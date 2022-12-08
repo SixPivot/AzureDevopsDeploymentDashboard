@@ -17,6 +17,7 @@ jobs:
   
   - deployment: test
     environment: Test
+    dependsOn: dev
     strategy:
      runOnce:
        deploy:
@@ -26,6 +27,7 @@ jobs:
   
   - deployment: prod
     environment: Prod
+    dependsOn: test
     strategy:
      runOnce:
        deploy:
