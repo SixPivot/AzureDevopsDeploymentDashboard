@@ -1,0 +1,34 @@
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+jobs:
+  - deployment: dev
+    environment: Dev
+    strategy:
+     runOnce:
+       deploy:
+         steps:
+           - script: echo "Deploy to Dev"
+           - script: sleep 10
+  
+  - deployment: test
+    environment: Test
+    strategy:
+     runOnce:
+       deploy:
+         steps:
+           - script: echo "Deploy to Test"
+           - script: sleep 10
+  
+  - deployment: prod
+    environment: Prod
+    strategy:
+     runOnce:
+       deploy:
+         steps:
+           - script: echo "Deploy to Prod"
+
