@@ -5,32 +5,39 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-jobs:
-  - deployment: dev
-    environment: Dev
-    strategy:
-     runOnce:
-       deploy:
-         steps:
-           - script: echo "Deploy to Dev"
-           - script: sleep 10
-  
-  - deployment: test
-    environment: Test
-    dependsOn: dev
-    strategy:
-     runOnce:
-       deploy:
-         steps:
-           - script: echo "Deploy to Test"
-           - script: sleep 10
-  
-  - deployment: prod
-    environment: Prod
-    dependsOn: test
-    strategy:
-     runOnce:
-       deploy:
-         steps:
-           - script: echo "Deploy to Prod"
+stages:
+  - stage: dev
+
+    jobs:
+      - deployment: dev
+        environment: Dev
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - script: echo "Deploy to Dev"
+                - script: sleep 10
+      
+  - stage: test
+    jobs:
+      - deployment: test
+        environment: Test
+        dependsOn: dev
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - script: echo "Deploy to Test"
+                - script: sleep 10
+
+  - stage: prod
+    jobs:
+      - deployment: prod
+        environment: Prod
+        dependsOn: test
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - script: echo "Deploy to Prod"
 
