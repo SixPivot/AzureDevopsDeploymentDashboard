@@ -22,7 +22,6 @@ stages:
     jobs:
       - deployment: test
         environment: Test
-        dependsOn: dev
         strategy:
           runOnce:
             deploy:
@@ -34,7 +33,6 @@ stages:
     jobs:
       - deployment: prod
         environment: Prod
-        dependsOn: test
         strategy:
           runOnce:
             deploy:
