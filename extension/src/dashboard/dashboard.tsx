@@ -7,10 +7,52 @@ import { Page } from "azure-devops-ui/Page";
 import { getClient } from "azure-devops-extension-api";
 import { CoreRestClient } from "azure-devops-extension-api/Core";
 
-class Dashboard extends React.Component<{}> {
+import { Table, ITableColumn, renderSimpleCell } from "azure-devops-ui/Table";
+import { ArrayItemProvider } from "azure-devops-ui/Utilities/Provider";
+
+interface IPipelineContentState {
+  pipelines?: ArrayItemProvider<any>;
+  columns: ITableColumn<any>[];
+}
+
+class Dashboard extends React.Component<{}, IPipelineContentState> {
   constructor(props: {}) {
     super(props);
-    this.state = {};
+
+    this.state = {
+      columns: [{
+        id: "name",
+        name: "",
+        renderCell: renderSimpleCell,
+        width: 300
+      },
+      {
+        id: "dev",
+        name: "Dev",
+        renderCell: renderSimpleCell,
+        width: 200
+      },
+      {
+        id: "stg",
+        name: "Staging",
+        renderCell: renderSimpleCell,
+        width: 200
+      },
+      {
+        id: "prod",
+        name: "Prod",
+        renderCell: renderSimpleCell,
+        width: 200
+      }],
+      pipelines: new ArrayItemProvider([
+        {
+          name: 'Sample Pipeline 1',
+          dev: 'v5.3.2',
+          stg: 'v5.3.0',
+          prod: 'v5.0.1'
+        }
+      ])
+    };
   }
 
   public componentDidMount() {
@@ -25,32 +67,19 @@ class Dashboard extends React.Component<{}> {
         <Header
           title="Deployment Dashboard"
         />
-        <table>
-          <tr>
-            <th>&nbsp;</th>
-            <th>Dev</th>
-            <th>Staging</th>
-            <th>Prod</th>
-          </tr>
-          <tr>
-            <td>Rhipe</td>
-            <td>v1.0.5</td>
-            <td>v1.0.3</td>
-            <td>v1.0.1</td>
-          </tr>
-          <tr>
-            <td>Azure</td>
-            <td>v2.1.0</td>
-            <td>v1.5.0</td>
-            <td>v1.5.0</td>
-          </tr>
-          <tr>
-            <td>Amazon</td>
-            <td>v3.0.7</td>
-            <td>v2.2.1</td>
-            <td>v2.2.0</td>
-          </tr>
-        </table>
+        <div className="margin-8">
+          {
+            !this.state.pipelines &&
+            <p>Loading...</p>
+          }
+          {
+            this.state.pipelines &&
+            <Table
+              columns={this.state.columns}
+              itemProvider={this.state.pipelines}
+            />
+          }
+        </div>
       </Page>
     );
   }
