@@ -21,7 +21,7 @@ steps:
       workingDir: extension
 
   - script: |
-      npx nbgv cloud
+      npx nbgv cloud --all-vars
     displayName: "Script: Set version"
     workingDirectory: extension
 
