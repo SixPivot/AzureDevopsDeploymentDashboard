@@ -4,6 +4,7 @@ import * as ReactDOM from "react-dom";
 import * as SDK from "azure-devops-extension-sdk";
 import { Header } from "azure-devops-ui/Header";
 import { Page } from "azure-devops-ui/Page";
+import { Card } from "azure-devops-ui/Card";
 import { getClient } from "azure-devops-extension-api";
 import { CoreRestClient } from "azure-devops-extension-api/Core";
 import { BuildRestClient } from "azure-devops-extension-api/Build";
@@ -17,6 +18,15 @@ interface IPipelineContentState {
   columns: ITableColumn<any>[];
 }
 
+interface LatestPipeline {
+  [key: string]: EnvironmentDeploymentExecutionRecord
+}
+
+interface EnvironmentPipelines {
+  name: string,
+  pipelines: LatestPipeline
+}
+
 class Dashboard extends React.Component<{}, IPipelineContentState> {
   constructor(props: {}) {
     super(props);
@@ -27,33 +37,8 @@ class Dashboard extends React.Component<{}, IPipelineContentState> {
         name: "",
         renderCell: renderSimpleCell,
         width: 300
-      },
-      {
-        id: "dev",
-        name: "Dev",
-        renderCell: renderSimpleCell,
-        width: 200
-      },
-      {
-        id: "test",
-        name: "Test",
-        renderCell: renderSimpleCell,
-        width: 200
-      },
-      {
-        id: "prod",
-        name: "Prod",
-        renderCell: renderSimpleCell,
-        width: 200
       }],
-      pipelines: new ArrayItemProvider([
-        {
-          name: 'Sample Pipeline 1',
-          dev: 'v5.3.2',
-          test: 'v5.3.0',
-          prod: 'v5.0.1'
-        }
-      ])
+      pipelines: new ArrayItemProvider([])
     };
   }
 
@@ -61,14 +46,6 @@ class Dashboard extends React.Component<{}, IPipelineContentState> {
     SDK.init();
     
     const client = getClient(TaskAgentRestClient);
-    interface LatestPipeline {
-      [key: string]: EnvironmentDeploymentExecutionRecord
-    }
-
-    interface EnvironmentPipelines {
-      name: string,
-      pipelines: LatestPipeline
-    }
     
     // first get environments
     // for-each environment get deployment execution records
@@ -90,6 +67,12 @@ class Dashboard extends React.Component<{}, IPipelineContentState> {
       Promise.all(pipeline_promises)
           .then((environments) => {
             console.info(environments);
+            const columns = this.generateColumns(environments);
+            const rows = this.generateRows(environments)
+            this.setState({
+              columns: columns,
+              pipelines: new ArrayItemProvider(rows)
+            });
           });
     });
     
@@ -110,25 +93,65 @@ class Dashboard extends React.Component<{}, IPipelineContentState> {
     buildApi.getBuild("ReleaseDashboard", 919).then(console.info); //*/
   }
 
+  generateColumns(environments: EnvironmentPipelines[]): Array<any> {
+    let columns = [];
+    columns.push({
+      id: "name",
+      name: "",
+      renderCell: renderSimpleCell,
+      width: 300
+    });
+    const dynamicColumns = environments.map(environment => {
+      return {
+        id: environment.name,
+        name: environment.name,
+        renderCell: renderSimpleCell,
+        width: 200
+      }
+    });
+    columns = columns.concat(dynamicColumns);
+    console.log(columns);
+    return columns;
+  }
+
+  generateRows(environments: EnvironmentPipelines[]): Array<any> {
+    const rows: Array<any> = [];
+    
+    environments.forEach(environment => {
+      console.log(Object.keys(environment.pipelines));
+      Object.keys(environment.pipelines).forEach(pipelineName => {
+        let row = rows.find(pr => pr.name == pipelineName);
+        if (!row) {
+          row = { name: pipelineName };
+          rows.push(row);
+        }
+        row[environment.name] = environment.pipelines[pipelineName].owner.name;
+      });
+    });
+    return rows;
+  }
+
   public render(): JSX.Element {
     return (
       <Page className="flex-grow">
         <Header
           title="Deployment Dashboard!"
         />
-        <div className="margin-8">
-          {
-            !this.state.pipelines &&
-            <p>Loading...</p>
-          }
-          {
-            this.state.pipelines &&
-            <Table
-              columns={this.state.columns}
-              itemProvider={this.state.pipelines}
-            />
-          }
-        </div>
+        <Card className="margin-16 bolt-page-white">
+          <div className="margin-8">
+            {
+              !this.state.pipelines &&
+              <p>Loading...</p>
+            }
+            {
+              this.state.pipelines &&
+              <Table
+                columns={this.state.columns}
+                itemProvider={this.state.pipelines}
+              />
+            }
+          </div>
+        </Card>
       </Page>
     );
   }
