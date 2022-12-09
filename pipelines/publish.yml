@@ -37,3 +37,9 @@ steps:
 
   - script: npm run package
     workingDirectory: extension
+
+  - script: |
+      npx tfx extension publish --token $(MARKETPLACE_TOKEN) --manifest-globs vss-extension.json --overrides-file configs/release.json --output-path out
+    condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
+    workingDirectory: extension
+    displayName: 'Script: Publish to Marketplace'
