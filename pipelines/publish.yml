@@ -30,8 +30,8 @@ steps:
 
   - pwsh: |
       $config = (Get-Content vss-extension.json) | ConvertFrom-Json
-      $config | Add-Member -MemberType NoteProperty -Name version -Value $env:NBGV_NPMPACKAGEVERSION
-      $config | ConvertTo-Json | Set-Content vss-extension.json
+      $config.version = $env:NBGV_NPMPACKAGEVERSION
+      $config | ConvertTo-Json -depth 3 | Set-Content vss-extension.json
     displayName: "PowerShell: Patch version"
     workingDirectory: extension
 
