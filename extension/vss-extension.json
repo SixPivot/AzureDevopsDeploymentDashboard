@@ -36,7 +36,8 @@
     }
   ],
   "scopes": [
-    "vso.build"
+    "vso.build",
+    "vso.release"
   ],
   "contributions": [
     {

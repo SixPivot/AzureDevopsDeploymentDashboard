@@ -6,6 +6,8 @@ import { Header } from "azure-devops-ui/Header";
 import { Page } from "azure-devops-ui/Page";
 import { getClient } from "azure-devops-extension-api";
 import { CoreRestClient } from "azure-devops-extension-api/Core";
+import { BuildRestClient } from "azure-devops-extension-api/Build";
+import { ReleaseRestClient } from "azure-devops-extension-api/Release";
 
 import { Table, ITableColumn, renderSimpleCell } from "azure-devops-ui/Table";
 import { ArrayItemProvider } from "azure-devops-ui/Utilities/Provider";
@@ -58,14 +60,19 @@ class Dashboard extends React.Component<{}, IPipelineContentState> {
   public componentDidMount() {
     SDK.init();
     
-    const builds = getClient(CoreRestClient).getProject("ReleaseDashboard").then(console.log);
+    const projects = getClient(CoreRestClient);
+    const client = getClient(ReleaseRestClient);
+    client.getReleases("ReleaseDashboard").then(console.info);
+    const buildApi = getClient(BuildRestClient);
+    /*buildApi.getBuilds("ReleaseDashboard").then(console.info);
+    buildApi.getBuild("ReleaseDashboard", 919).then(console.info); //*/
   }
 
   public render(): JSX.Element {
     return (
       <Page className="flex-grow">
         <Header
-          title="Deployment Dashboard"
+          title="Deployment Dashboard!"
         />
         <div className="margin-8">
           {
