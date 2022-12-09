@@ -2,7 +2,7 @@
   "manifestVersion": 1,
   "id": "hack2022-ado-hw",
   "publisher": "hack2022-ado",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "name": "Release Dashboard",
   "description": "A dashboard to view a summary of all deployments",
   "demands": ["api-version/3.0"],
