@@ -17,5 +17,5 @@ steps:
       command: ci
       workingDir: extension
 
-  - script: npx tfx-create
+  - script: npm run tfx-create
     workingDirectory: extension
