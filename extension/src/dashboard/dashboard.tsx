@@ -64,18 +64,45 @@ class Dashboard extends React.Component<{}, IPipelineContentState> {
     interface LatestPipeline {
       [key: string]: EnvironmentDeploymentExecutionRecord
     }
-    client.getEnvironmentDeploymentExecutionRecords("ReleaseDashboard", 5).then((pipelines ) => {
-      let latest_pipelines : LatestPipeline = {};
+    
+    // first get environments
+    // for-each environment get deployment execution records
+    // for each record filter by latest by pipeline
+    
+    client.getEnvironments("ReleaseDashboard").then((environments) => {
+      let pipeline_promises : Array<Promise<LatestPipeline>> = [];
+      environments.forEach((environment) => {
+        let promise : Promise<LatestPipeline> = new Promise<LatestPipeline>((resolve, reject) => {
+          client
+              .getEnvironmentDeploymentExecutionRecords("ReleaseDashboard", environment.id)
+              .then((pipelines) => {
+                resolve(pipeline_handler(pipelines));
+              });
+        });
+        pipeline_promises.push(promise);
+      });
       
+      Promise.all(pipeline_promises)
+          .then((environments) => {
+            console.info(environments);
+          });
+    });
+    
+    let pipeline_handler = (pipelines: EnvironmentDeploymentExecutionRecord[]) => {
+      let latest_pipelines : LatestPipeline = {};
+
       pipelines.forEach((pipeline) => {
         if (latest_pipelines[pipeline.definition.name]) return;
 
         latest_pipelines[pipeline.definition.name] = pipeline;
       });
-      
-      console.info(latest_pipelines);
-    });
-    client.getEnvironments("ReleaseDashboard").then(console.info);
+
+      return Promise.resolve(latest_pipelines);
+    }
+    
+    // dev = 5, test = 6, prod = 7
+    client.getEnvironmentDeploymentExecutionRecords("ReleaseDashboard", 5)
+        .then(pipeline_handler);
       
     const buildApi = getClient(BuildRestClient);
     /*buildApi.getBuilds("ReleaseDashboard").then(console.info);
