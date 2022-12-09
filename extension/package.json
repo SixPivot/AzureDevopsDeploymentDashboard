@@ -11,8 +11,7 @@
     "publish": "npm run compile && tfx extension publish --manifest-globs vss-extension.json --overrides-file configs/release.json --output-path out",
     "publish:dev": "npm run compile:dev && tfx extension publish --manifest-globs vss-extension.json --overrides-file configs/dev.json --output-path out",
     "start:dev": "webpack-dev-server --mode development",
-    "tfx-create": "tfx extension create --manifest-globs vss-extension.json",
-    "tfx-publish": "tfx extension publish --manifest-globs vss-extension.json"
+    "tfx-create": "tfx extension create --manifest-globs vss-extension.json"
   },
   "dependencies": {
     "azure-devops-extension-api": "^1.152.0",
