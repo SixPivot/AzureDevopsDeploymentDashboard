@@ -10,14 +10,18 @@
     "package:dev": "npm run compile:dev && tfx extension create --manifest-globs vss-extension.json --overrides-file configs/dev.json --output-path out",
     "publish": "npm run compile && tfx extension publish --manifest-globs vss-extension.json --overrides-file configs/release.json --output-path out",
     "publish:dev": "npm run compile:dev && tfx extension publish --manifest-globs vss-extension.json --overrides-file configs/dev.json --output-path out",
-    "start:dev": "webpack-dev-server --mode development"
+     "start:dev": "webpack-dev-server --mode development",
+    "tfx-create": "tfx extension create --manifest-globs vss-extension.json",
+    "tfx-publish": "tfx extension publish --manifest-globs vss-extension.json"
   },
   "dependencies": {
     "azure-devops-extension-api": "^1.152.0",
     "azure-devops-extension-sdk": "^2.0.7",
     "azure-devops-ui": "^1.152.2",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "nerdbank-gitversioning": "^3.6.65-alpha",
+    "tfx-cli": "^0.12.0"
   },
   "devDependencies": {
     "@types/react": "^16.8.18",
