@@ -37,10 +37,8 @@
   ],
   "scopes": [
     "vso.build",
-     "vso.release",
-    "vso.taskgroups_read",
-    "vso.taskgroups_manage",
-    "vso.taskgroups_write"
+    "vso.release",
+    "vso.environment_manage"
   ],
   "contributions": [
     {
