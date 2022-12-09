@@ -17,8 +17,10 @@ steps:
       command: ci
       workingDir: extension
 
-  - script: npx nbgv cloud
+  - script: |
+      npx nbgv cloud
     displayName: "Script: Set version"
+    workingDirectory: extension
 
   - script: printenv
     displayName: "Script: printenv"
