@@ -6,6 +6,9 @@ trigger:
       - main
 
 steps:
+  - checkout: self
+    fetchDepth: 0
+    
   - task: NodeTool@0
     displayName: "NodeTool"
     inputs:
