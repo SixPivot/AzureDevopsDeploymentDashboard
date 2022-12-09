@@ -64,19 +64,24 @@ class Dashboard extends React.Component<{}, IPipelineContentState> {
     interface LatestPipeline {
       [key: string]: EnvironmentDeploymentExecutionRecord
     }
+
+    interface EnvironmentPipelines {
+      name: string,
+      pipelines: LatestPipeline
+    }
     
     // first get environments
     // for-each environment get deployment execution records
     // for each record filter by latest by pipeline
     
     client.getEnvironments("ReleaseDashboard").then((environments) => {
-      let pipeline_promises : Array<Promise<LatestPipeline>> = [];
+      let pipeline_promises : Array<Promise<EnvironmentPipelines>> = [];
       environments.forEach((environment) => {
-        let promise : Promise<LatestPipeline> = new Promise<LatestPipeline>((resolve, reject) => {
+        let promise : Promise<EnvironmentPipelines> = new Promise<EnvironmentPipelines>((resolve, reject) => {
           client
               .getEnvironmentDeploymentExecutionRecords("ReleaseDashboard", environment.id)
               .then((pipelines) => {
-                resolve(pipeline_handler(pipelines));
+                resolve(pipeline_handler(environment.name, pipelines));
               });
         });
         pipeline_promises.push(promise);
@@ -88,7 +93,7 @@ class Dashboard extends React.Component<{}, IPipelineContentState> {
           });
     });
     
-    let pipeline_handler = (pipelines: EnvironmentDeploymentExecutionRecord[]) => {
+    let pipeline_handler = (name: string, pipelines: EnvironmentDeploymentExecutionRecord[]) : Promise<EnvironmentPipelines> => {
       let latest_pipelines : LatestPipeline = {};
 
       pipelines.forEach((pipeline) => {
@@ -97,13 +102,9 @@ class Dashboard extends React.Component<{}, IPipelineContentState> {
         latest_pipelines[pipeline.definition.name] = pipeline;
       });
 
-      return Promise.resolve(latest_pipelines);
+      return Promise.resolve({name, pipelines: latest_pipelines});
     }
     
-    // dev = 5, test = 6, prod = 7
-    client.getEnvironmentDeploymentExecutionRecords("ReleaseDashboard", 5)
-        .then(pipeline_handler);
-      
     const buildApi = getClient(BuildRestClient);
     /*buildApi.getBuilds("ReleaseDashboard").then(console.info);
     buildApi.getBuild("ReleaseDashboard", 919).then(console.info); //*/
