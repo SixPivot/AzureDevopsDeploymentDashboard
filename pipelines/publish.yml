@@ -8,7 +8,7 @@ trigger:
 steps:
   - checkout: self
     fetchDepth: 0
-    
+
   - task: NodeTool@0
     displayName: "NodeTool"
     inputs:
@@ -28,5 +28,5 @@ steps:
   - script: printenv
     displayName: "Script: printenv"
 
-  - script: npm run tfx-create
+  - script: npm run package
     workingDirectory: extension
