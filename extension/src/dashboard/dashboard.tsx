@@ -33,8 +33,8 @@ class Dashboard extends React.Component<{}, IPipelineContentState> {
         width: 200
       },
       {
-        id: "stg",
-        name: "Staging",
+        id: "test",
+        name: "Test",
         renderCell: renderSimpleCell,
         width: 200
       },
@@ -48,7 +48,7 @@ class Dashboard extends React.Component<{}, IPipelineContentState> {
         {
           name: 'Sample Pipeline 1',
           dev: 'v5.3.2',
-          stg: 'v5.3.0',
+          test: 'v5.3.0',
           prod: 'v5.0.1'
         }
       ])
