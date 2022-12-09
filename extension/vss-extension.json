@@ -36,12 +36,12 @@
     {
       "id": "deployment-dashboard",
       "type": "ms.vss-web.hub",
-      "description": "Adds a 'Hello' hub to the Work hub group.",
+      "description": "The best darn deployment dashboard you're going to see",
       "targets": ["ms.vss-build-web.build-release-hub-group"],
       "properties": {
         "name": "Deployment Dashboard",
-        "order": 0,
-        "uri": "index.html"
+        "uri": "dist/dashboard/dashboard.html",
+        "order": 1
       }
     }
   ]
