@@ -1,0 +1,21 @@
+# Build and publish extension to Marketplace
+
+trigger:
+  branches:
+    include:
+      - main
+
+steps:
+  - task: NodeTool@0
+    displayName: "NodeTool"
+    inputs:
+      versionSpec: "16.x"
+
+  - task: Npm@1
+    displayName: "Npm: Install"
+    inputs:
+      command: ci
+      workingDir: extension
+
+  - script: npx tfx-create
+    workingDirectory: extension

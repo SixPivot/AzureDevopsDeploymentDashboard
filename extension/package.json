@@ -4,12 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tfx-create": "tfx extension create --manifest-globs vss-extension.json",
+    "tfx-publish": "tfx extension publish --manifest-globs vss-extension.json"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "vss-web-extension-sdk": "^5.141.0"
+  },
+  "devDependencies": {
+    "tfx-cli": "^0.12.0"
   }
 }
