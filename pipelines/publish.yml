@@ -17,5 +17,11 @@ steps:
       command: ci
       workingDir: extension
 
+  - script: npx nbgv cloud
+    displayName: "Script: Set version"
+
+  - script: printenv
+    displayName: "Script: printenv"
+
   - script: npm run tfx-create
     workingDirectory: extension

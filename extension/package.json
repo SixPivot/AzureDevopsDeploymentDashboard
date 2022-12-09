@@ -15,6 +15,7 @@
     "vss-web-extension-sdk": "^5.141.0"
   },
   "devDependencies": {
+    "nerdbank-gitversioning": "^3.6.65-alpha",
     "tfx-cli": "^0.12.0"
   }
 }
