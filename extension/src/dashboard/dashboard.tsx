@@ -7,10 +7,12 @@ import { Page } from "azure-devops-ui/Page";
 import { getClient } from "azure-devops-extension-api";
 import { CoreRestClient } from "azure-devops-extension-api/Core";
 import { BuildRestClient } from "azure-devops-extension-api/Build";
-import { TaskAgentRestClient } from "azure-devops-extension-api/TaskAgent";
+import { TaskAgentRestClient, EnvironmentDeploymentExecutionRecord } from "azure-devops-extension-api/TaskAgent";
 
 import { Table, ITableColumn, renderSimpleCell } from "azure-devops-ui/Table";
 import { ArrayItemProvider } from "azure-devops-ui/Utilities/Provider";
+
+import DevPipelines from "./dev_pipelines";
 
 interface IPipelineContentState {
   pipelines?: ArrayItemProvider<any>;
@@ -60,9 +62,23 @@ class Dashboard extends React.Component<{}, IPipelineContentState> {
   public componentDidMount() {
     SDK.init();
     
-    const projects = getClient(CoreRestClient);
     const client = getClient(TaskAgentRestClient);
+    interface LatestPipeline {
+      [key: string]: EnvironmentDeploymentExecutionRecord
+    }
+    client.getEnvironmentDeploymentExecutionRecords("ReleaseDashboard", 5).then((pipelines ) => {
+      let latest_pipelines : LatestPipeline = {};
+      
+      pipelines.forEach((pipeline) => {
+        if (latest_pipelines[pipeline.definition.name]) return;
+
+        latest_pipelines[pipeline.definition.name] = pipeline;
+      });
+      
+      console.info(latest_pipelines);
+    });
     client.getEnvironments("ReleaseDashboard").then(console.info);
+      
     const buildApi = getClient(BuildRestClient);
     /*buildApi.getBuilds("ReleaseDashboard").then(console.info);
     buildApi.getBuild("ReleaseDashboard", 919).then(console.info); //*/
