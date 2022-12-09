@@ -1,0 +1,39 @@
+{
+  "manifestVersion": 1,
+  "id": "hack2022-ado-hw",
+  "publisher": "hack2022-ado",
+  "version": "1.0.8",
+  "name": "Deployment Dashboard",
+  "description": "A dashboard to view a summary of all deployments",
+  "public": false,
+  "categories": ["Azure Repos"],
+  "targets": [
+    {
+      "id": "Microsoft.VisualStudio.Services"
+    }
+  ],
+  "contributions": [
+    {
+      "id": "deployment-dashboard",
+      "type": "ms.vss-web.hub",
+      "description": "Adds a 'Hello' hub to the Work hub group.",
+      "targets": ["ms.vss-build-web.build-release-hub-group"],
+      "properties": {
+        "name": "Deployment Dashboard",
+        "order": 0,
+        "uri": "deployment-dashboard.html"
+      }
+    }
+  ],
+  "scopes": ["vso.build"],
+  "files": [
+    {
+      "path": "deployment-dashboard.html",
+      "addressable": true
+    },
+    {
+      "path": "sdk/scripts",
+      "addressable": true
+    }
+  ]
+}
