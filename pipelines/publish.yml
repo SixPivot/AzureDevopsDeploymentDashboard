@@ -28,5 +28,12 @@ steps:
   - script: printenv
     displayName: "Script: printenv"
 
+  - pwsh: |
+      $config = (Get-Content configs/release.json) | ConvertFrom-Json
+      $config | Add-Member -MemberType NoteProperty -Name version -Value $env:NBGV_NPMPACKAGEVERSION
+      $config | ConvertTo-Json | Set-Content configs/release.json
+    displayName: "PowerShell: Patch version"
+    workingDirectory: extension
+
   - script: npm run package
     workingDirectory: extension
