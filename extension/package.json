@@ -10,7 +10,7 @@
     "package:dev": "npm run compile:dev && tfx extension create --manifest-globs vss-extension.json --overrides-file configs/dev.json --output-path out",
     "publish": "npm run compile && tfx extension publish --manifest-globs vss-extension.json --overrides-file configs/release.json --output-path out",
     "publish:dev": "npm run compile:dev && tfx extension publish --manifest-globs vss-extension.json --overrides-file configs/dev.json --output-path out",
-     "start:dev": "webpack-dev-server --mode development",
+    "start:dev": "webpack-dev-server --mode development",
     "tfx-create": "tfx extension create --manifest-globs vss-extension.json",
     "tfx-publish": "tfx extension publish --manifest-globs vss-extension.json"
   },
@@ -20,7 +20,6 @@
     "azure-devops-ui": "^1.152.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "nerdbank-gitversioning": "^3.6.65-alpha",
     "tfx-cli": "^0.12.0"
   },
   "devDependencies": {
@@ -35,7 +34,8 @@
     "eslint-config-prettier": "^4.3.0",
     "eslint-plugin-prettier": "^3.1.0",
     "file-loader": "^3.0.1",
-    "node-sass": "^4.12.0",
+    "nerdbank-gitversioning": "^3.6.65-alpha",
+    "node-sass": "^8.0.0",
     "prettier": "^1.17.1",
     "rimraf": "^2.6.3",
     "sass-loader": "^7.1.0",
