@@ -1,39 +1,55 @@
 {
   "manifestVersion": 1,
-  "id": "hack2022-ado-hw",
-  "publisher": "hack2022-ado",
-  "version": "1.0.8",
-  "name": "Deployment Dashboard",
-  "description": "A dashboard to view a summary of all deployments",
-  "public": false,
+  "version": "1.0.0",
+  "name": "Release Dashboard",
+  "description": "HackDay 22 Release Dashboard",
+  "publisher": "SixPivot",
+  "demands": ["api-version/3.0"],
   "categories": ["Azure Repos"],
   "targets": [
     {
       "id": "Microsoft.VisualStudio.Services"
     }
   ],
-  "contributions": [
-    {
-      "id": "deployment-dashboard",
-      "type": "ms.vss-web.hub",
-      "description": "Adds a 'Hello' hub to the Work hub group.",
-      "targets": ["ms.vss-build-web.build-release-hub-group"],
-      "properties": {
-        "name": "Deployment Dashboard",
-        "order": 0,
-        "uri": "deployment-dashboard.html"
-      }
+  "content": {
+    "details": {
+      "path": "README.md"
     }
-  ],
-  "scopes": ["vso.build"],
+  },
+  "icons": {
+    "default": "img/world.png"
+  },
   "files": [
     {
-      "path": "deployment-dashboard.html",
+      "path": "dist",
       "addressable": true
     },
     {
-      "path": "sdk/scripts",
+      "path": "img",
       "addressable": true
+    }
+  ],
+  "contributions": [
+    {
+      "id": "hello-world-hub-group",
+      "type": "ms.vss-web.hub-group",
+      "description": "Sample hub group",
+      "targets": ["ms.vss-web.project-hub-groups-collection"],
+      "properties": {
+        "name": "Hello World!",
+        "icon": {
+          "dark": "img/world.png",
+          "light": "img/world.png"
+        }
+      }
+    },
+    {
+      "id": "default-hub",
+      "type": "ms.vss-web.hub",
+      "targets": [".hello-world-hub-group"],
+      "properties": {
+        "uri": "dist/hub/hub.html"
+      }
     }
   ]
 }
