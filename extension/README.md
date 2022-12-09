@@ -2,6 +2,8 @@
 
 HackDay 22 Release Dashboard
 
+[PowerPoint Summary](https://sixpivot.sharepoint.com/:p:/s/Hackathon2022/EedyW2XmyDFNhTzg3wUubGgBb61nw-DWuuhCcLQNpZ2ciw?e=JZAuec)
+
 ## Running this project
 
 Follow these steps to run a dev version of this project that supports hot reload and is debuggable through VS Code. You will need to install [Firefox](https://www.mozilla.org/firefox/) if you don't have it already because the VS Code Debugger for Chrome extension [doesn't support iframes](https://github.com/microsoft/vscode-chrome-debug/issues/786) yet.
@@ -41,3 +43,16 @@ Follow these steps to run a dev version of this project that supports hot reload
    > If you leave the Firefox window open that VS Code launches, the debugger will reattach instead of starting a clean Firefox instance each time.
 
 1. Navigate to your extension and set a breakpoint in a method in VS Code. You should see that breakpoint hit when that method executes.
+
+## Developer resources
+
+- [Miro board used for brainstorming](https://miro.com/app/board/uXjVP7LsQgA=/)
+- Azure DevOps Extensions
+  - [Overview](https://learn.microsoft.com/azure/devops/extend/overview?toc=%2Fazure%2Fdevops%2Fmarketplace-extensibility%2Ftoc.json&view=azure-devops&WT.mc_id=DOP-MVP-5001655)
+  - [Sample application](https://github.com/microsoft/azure-devops-extension-sample)
+  - [Hot reload and debug](https://github.com/microsoft/azure-devops-extension-hot-reload-and-debug)
+- [Scopes](https://github.com/MicrosoftDocs/azure-devops-docs/blob/main/docs/integrate/includes/scopes.md)
+- [Extension API docs](https://learn.microsoft.com/en-us/javascript/api/azure-devops-extension-api/?WT.mc_id=DOP-MVP-5001655)
+- Azure DevOps REST APIs
+  - [Environments](https://learn.microsoft.com/rest/api/azure/devops/distributedtask/environments/list?view=azure-devops-rest-6.0&WT.mc_id=DOP-MVP-5001655) [Example](https://dev.azure.com/sixpivot/ReleaseDashboard/_apis/distributedtask/environments/5?api-version=6.0-preview.1)
+  - [Environmentdeployment Records](https://learn.microsoft.com/en-us/rest/api/azure/devops/distributedtask/environmentdeployment-records?view=azure-devops-rest-6.0&WT.mc_id=DOP-MVP-5001655) [Example](https://dev.azure.com/sixpivot/ReleaseDashboard/_apis/distributedtask/environments/5/environmentdeploymentrecords?api-version=6.0-preview.1&top=1)
