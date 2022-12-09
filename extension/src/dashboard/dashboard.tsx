@@ -7,7 +7,7 @@ import { Page } from "azure-devops-ui/Page";
 import { getClient } from "azure-devops-extension-api";
 import { CoreRestClient } from "azure-devops-extension-api/Core";
 import { BuildRestClient } from "azure-devops-extension-api/Build";
-import { ReleaseRestClient } from "azure-devops-extension-api/Release";
+import { TaskAgentRestClient } from "azure-devops-extension-api/TaskAgent";
 
 import { Table, ITableColumn, renderSimpleCell } from "azure-devops-ui/Table";
 import { ArrayItemProvider } from "azure-devops-ui/Utilities/Provider";
@@ -61,8 +61,8 @@ class Dashboard extends React.Component<{}, IPipelineContentState> {
     SDK.init();
     
     const projects = getClient(CoreRestClient);
-    const client = getClient(ReleaseRestClient);
-    client.getReleases("ReleaseDashboard").then(console.info);
+    const client = getClient(TaskAgentRestClient);
+    client.getEnvironments("ReleaseDashboard").then(console.info);
     const buildApi = getClient(BuildRestClient);
     /*buildApi.getBuilds("ReleaseDashboard").then(console.info);
     buildApi.getBuild("ReleaseDashboard", 919).then(console.info); //*/
