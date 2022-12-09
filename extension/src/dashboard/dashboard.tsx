@@ -1,11 +1,8 @@
- /// <reference types="vss-web-extension-sdk" />
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as SDK from "azure-devops-extension-sdk";
 import { Header } from "azure-devops-ui/Header";
 import { Page } from "azure-devops-ui/Page";
-import { getClient } from "azure-devops-extension-api";
-import { CoreRestClient } from "azure-devops-extension-api/Core";
 
 class Dashboard extends React.Component<{}> {
   constructor(props: {}) {
@@ -15,8 +12,6 @@ class Dashboard extends React.Component<{}> {
 
   public componentDidMount() {
     SDK.init();
-    
-    const builds = getClient(CoreRestClient).getProject("ReleaseDashboard").then(console.log);
   }
 
   public render(): JSX.Element {

@@ -19,8 +19,7 @@
     "azure-devops-ui": "^1.152.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "tfx-cli": "^0.12.0",
-    "vss-web-extension-sdk": "^5.141.0"
+    "tfx-cli": "^0.12.0"
   },
   "devDependencies": {
     "@types/react": "^16.8.18",
