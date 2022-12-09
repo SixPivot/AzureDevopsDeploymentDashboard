@@ -12,8 +12,6 @@ import { TaskAgentRestClient, EnvironmentDeploymentExecutionRecord } from "azure
 import { Table, ITableColumn, renderSimpleCell } from "azure-devops-ui/Table";
 import { ArrayItemProvider } from "azure-devops-ui/Utilities/Provider";
 
-import DevPipelines from "./dev_pipelines";
-
 interface IPipelineContentState {
   pipelines?: ArrayItemProvider<any>;
   columns: ITableColumn<any>[];
