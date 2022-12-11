@@ -1,5 +1,6 @@
 {
   "id": "hack2022-ado-hw-dev",
+  "name": "Release Dashboard (Dev)",
   "public": false,
   "baseUri": "https://localhost:3000"
 }
