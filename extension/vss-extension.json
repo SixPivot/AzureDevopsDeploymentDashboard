@@ -1,7 +1,7 @@
 {
   "manifestVersion": 1,
-  "id": "hack2022-ado-hw",
-  "publisher": "hack2022-ado",
+  "id": "sixpivot-release-dashboard",
+  "publisher": "sixpivot",
   "version": "1.0.14",
   "name": "Release Dashboard",
   "description": "A dashboard to view a summary of all deployments",

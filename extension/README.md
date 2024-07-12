@@ -1,12 +1,20 @@
 # Release Dashboard
 
-HackDay 22 Release Dashboard
+~~HackDay 22 Release Dashboard~~
+This is now the SixPivot Azure Devops Pipelines Release Dashboard!
 
 [PowerPoint Summary](https://sixpivot.sharepoint.com/:p:/s/Hackathon2022/EedyW2XmyDFNhTzg3wUubGgBb61nw-DWuuhCcLQNpZ2ciw?e=JZAuec)
 
 ## Running this project
 
 Follow these steps to run a dev version of this project that supports hot reload and is debuggable through VS Code. You will need to install [Firefox](https://www.mozilla.org/firefox/) if you don't have it already because the VS Code Debugger for Chrome extension [doesn't support iframes](https://github.com/microsoft/vscode-chrome-debug/issues/786) yet.
+
+## Publishing extensions
+
+1. Go to `https://marketplace.visualstudio.com/`
+1. Click "publish an extension" on the top right of the screen. 
+1. If you are already added to a publisher, you will be taken to `https://marketplace.visualstudio.com/manage/publishers/sixpivot`, assuming the publisher you're added to is `SixPivot`.
+1. If you have not been added to a publisher yet, you will go directly to a create screen.
 
 ### Hot reload
 
