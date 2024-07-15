@@ -51,6 +51,7 @@ The extensions are probably already installed in the SixPivot org in Azure-devop
 
 - [Miro board used for brainstorming](https://miro.com/app/board/uXjVP7LsQgA=/)
 - Azure DevOps Extensions
+  - [Azure DevOps Developer portal](https://developer.microsoft.com/en-gb/azure-devops/)
   - [Overview](https://learn.microsoft.com/azure/devops/extend/overview?toc=%2Fazure%2Fdevops%2Fmarketplace-extensibility%2Ftoc.json&view=azure-devops&WT.mc_id=DOP-MVP-5001655)
   - [Sample application](https://github.com/microsoft/azure-devops-extension-sample)
   - [Hot reload and debug](https://github.com/microsoft/azure-devops-extension-hot-reload-and-debug)
