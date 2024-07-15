@@ -7,11 +7,10 @@ import { Page } from "azure-devops-ui/Page";
 import { Card } from "azure-devops-ui/Card";
 import { getClient } from "azure-devops-extension-api";
 import { TaskAgentRestClient } from "azure-devops-extension-api/TaskAgent";
-import { renderSimpleCell } from "azure-devops-ui/Table";
+import { renderSimpleCell, Table } from "azure-devops-ui/Table";
 import { ArrayItemProvider } from "azure-devops-ui/Utilities/Provider";
 import { IPipelineContentState } from "../api/types";
 import { getPipelines } from "../api/AzureDevopsClient";
-import { PipelinesTable } from "../components/PipelinesTable";
 
 class Dashboard extends React.Component<{}, IPipelineContentState> {
   constructor(props: {}) {
@@ -57,7 +56,10 @@ class Dashboard extends React.Component<{}, IPipelineContentState> {
             }
             {
               this.state.pipelines &&
-              <PipelinesTable columns={this.state.columns} pipelines={this.state.pipelines} />
+              <Table
+                columns={this.state.columns}
+                itemProvider={this.state.pipelines}
+              />
             }
           </div>
         </Card>
