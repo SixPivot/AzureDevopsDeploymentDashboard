@@ -36,6 +36,7 @@ stages:
                 - script: sleep 10
 
   - stage: preprod
+    dependsOn: dev
     jobs:
       - deployment: preprod
         environment: Preprod
