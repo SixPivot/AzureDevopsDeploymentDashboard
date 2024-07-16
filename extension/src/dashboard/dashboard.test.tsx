@@ -1,8 +1,9 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { Dashboard } from './dashboard'
+// import { Dashboard } from './dashboard'
 import * as React from 'react'
 import '@testing-library/jest-dom'
+import { TestComponent } from './testcomponent'
 
 jest.mock('azure-devops-extension-sdk', () => {
   return {
@@ -13,7 +14,7 @@ jest.mock('azure-devops-extension-sdk', () => {
 // todo: rewrite test
 test('loads and displays greeting', async () => {
   // ARRANGE
-  render(<Dashboard />)
+  render(<TestComponent />)
 
   // ACT
   await userEvent.click(screen.getByText('Load Greeting'))
