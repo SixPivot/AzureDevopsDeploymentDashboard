@@ -9,8 +9,8 @@ import { getClient } from "azure-devops-extension-api";
 import { TaskAgentRestClient } from "azure-devops-extension-api/TaskAgent";
 import { renderSimpleCell, Table } from "azure-devops-ui/Table";
 import { ArrayItemProvider } from "azure-devops-ui/Utilities/Provider";
-import { IPipelineContentState } from "../api/types";
-import { getPipelines } from "../api/AzureDevopsClient";
+import { IPipelineContentState } from "./api/types";
+import { getPipelines } from "./api/AzureDevopsClient";
 
 class Dashboard extends React.Component<{}, IPipelineContentState> {
   constructor(props: {}) {
