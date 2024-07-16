@@ -4,6 +4,7 @@ import { Dashboard } from './dashboard'
 import * as React from 'react'
 import '@testing-library/jest-dom'
 
+// todo: rewrite test
 test('loads and displays greeting', async () => {
   // ARRANGE
   render(<Dashboard />)
