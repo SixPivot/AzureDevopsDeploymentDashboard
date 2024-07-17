@@ -26,10 +26,17 @@ export async function getPipelines() {
         project,
         environment.id,
       );
-    const environmentPipeline: EnvironmentPipelines = { name: environment.name, pipelines: {} };
+    const environmentPipeline: EnvironmentPipelines = {
+      name: environment.name,
+      pipelines: {},
+    };
     for (const pipeline of task) {
       if (!environmentPipeline.pipelines[pipeline.definition.name]) {
-        environmentPipeline.pipelines[pipeline.definition.name] = pipeline;
+        const data = pipelines.find(p => p.id == pipeline.definition.id);
+        environmentPipeline.pipelines[pipeline.definition.name] = {
+          deployment: pipeline,
+          pipeline: data
+        };
       }
     }
     environmentPipelines.push(environmentPipeline);
@@ -67,16 +74,20 @@ function generateColumns(environments: EnvironmentPipelines[]): Array<any> {
 function generateRows(environments: EnvironmentPipelines[]): Array<any> {
   const rows: Array<any> = [];
 
-  environments.forEach((environment) => {
+  for(const environment of environments){
+
     console.log(Object.keys(environment.pipelines));
-    Object.keys(environment.pipelines).forEach((pipelineName) => {
+
+    for(const pipelineName of Object.keys(environment.pipelines)){
       let row = rows.find((pr) => pr.name == pipelineName);
+      
       if (!row) {
         row = { name: pipelineName };
         rows.push(row);
       }
-      row[environment.name] = environment.pipelines[pipelineName].owner.name;
-    });
-  });
+      
+      row[environment.name] = environment.pipelines[pipelineName].deployment.owner.name;
+    }
+  }
   return rows;
 }
