@@ -1,0 +1,32 @@
+
+body {
+    font-family: "Segoe UI", "-apple-system", BlinkMacSystemFont, Roboto, "Helvetica Neue", Helvetica, Ubuntu, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    /* background-color: rgba( var(--palette-neutral-2,248, 248, 248) ,  1 ); */
+}
+
+.no-data {
+    color: #CCC;
+    font-style: italic;
+}
+
+.finish-date {
+    color: #BBB;
+    font-size: 0.9em;
+}
+
+.pipeline-details {
+    display: flex;
+    align-items: flex-start;
+
+    .status-icon {
+        margin-top: 3px;
+    }
+}
+
+.release-table {
+    width: 100% !important;
+}
+
+.link {
+    color: #333399;
+}
