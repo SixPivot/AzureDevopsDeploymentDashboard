@@ -28,7 +28,6 @@ test('loads and displays greeting', async () => {
 
 
 test('check basic test', async () => {
-  // ARRANGE
   render(<TestComponent />)
 })
 

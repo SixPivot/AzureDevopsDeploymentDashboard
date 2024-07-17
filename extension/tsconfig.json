@@ -23,6 +23,5 @@
   },
   "include": [
     "src"
-  ],
-  "exclude": ["node_modules", "typings", "webpack.config.js"]
+  ]
 }

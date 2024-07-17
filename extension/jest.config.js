@@ -1,14 +1,11 @@
 /** @type {import('ts-jest').JestConfigWithTsJest} **/
 module.exports = {
-  preset: "ts-jest/presets/js-with-ts-esm",
+  verbose: true,
   testEnvironment: "jsdom",
   rootDir: "src",
-  globals: {"useESM": true,},
-  transform: {
-    "^.+.tsx?$": ["ts-jest",{}],
-  },
-  extensionsToTreatAsEsm: [".ts"],
-  transformIgnorePatterns: ["node_modules/(?!(azure-devops-ui)/)"],
+  extensionsToTreatAsEsm: [".ts", ".tsx", ".jsx"],
+  // transformIgnorePatterns: ["node_modules/(?!(azure-devops-ui)/)"],
+  transform: {},
   moduleFileExtensions: [
     "ts",
     "tsx",
