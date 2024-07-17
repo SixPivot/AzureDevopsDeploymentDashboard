@@ -1,59 +1,46 @@
 import { renderSimpleCell } from "azure-devops-ui/Table";
 import { ArrayItemProvider } from "azure-devops-ui/Utilities/Provider";
+import { getClient } from "azure-devops-extension-api";
+import { PipelinesRestClient } from "azure-devops-extension-api/Pipelines/PipelinesClient";
 import {
   EnvironmentDeploymentExecutionRecord,
   TaskAgentRestClient,
 } from "azure-devops-extension-api/TaskAgent";
 import { EnvironmentPipelines, LatestPipeline } from "./types";
+import { Pipeline } from "azure-devops-extension-api/Pipelines/Pipelines";
 
-export function getPipelines(client: TaskAgentRestClient) {
-  // first get environments
-  // for-each environment get deployment execution records
-  // for each record filter by latest by pipeline
-  let pipeline_handler = (
-    name: string,
-    pipelines: EnvironmentDeploymentExecutionRecord[],
-  ): Promise<EnvironmentPipelines> => {
-    let latest_pipelines: LatestPipeline = {};
+const project = "ReleaseDashboard";
+export async function getPipelines() {
+  const taskAgentClient = getClient(TaskAgentRestClient);
+  const pipelinesClient = getClient(PipelinesRestClient);
 
-    pipelines.forEach((pipeline) => {
-      if (latest_pipelines[pipeline.definition.name]) return;
+  const [pipelines, environments] = await Promise.all([
+    pipelinesClient.listPipelines(project),
+    taskAgentClient.getEnvironments(project),
+  ]);
 
-      latest_pipelines[pipeline.definition.name] = pipeline;
-    });
+  const environmentPipelines: EnvironmentPipelines[] = [];
+  for (const environment of environments) {
+    const task = await taskAgentClient
+      .getEnvironmentDeploymentExecutionRecords(
+        project,
+        environment.id,
+      );
+    const environmentPipeline: EnvironmentPipelines = { name: environment.name, pipelines: {} };
+    for (const pipeline of task) {
+      if (!environmentPipeline.pipelines[pipeline.definition.name]) {
+        environmentPipeline.pipelines[pipeline.definition.name] = pipeline;
+      }
+    }
+    environmentPipelines.push(environmentPipeline);
+  }
 
-    return Promise.resolve({ name, pipelines: latest_pipelines });
+  const columns = generateColumns(environmentPipelines);
+  const rows = generateRows(environmentPipelines);
+  return {
+    columns: columns,
+    pipelines: new ArrayItemProvider(rows),
   };
-
-  return client.getEnvironments("ReleaseDashboard").then((environments) => {
-    let pipeline_promises: Array<Promise<EnvironmentPipelines>> = [];
-    environments.forEach((environment) => {
-      let promise: Promise<EnvironmentPipelines> = new Promise<
-        EnvironmentPipelines
-      >((resolve, reject) => {
-        client
-          .getEnvironmentDeploymentExecutionRecords(
-            "ReleaseDashboard",
-            environment.id,
-          )
-          .then((pipelines) => {
-            resolve(pipeline_handler(environment.name, pipelines));
-          });
-      });
-      pipeline_promises.push(promise);
-    });
-
-    return Promise.all(pipeline_promises)
-      .then((environments) => {
-        console.info(environments);
-        const columns = generateColumns(environments);
-        const rows = generateRows(environments);
-        return {
-          columns: columns,
-          pipelines: new ArrayItemProvider(rows),
-        };
-      });
-  });
 }
 
 function generateColumns(environments: EnvironmentPipelines[]): Array<any> {
