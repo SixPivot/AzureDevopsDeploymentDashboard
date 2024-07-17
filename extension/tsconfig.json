@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "esnext",
+    "module": "ESNext",
     "allowJs": true,
     "moduleResolution": "node",
     "sourceMap": true,
@@ -13,7 +13,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "strict": true,
-    "noEmit": true,
+    "skipLibCheck": true,
     "target": "es6",
     "rootDir": "src/",
     "outDir": "dist/",
@@ -21,5 +21,8 @@
     "lib": ["esnext", "dom", "dom.iterable"],
     "types": ["react", "vss-web-extension-sdk", "jest"]
   },
-  "exclude": ["node_modules", "typings"]
+  "include": [
+    "src"
+  ],
+  "exclude": ["node_modules", "typings", "webpack.config.js"]
 }

@@ -25,3 +25,10 @@ test('loads and displays greeting', async () => {
   expect(screen.getByRole('heading')).toHaveTextContent('hello there')
   expect(screen.getByRole('button')).toBeDisabled()
 })
+
+
+test('check basic test', async () => {
+  // ARRANGE
+  render(<TestComponent />)
+})
+
