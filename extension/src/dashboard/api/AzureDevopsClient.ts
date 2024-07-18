@@ -1,13 +1,11 @@
-import { renderSimpleCell } from "azure-devops-ui/Table";
 import { ArrayItemProvider } from "azure-devops-ui/Utilities/Provider";
 import { getClient } from "azure-devops-extension-api";
 import { PipelinesRestClient } from "azure-devops-extension-api/Pipelines/PipelinesClient";
 import {
-  EnvironmentDeploymentExecutionRecord,
   TaskAgentRestClient,
 } from "azure-devops-extension-api/TaskAgent";
-import { EnvironmentPipelines, LatestPipeline } from "./types";
-import { Pipeline } from "azure-devops-extension-api/Pipelines/Pipelines";
+import { EnvironmentPipelines } from "./types";
+import moment = require("moment");
 
 const project = "ReleaseDashboard";
 export async function getPipelines() {
@@ -21,7 +19,7 @@ export async function getPipelines() {
 
   const environmentPipelines: EnvironmentPipelines[] = [];
   for (const environment of environments) {
-    const task = await taskAgentClient
+    const deployments = await taskAgentClient
       .getEnvironmentDeploymentExecutionRecords(
         project,
         environment.id,
@@ -30,45 +28,23 @@ export async function getPipelines() {
       name: environment.name,
       pipelines: {},
     };
-    for (const pipeline of task) {
-      if (!environmentPipeline.pipelines[pipeline.definition.name]) {
-        const data = pipelines.find(p => p.id == pipeline.definition.id);
-        environmentPipeline.pipelines[pipeline.definition.name] = {
-          deployment: pipeline,
-          pipeline: data
+    for (const deployment of deployments) {
+      if (!environmentPipeline.pipelines[deployment.definition.name]) {
+        const pipeline = pipelines.find(p => p.id == deployment.definition.id);
+        environmentPipeline.pipelines[deployment.definition.name] = {
+          deployment: deployment,
+          pipeline: pipeline
         };
       }
     }
     environmentPipelines.push(environmentPipeline);
   }
 
-  const columns = generateColumns(environmentPipelines);
   const rows = generateRows(environmentPipelines);
   return {
-    columns: columns,
+    environments: environmentPipelines,
     pipelines: new ArrayItemProvider(rows),
   };
-}
-
-function generateColumns(environments: EnvironmentPipelines[]): Array<any> {
-  let columns = [];
-  columns.push({
-    id: "name",
-    name: "",
-    renderCell: renderSimpleCell,
-    width: 300,
-  });
-  const dynamicColumns = environments.map((environment) => {
-    return {
-      id: environment.name,
-      name: environment.name,
-      renderCell: renderSimpleCell,
-      width: 200,
-    };
-  });
-  columns = columns.concat(dynamicColumns);
-  console.log(columns);
-  return columns;
 }
 
 function generateRows(environments: EnvironmentPipelines[]): Array<any> {
@@ -85,9 +61,22 @@ function generateRows(environments: EnvironmentPipelines[]): Array<any> {
         row = { name: pipelineName };
         rows.push(row);
       }
-      
-      row[environment.name] = environment.pipelines[pipelineName].deployment.owner.name;
+
+      var finishDate = environment.pipelines[pipelineName].deployment.finishTime as Date;
+
+      row[environment.name] = {
+        value: environment.pipelines[pipelineName].deployment.owner.name,
+        finishTime: finishDate ? moment(finishDate).format('d MMM yyyy, hh:mm A') : '',
+        result: environment.pipelines[pipelineName].deployment.result,
+        folder: environment.pipelines[pipelineName].pipeline?.folder
+      }
     }
   }
+
+  console.log(rows);
+
   return rows;
 }
+
+
+
