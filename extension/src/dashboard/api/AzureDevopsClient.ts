@@ -1,13 +1,13 @@
 import { ArrayItemProvider } from "azure-devops-ui/Utilities/Provider";
+import { getClient } from "azure-devops-extension-api";
+import { PipelinesRestClient } from "azure-devops-extension-api/Pipelines/PipelinesClient";
 import {
   TaskAgentRestClient,
 } from "azure-devops-extension-api/TaskAgent";
-import { PipelinesRestClient } from "azure-devops-extension-api/Pipelines/PipelinesClient";
 import { EnvironmentPipelines } from "./types";
 import React = require("react");
 import { renderReleaseInfo } from "../dashboard";
 import moment = require("moment");
-import { getClient } from "azure-devops-extension-api";
 
 const project = "ReleaseDashboard";
 export async function getPipelines() {
@@ -73,9 +73,13 @@ function generateColumns(environments: EnvironmentPipelines[]): Array<any> {
 function generateRows(environments: EnvironmentPipelines[]): Array<any> {
   const rows: Array<any> = [];
 
-  environments.forEach((environment) => {
-    Object.keys(environment.pipelines).forEach((pipelineName) => {
+  for(const environment of environments){
+
+    console.log(Object.keys(environment.pipelines));
+
+    for(const pipelineName of Object.keys(environment.pipelines)){
       let row = rows.find((pr) => pr.name == pipelineName);
+      
       if (!row) {
         row = { name: pipelineName };
         rows.push(row);
@@ -89,8 +93,8 @@ function generateRows(environments: EnvironmentPipelines[]): Array<any> {
         result: environment.pipelines[pipelineName].deployment.result,
         folder: environment.pipelines[pipelineName].pipeline?.folder
       }
-    });
-  });
+    }
+  }
 
   console.log(rows);
 
