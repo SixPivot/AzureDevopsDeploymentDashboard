@@ -65,7 +65,6 @@ function generateRows(
         rows.push(row);
       }
 
-      console.log(row);
       var finishDate = environment.pipelines[pipelineName].deployment
         .finishTime as Date;
 
@@ -79,8 +78,6 @@ function generateRows(
       };
     }
   }
-
-  //console.log(rows);
 
   return rows;
 }
