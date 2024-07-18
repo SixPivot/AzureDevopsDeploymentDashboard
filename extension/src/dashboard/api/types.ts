@@ -19,9 +19,23 @@ export interface LatestPipeline {
 export interface EnvironmentPipelines {
   name: string;
   pipelines: LatestPipeline;
+  sortOrder?: number;
 }
 
 export interface IStatusIndicatorData {
   statusProps: IStatusProps;
   label: string;
+}
+
+export interface TableColumn {
+  id: string,
+  name: string,
+  renderCell: (
+    rowIndex: number,
+    columnIndex: number,
+    tableColumn: ITableColumn<any>,
+    tableItem: any
+  ) => JSX.Element,
+  width: number,
+  sortOrder: number | undefined
 }

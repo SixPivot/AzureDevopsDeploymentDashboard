@@ -7,7 +7,7 @@ import { Page } from "azure-devops-ui/Page";
 import { Card } from "azure-devops-ui/Card";
 import { ITableColumn, renderSimpleCell, SimpleTableCell, Table } from "azure-devops-ui/Table";
 import { ArrayItemProvider } from "azure-devops-ui/Utilities/Provider";
-import { EnvironmentPipelines, IPipelineContentState, IStatusIndicatorData } from "./api/types";
+import { EnvironmentPipelines, IPipelineContentState, IStatusIndicatorData, TableColumn } from "./api/types";
 import { getPipelines } from "./api/AzureDevopsClient";
 import "./dashboard.scss";
 import { Status, Statuses, StatusSize } from "azure-devops-ui/Status";
@@ -33,7 +33,7 @@ class Dashboard extends React.Component<{}, IPipelineContentState> {
     columnIndex: number,
     tableColumn: ITableColumn<any>,
     tableItem: any
-  ) : JSX.Element => {
+  ): JSX.Element => {
     return (
       <SimpleTableCell
         columnIndex={columnIndex}
@@ -41,7 +41,7 @@ class Dashboard extends React.Component<{}, IPipelineContentState> {
         key={"col-" + columnIndex}
         contentClassName="fontWeightSemiBold font-weight-semibold fontSizeM font-size-m"
       >
-  
+
         {tableColumn.id === 'name' ? (
           <div>{tableItem.name}</div>
         ) : (
@@ -65,12 +65,12 @@ class Dashboard extends React.Component<{}, IPipelineContentState> {
     );
   }
 
- getStatusIndicatorData = (status: number) : IStatusIndicatorData => {
+  getStatusIndicatorData = (status: number): IStatusIndicatorData => {
     const indicatorData: IStatusIndicatorData = {
       label: "Success",
       statusProps: { ...Statuses.Success, ariaLabel: "Success" },
     };
-  
+
     switch (status) {
       case 2:
         indicatorData.statusProps = { ...Statuses.Failed, ariaLabel: "Failed" };
@@ -89,29 +89,92 @@ class Dashboard extends React.Component<{}, IPipelineContentState> {
         indicatorData.label = "Abandoned";
         break;
     }
-  
+
     return indicatorData;
   };
 
-  private generateColumns(environments: EnvironmentPipelines[]): Array<any> {
-    let columns = [];
+  private generateColumns(environments: EnvironmentPipelines[]): Array<TableColumn> {
+    let columns : TableColumn[] = [];
+
     columns.push({
       id: "name",
       name: "",
       renderCell: this.renderReleaseInfo,
       width: 250,
-    });
+      sortOrder: 0
+    } as TableColumn);
+
     const dynamicColumns = environments.map((environment) => {
       return {
         id: environment.name,
         name: environment.name,
         renderCell: this.renderReleaseInfo,
-        width: 200,
-      };
+        width: 200
+      } as TableColumn;
     });
-    columns = columns.concat(dynamicColumns);
-    return columns;
+
+    const concatenated = columns.concat(dynamicColumns);
+
+    this.applySortOrder(concatenated);
+    const sorted = this.sortColumns(concatenated);
+
+    return sorted;
   }
+
+  private applySortOrder(columns: TableColumn[]) {
+    columns.forEach(column => {
+      if (column.sortOrder === 0)
+        return;
+
+      this.applySortOrderToColumn(column, "dev", 10);
+      this.applySortOrderToColumn(column, "test", 30);
+      this.applySortOrderToColumn(column, "uat", 40);
+      this.applySortOrderToColumn(column, "preprod", 50);
+      this.applySortOrderToColumn(column, "prod", 60);
+
+      if (!column.sortOrder)
+        column.sortOrder = 20;
+    });
+  }
+
+  private applySortOrderToColumn(column: TableColumn, groupWord: string, groupSortOrder: number) {
+    if (column.sortOrder)
+      return;
+
+    const name = column.name.trim().toLowerCase();
+
+    if (name.startsWith(groupWord))
+      column.sortOrder = groupSortOrder + 1;
+    else if (name.endsWith(groupWord))
+      column.sortOrder = groupSortOrder + 3;
+    else if (name.indexOf(groupWord) >= 0)
+      column.sortOrder = groupSortOrder + 2;
+  }
+
+  private sortColumns(array: TableColumn[]): TableColumn[] {
+    return array.sort((a, b) => {
+      // Compare by sortOrder first
+      if (a.sortOrder !== undefined && b.sortOrder !== undefined) {
+        if (a.sortOrder !== b.sortOrder) {
+          return a.sortOrder - b.sortOrder;
+        }
+      } else if (a.sortOrder !== undefined) {
+        return -1;
+      } else if (b.sortOrder !== undefined) {
+        return 1;
+      }
+  
+      // If sortOrder is the same or undefined for both, compare by name
+      if (a.name < b.name) {
+        return -1;
+      } else if (a.name > b.name) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+  }
+  
 
   public componentDidMount() {
     SDK.init();
