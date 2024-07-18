@@ -57,7 +57,7 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
         contentClassName="fontWeightSemiBold font-weight-semibold fontSizeM font-size-m"
       >
         {tableColumn.id === "name" ? (
-          <div>{tableItem.name}</div>
+          <Link target="_top" href={tableItem.uri}>{tableItem.name}</Link>
         ) : tableItem.environments[tableColumn.id] ? (
           <div className="flex-row flex-start">
             <Status
@@ -68,7 +68,7 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
               size={StatusSize.m}
             />
             <div className="flex-column wrap-text">
-              <Link>{tableItem.environments[tableColumn.id].value}</Link>
+            <Link target="_top" href={tableItem.environments[tableColumn.id].uri}>{tableItem.environments[tableColumn.id].value}</Link>
               <div className="finish-date">
                 {tableItem.environments[tableColumn.id].finishTime}
               </div>

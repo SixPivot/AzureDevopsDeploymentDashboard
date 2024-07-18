@@ -26,6 +26,7 @@ export async function getPipelines(): Promise<DashboardEnvironmentPipelineInfo> 
         project,
         environment.id
       );
+
     const environmentPipeline: EnvironmentPipelines = {
       name: environment.name,
       pipelines: {},
@@ -61,10 +62,13 @@ function generateRows(
       let row = rows.find((pr) => pr.name == pipelineName);
 
       if (!row) {
-        row = { name: pipelineName, environments: {} };
+        row = {
+          name: pipelineName,
+          environments: {},
+          uri: environment.pipelines[pipelineName].deployment.definition._links["web"].href,
+        };
         rows.push(row);
       }
-
       var finishDate = environment.pipelines[pipelineName].deployment
         .finishTime as Date;
 
@@ -75,6 +79,7 @@ function generateRows(
           : "",
         result: environment.pipelines[pipelineName].deployment.result,
         folder: environment.pipelines[pipelineName].pipeline?.folder,
+        uri: environment.pipelines[pipelineName].deployment.owner?._links["web"].href
       };
     }
   }
