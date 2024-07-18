@@ -1,4 +1,7 @@
-import { EnvironmentDeploymentExecutionRecord  } from "azure-devops-extension-api/TaskAgent";
+import {
+  EnvironmentDeploymentExecutionRecord,
+  TaskResult,
+} from "azure-devops-extension-api/TaskAgent";
 import { Pipeline } from "azure-devops-extension-api/Pipelines/Pipelines";
 import { ITableColumn } from "azure-devops-ui/Table";
 import { ArrayItemProvider } from "azure-devops-ui/Utilities/Provider";
@@ -12,7 +15,7 @@ export interface IPipelineContentState {
 export interface LatestPipeline {
   [key: string]: {
     deployment: EnvironmentDeploymentExecutionRecord;
-    pipeline: Pipeline | undefined
+    pipeline: Pipeline | undefined;
   };
 }
 
@@ -24,4 +27,26 @@ export interface EnvironmentPipelines {
 export interface IStatusIndicatorData {
   statusProps: IStatusProps;
   label: string;
+}
+
+export interface ReleaseInfo {
+  value: string;
+  result: TaskResult;
+  folder?: string;
+  finishTime: string;
+}
+
+/* Example: {Dev: { value: "20240715.2", finishTime: "1 Jul 2024, 01:37 PM", result: 0}} Where Dev is environment name. And dynamically added as dictionary key*/
+export interface EnvironmentReleaseDictionary {
+  [index: string]: ReleaseInfo;
+}
+
+export interface PipelineInfo {
+  name: string;
+  environments: EnvironmentReleaseDictionary;
+}
+
+export interface DashboardEnvironmentPipelineInfo {
+  environments: EnvironmentPipelines[];
+  pipelines: ArrayItemProvider<PipelineInfo>;
 }
