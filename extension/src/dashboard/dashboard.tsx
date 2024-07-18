@@ -7,7 +7,7 @@ import { Page } from "azure-devops-ui/Page";
 import { Card } from "azure-devops-ui/Card";
 import { ITableColumn, renderSimpleCell, SimpleTableCell, Table } from "azure-devops-ui/Table";
 import { ArrayItemProvider } from "azure-devops-ui/Utilities/Provider";
-import { IPipelineContentState } from "./api/types";
+import { EnvironmentPipelines, IPipelineContentState } from "./api/types";
 import { getPipelines } from "./api/AzureDevopsClient";
 import "./dashboard.css";
 import { IStatusProps, Status, Statuses, StatusSize } from "azure-devops-ui/Status";
@@ -45,7 +45,7 @@ function getStatusIndicatorData(status: number): IStatusIndicatorData {
   return indicatorData;
 }
 
-export function renderReleaseInfo(
+function renderReleaseInfo(
   rowIndex: number,
   columnIndex: number,
   tableColumn: ITableColumn<any>,
@@ -90,20 +90,40 @@ class Dashboard extends React.Component<{}, IPipelineContentState> {
       columns: [{
         id: "name",
         name: "",
-        renderCell: renderSimpleCell,
+        renderCell: renderReleaseInfo,
         width: 300
       }],
       pipelines: new ArrayItemProvider([])
     };
   }
 
+  private generateColumns(environments: EnvironmentPipelines[]): Array<any> {
+    let columns = [];
+    columns.push({
+      id: "name",
+      name: "",
+      renderCell: renderReleaseInfo,
+      width: 250,
+    });
+    const dynamicColumns = environments.map((environment) => {
+      return {
+        id: environment.name,
+        name: environment.name,
+        renderCell: renderReleaseInfo,
+        width: 200,
+      };
+    });
+    columns = columns.concat(dynamicColumns);
+    return columns;
+  }
+
   public componentDidMount() {
     SDK.init();
 
     getPipelines().then((arg: any) => {
-      const { columns, pipelines } = arg;
+      const { environments, pipelines } = arg;
       this.setState({
-        columns: columns,
+        columns: this.generateColumns(environments),
         pipelines: pipelines
       });
     });

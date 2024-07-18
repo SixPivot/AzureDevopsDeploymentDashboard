@@ -5,8 +5,6 @@ import {
   TaskAgentRestClient,
 } from "azure-devops-extension-api/TaskAgent";
 import { EnvironmentPipelines } from "./types";
-import React = require("react");
-import { renderReleaseInfo } from "../dashboard";
 import moment = require("moment");
 
 const project = "ReleaseDashboard";
@@ -42,32 +40,11 @@ export async function getPipelines() {
     environmentPipelines.push(environmentPipeline);
   }
 
-  const columns = generateColumns(environmentPipelines);
   const rows = generateRows(environmentPipelines);
   return {
-    columns: columns,
+    environments: environmentPipelines,
     pipelines: new ArrayItemProvider(rows),
   };
-}
-
-function generateColumns(environments: EnvironmentPipelines[]): Array<any> {
-  let columns = [];
-  columns.push({
-    id: "name",
-    name: "",
-    renderCell: renderReleaseInfo,
-    width: 300,
-  });
-  const dynamicColumns = environments.map((environment) => {
-    return {
-      id: environment.name,
-      name: environment.name,
-      renderCell: renderReleaseInfo,
-      width: 200,
-    };
-  });
-  columns = columns.concat(dynamicColumns);
-  return columns;
 }
 
 function generateRows(environments: EnvironmentPipelines[]): Array<any> {
