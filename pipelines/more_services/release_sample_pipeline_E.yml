@@ -1,0 +1,45 @@
+
+trigger: none
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+  - stage: build
+    jobs:
+    - job: build
+      displayName: Build
+      steps:
+      - script: echo "Build"
+      - script: sleep 10
+  - stage: dev
+
+    jobs:
+      - deployment: dev
+        environment: Dev
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - script: exit 1
+      
+  - stage: uat
+    jobs:
+      - deployment: uat
+        environment: UAT
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - script: echo "Deploy to UAT"
+
+  - stage: prod
+    jobs:
+      - deployment: prod
+        environment: Prod
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - script: echo "Deploy to Prod"
+

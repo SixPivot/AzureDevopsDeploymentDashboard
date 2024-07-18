@@ -1,59 +1,53 @@
 import { renderSimpleCell } from "azure-devops-ui/Table";
 import { ArrayItemProvider } from "azure-devops-ui/Utilities/Provider";
+import { getClient } from "azure-devops-extension-api";
+import { PipelinesRestClient } from "azure-devops-extension-api/Pipelines/PipelinesClient";
 import {
   EnvironmentDeploymentExecutionRecord,
   TaskAgentRestClient,
 } from "azure-devops-extension-api/TaskAgent";
 import { EnvironmentPipelines, LatestPipeline } from "./types";
+import { Pipeline } from "azure-devops-extension-api/Pipelines/Pipelines";
 
-export function getPipelines(client: TaskAgentRestClient) {
-  // first get environments
-  // for-each environment get deployment execution records
-  // for each record filter by latest by pipeline
-  let pipeline_handler = (
-    name: string,
-    pipelines: EnvironmentDeploymentExecutionRecord[],
-  ): Promise<EnvironmentPipelines> => {
-    let latest_pipelines: LatestPipeline = {};
+const project = "ReleaseDashboard";
+export async function getPipelines() {
+  const taskAgentClient = getClient(TaskAgentRestClient);
+  const pipelinesClient = getClient(PipelinesRestClient);
 
-    pipelines.forEach((pipeline) => {
-      if (latest_pipelines[pipeline.definition.name]) return;
+  const [pipelines, environments] = await Promise.all([
+    pipelinesClient.listPipelines(project),
+    taskAgentClient.getEnvironments(project),
+  ]);
 
-      latest_pipelines[pipeline.definition.name] = pipeline;
-    });
-
-    return Promise.resolve({ name, pipelines: latest_pipelines });
-  };
-
-  return client.getEnvironments("ReleaseDashboard").then((environments) => {
-    let pipeline_promises: Array<Promise<EnvironmentPipelines>> = [];
-    environments.forEach((environment) => {
-      let promise: Promise<EnvironmentPipelines> = new Promise<
-        EnvironmentPipelines
-      >((resolve, reject) => {
-        client
-          .getEnvironmentDeploymentExecutionRecords(
-            "ReleaseDashboard",
-            environment.id,
-          )
-          .then((pipelines) => {
-            resolve(pipeline_handler(environment.name, pipelines));
-          });
-      });
-      pipeline_promises.push(promise);
-    });
-
-    return Promise.all(pipeline_promises)
-      .then((environments) => {
-        console.info(environments);
-        const columns = generateColumns(environments);
-        const rows = generateRows(environments);
-        return {
-          columns: columns,
-          pipelines: new ArrayItemProvider(rows),
+  const environmentPipelines: EnvironmentPipelines[] = [];
+  for (const environment of environments) {
+    const task = await taskAgentClient
+      .getEnvironmentDeploymentExecutionRecords(
+        project,
+        environment.id,
+      );
+    const environmentPipeline: EnvironmentPipelines = {
+      name: environment.name,
+      pipelines: {},
+    };
+    for (const pipeline of task) {
+      if (!environmentPipeline.pipelines[pipeline.definition.name]) {
+        const data = pipelines.find(p => p.id == pipeline.definition.id);
+        environmentPipeline.pipelines[pipeline.definition.name] = {
+          deployment: pipeline,
+          pipeline: data
         };
-      });
-  });
+      }
+    }
+    environmentPipelines.push(environmentPipeline);
+  }
+
+  const columns = generateColumns(environmentPipelines);
+  const rows = generateRows(environmentPipelines);
+  return {
+    columns: columns,
+    pipelines: new ArrayItemProvider(rows),
+  };
 }
 
 function generateColumns(environments: EnvironmentPipelines[]): Array<any> {
@@ -80,16 +74,20 @@ function generateColumns(environments: EnvironmentPipelines[]): Array<any> {
 function generateRows(environments: EnvironmentPipelines[]): Array<any> {
   const rows: Array<any> = [];
 
-  environments.forEach((environment) => {
+  for(const environment of environments){
+
     console.log(Object.keys(environment.pipelines));
-    Object.keys(environment.pipelines).forEach((pipelineName) => {
+
+    for(const pipelineName of Object.keys(environment.pipelines)){
       let row = rows.find((pr) => pr.name == pipelineName);
+      
       if (!row) {
         row = { name: pipelineName };
         rows.push(row);
       }
-      row[environment.name] = environment.pipelines[pipelineName].owner.name;
-    });
-  });
+      
+      row[environment.name] = environment.pipelines[pipelineName].deployment.owner.name;
+    }
+  }
   return rows;
 }

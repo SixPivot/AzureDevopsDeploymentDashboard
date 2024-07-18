@@ -5,12 +5,11 @@ import * as SDK from "azure-devops-extension-sdk";
 import { Header } from "azure-devops-ui/Header";
 import { Page } from "azure-devops-ui/Page";
 import { Card } from "azure-devops-ui/Card";
-import { getClient } from "azure-devops-extension-api";
-import { TaskAgentRestClient } from "azure-devops-extension-api/TaskAgent";
 import { renderSimpleCell, Table } from "azure-devops-ui/Table";
 import { ArrayItemProvider } from "azure-devops-ui/Utilities/Provider";
 import { IPipelineContentState } from "./api/types";
 import { getPipelines } from "./api/AzureDevopsClient";
+import { Pipeline } from "azure-devops-extension-api/Pipelines/Pipelines";
 
 class Dashboard extends React.Component<{}, IPipelineContentState> {
   constructor(props: {}) {
@@ -30,9 +29,8 @@ class Dashboard extends React.Component<{}, IPipelineContentState> {
   public componentDidMount() {
     SDK.init();
 
-    const client = getClient(TaskAgentRestClient);
 
-    getPipelines(client).then((arg: any) => {
+    getPipelines().then((arg: any) => {
       const { columns, pipelines } = arg;
       this.setState({
         columns: columns,
