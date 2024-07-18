@@ -51,7 +51,6 @@ export function getPipelines(client: TaskAgentRestClient) {
 
     return Promise.all(pipeline_promises)
       .then((environments) => {
-        console.log("KAI > getEnvironments", environments);
         const columns = generateColumns(environments);
         const rows = generateRows(environments);
         return {
@@ -79,7 +78,6 @@ function generateColumns(environments: EnvironmentPipelines[]): Array<any> {
     };
   });
   columns = columns.concat(dynamicColumns);
-  console.log("KAI > generateColumns", columns);
   return columns;
 }
 
@@ -87,7 +85,6 @@ function generateRows(environments: EnvironmentPipelines[]): Array<any> {
   const rows: Array<any> = [];
 
   environments.forEach((environment) => {
-    console.log("KAI > generateRows > " + environment.name, Object.keys(environment.pipelines));
     Object.keys(environment.pipelines).forEach((pipelineName) => {
       let row = rows.find((pr) => pr.name == pipelineName);
       if (!row) {
@@ -104,8 +101,6 @@ function generateRows(environments: EnvironmentPipelines[]): Array<any> {
       }
     });
   });
-
-  console.log("KAI > rows", rows);
 
   return rows;
 }
