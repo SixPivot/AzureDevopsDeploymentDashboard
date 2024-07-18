@@ -1,64 +1,53 @@
 import { ArrayItemProvider } from "azure-devops-ui/Utilities/Provider";
 import {
-  EnvironmentDeploymentExecutionRecord,
   TaskAgentRestClient,
 } from "azure-devops-extension-api/TaskAgent";
-import { EnvironmentPipelines, LatestPipeline } from "./types";
-import { IStatusProps, Status, Statuses, StatusSize } from "azure-devops-ui/Status";
-import { ObservableValue } from "azure-devops-ui/Core/Observable";
-import { ITableColumn, renderSimpleCell, SimpleTableCell, Table } from "azure-devops-ui/Table";
+import { PipelinesRestClient } from "azure-devops-extension-api/Pipelines/PipelinesClient";
+import { EnvironmentPipelines } from "./types";
 import React = require("react");
-import { Tooltip } from "azure-devops-ui/TooltipEx";
 import { renderReleaseInfo } from "../dashboard";
 import moment = require("moment");
+import { getClient } from "azure-devops-extension-api";
 
-export function getPipelines(client: TaskAgentRestClient) {
-  // first get environments
-  // for-each environment get deployment execution records
-  // for each record filter by latest by pipeline
-  let pipeline_handler = (
-    name: string,
-    pipelines: EnvironmentDeploymentExecutionRecord[],
-  ): Promise<EnvironmentPipelines> => {
-    let latest_pipelines: LatestPipeline = {};
+const project = "ReleaseDashboard";
+export async function getPipelines() {
+  const taskAgentClient = getClient(TaskAgentRestClient);
+  const pipelinesClient = getClient(PipelinesRestClient);
 
-    pipelines.forEach((pipeline) => {
-      if (latest_pipelines[pipeline.definition.name]) return;
+  const [pipelines, environments] = await Promise.all([
+    pipelinesClient.listPipelines(project),
+    taskAgentClient.getEnvironments(project),
+  ]);
 
-      latest_pipelines[pipeline.definition.name] = pipeline;
-    });
-
-    return Promise.resolve({ name, pipelines: latest_pipelines });
-  };
-
-  return client.getEnvironments("ReleaseDashboard").then((environments) => {
-    let pipeline_promises: Array<Promise<EnvironmentPipelines>> = [];
-    environments.forEach((environment) => {
-      let promise: Promise<EnvironmentPipelines> = new Promise<
-        EnvironmentPipelines
-      >((resolve, reject) => {
-        client
-          .getEnvironmentDeploymentExecutionRecords(
-            "ReleaseDashboard",
-            environment.id,
-          )
-          .then((pipelines) => {
-            resolve(pipeline_handler(environment.name, pipelines));
-          });
-      });
-      pipeline_promises.push(promise);
-    });
-
-    return Promise.all(pipeline_promises)
-      .then((environments) => {
-        const columns = generateColumns(environments);
-        const rows = generateRows(environments);
-        return {
-          columns: columns,
-          pipelines: new ArrayItemProvider(rows),
+  const environmentPipelines: EnvironmentPipelines[] = [];
+  for (const environment of environments) {
+    const deployments = await taskAgentClient
+      .getEnvironmentDeploymentExecutionRecords(
+        project,
+        environment.id,
+      );
+    const environmentPipeline: EnvironmentPipelines = {
+      name: environment.name,
+      pipelines: {},
+    };
+    for (const deployment of deployments) {
+      if (!environmentPipeline.pipelines[deployment.definition.name]) {
+        const pipeline = pipelines.find(p => p.id == deployment.definition.id);
+        environmentPipeline.pipelines[deployment.definition.name] = {
+          deployment: deployment,
+          pipeline: pipeline
         };
-      });
-  });
+      }
+    }
+    environmentPipelines.push(environmentPipeline);
+  }
+
+  const columns = generateColumns(environmentPipelines);
+  const rows = generateRows(environmentPipelines);
+  return {
+    columns: columns,
+    pipelines: new ArrayItemProvider(rows),
+  };
 }
 
 function generateColumns(environments: EnvironmentPipelines[]): Array<any> {
@@ -92,15 +81,18 @@ function generateRows(environments: EnvironmentPipelines[]): Array<any> {
         rows.push(row);
       }
 
-      var finishDate = environment.pipelines[pipelineName].finishTime as Date;
+      var finishDate = environment.pipelines[pipelineName].deployment.finishTime as Date;
 
       row[environment.name] = {
-        value: environment.pipelines[pipelineName].owner.name,
+        value: environment.pipelines[pipelineName].deployment.owner.name,
         finishTime: finishDate ? moment(finishDate).format('d MMM yyyy, hh:mm A') : '',
-        result: environment.pipelines[pipelineName].result
+        result: environment.pipelines[pipelineName].deployment.result,
+        folder: environment.pipelines[pipelineName].pipeline?.folder
       }
     });
   });
+
+  console.log(rows);
 
   return rows;
 }
