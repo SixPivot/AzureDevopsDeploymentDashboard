@@ -7,80 +7,10 @@ import { Page } from "azure-devops-ui/Page";
 import { Card } from "azure-devops-ui/Card";
 import { ITableColumn, renderSimpleCell, SimpleTableCell, Table } from "azure-devops-ui/Table";
 import { ArrayItemProvider } from "azure-devops-ui/Utilities/Provider";
-import { EnvironmentPipelines, IPipelineContentState } from "./api/types";
+import { EnvironmentPipelines, IPipelineContentState, IStatusIndicatorData } from "./api/types";
 import { getPipelines } from "./api/AzureDevopsClient";
 import "./dashboard.css";
-import { IStatusProps, Status, Statuses, StatusSize } from "azure-devops-ui/Status";
-
-interface IStatusIndicatorData {
-  statusProps: IStatusProps;
-  label: string;
-}
-
-function getStatusIndicatorData(status: number): IStatusIndicatorData {
-  const indicatorData: IStatusIndicatorData = {
-    label: "Success",
-    statusProps: { ...Statuses.Success, ariaLabel: "Success" },
-  };
-
-  switch (status) {
-    case 2:
-      indicatorData.statusProps = { ...Statuses.Failed, ariaLabel: "Failed" };
-      indicatorData.label = "Failed";
-      break;
-    case 3:
-      indicatorData.statusProps = { ...Statuses.Canceled, ariaLabel: "Canceled" };
-      indicatorData.label = "Canceled";
-      break;
-    case 4:
-      indicatorData.statusProps = { ...Statuses.Skipped, ariaLabel: "Skipped" };
-      indicatorData.label = "Skipped";
-      break;
-    case 5:
-      indicatorData.statusProps = { ...Statuses.Skipped, ariaLabel: "Abandoned" };
-      indicatorData.label = "Abandoned";
-      break;
-  }
-
-  return indicatorData;
-}
-
-function renderReleaseInfo(
-  rowIndex: number,
-  columnIndex: number,
-  tableColumn: ITableColumn<any>,
-  tableItem: any
-): JSX.Element {
-  return (
-    <SimpleTableCell
-      columnIndex={columnIndex}
-      tableColumn={tableColumn}
-      key={"col-" + columnIndex}
-      contentClassName="fontWeightSemiBold font-weight-semibold fontSizeM font-size-m"
-    >
-
-      {tableColumn.id === 'name' ? (
-        <div>{tableItem.name}</div>
-      ) : (
-        tableItem[tableColumn.id] ? (
-          <div className="pipeline-details">
-            <Status
-              {...getStatusIndicatorData(tableItem[tableColumn.id].result).statusProps}
-              className="icon-large-margin status-icon"
-              size={StatusSize.m}
-            />
-            <div className="flex-column wrap-text">
-              <div className="link">{tableItem[tableColumn.id].value}</div>
-              <div className="finish-date">{tableItem[tableColumn.id].finishTime}</div>
-            </div>
-          </div>
-        ) : (
-          <div className="no-data">-</div>
-        )
-      )}
-    </SimpleTableCell>
-  );
-}
+import { Status, Statuses, StatusSize } from "azure-devops-ui/Status";
 
 class Dashboard extends React.Component<{}, IPipelineContentState> {
   constructor(props: {}) {
@@ -90,26 +20,91 @@ class Dashboard extends React.Component<{}, IPipelineContentState> {
       columns: [{
         id: "name",
         name: "",
-        renderCell: renderReleaseInfo,
+        renderCell: this.renderReleaseInfo,
         width: 300
       }],
       pipelines: new ArrayItemProvider([])
     };
   }
 
+  renderReleaseInfo = (
+    rowIndex: number,
+    columnIndex: number,
+    tableColumn: ITableColumn<any>,
+    tableItem: any
+  ) : JSX.Element => {
+    return (
+      <SimpleTableCell
+        columnIndex={columnIndex}
+        tableColumn={tableColumn}
+        key={"col-" + columnIndex}
+        contentClassName="fontWeightSemiBold font-weight-semibold fontSizeM font-size-m"
+      >
+  
+        {tableColumn.id === 'name' ? (
+          <div>{tableItem.name}</div>
+        ) : (
+          tableItem[tableColumn.id] ? (
+            <div className="pipeline-details">
+              <Status
+                {...this.getStatusIndicatorData(tableItem[tableColumn.id].result).statusProps}
+                className="icon-large-margin status-icon"
+                size={StatusSize.m}
+              />
+              <div className="flex-column wrap-text">
+                <div className="link">{tableItem[tableColumn.id].value}</div>
+                <div className="finish-date">{tableItem[tableColumn.id].finishTime}</div>
+              </div>
+            </div>
+          ) : (
+            <div className="no-data">-</div>
+          )
+        )}
+      </SimpleTableCell>
+    );
+  }
+
+ getStatusIndicatorData = (status: number) : IStatusIndicatorData => {
+    const indicatorData: IStatusIndicatorData = {
+      label: "Success",
+      statusProps: { ...Statuses.Success, ariaLabel: "Success" },
+    };
+  
+    switch (status) {
+      case 2:
+        indicatorData.statusProps = { ...Statuses.Failed, ariaLabel: "Failed" };
+        indicatorData.label = "Failed";
+        break;
+      case 3:
+        indicatorData.statusProps = { ...Statuses.Canceled, ariaLabel: "Canceled" };
+        indicatorData.label = "Canceled";
+        break;
+      case 4:
+        indicatorData.statusProps = { ...Statuses.Skipped, ariaLabel: "Skipped" };
+        indicatorData.label = "Skipped";
+        break;
+      case 5:
+        indicatorData.statusProps = { ...Statuses.Skipped, ariaLabel: "Abandoned" };
+        indicatorData.label = "Abandoned";
+        break;
+    }
+  
+    return indicatorData;
+  };
+
   private generateColumns(environments: EnvironmentPipelines[]): Array<any> {
     let columns = [];
     columns.push({
       id: "name",
       name: "",
-      renderCell: renderReleaseInfo,
+      renderCell: this.renderReleaseInfo,
       width: 250,
     });
     const dynamicColumns = environments.map((environment) => {
       return {
         id: environment.name,
         name: environment.name,
-        renderCell: renderReleaseInfo,
+        renderCell: this.renderReleaseInfo,
         width: 200,
       };
     });
@@ -164,8 +159,6 @@ class Dashboard extends React.Component<{}, IPipelineContentState> {
             </div>
           </Card>
         </div>
-
-
       </Page>
     );
   }
