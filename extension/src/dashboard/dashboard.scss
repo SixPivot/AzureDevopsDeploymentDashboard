@@ -1,0 +1,19 @@
+@import "node_modules/azure-devops-ui/Core/_platformCommon.scss";
+body {
+    font-family: $fontFamily
+}
+
+// todo: replace with zero data control
+.no-data {
+    color: #CCC;
+    font-style: italic;
+}
+
+.finish-date {
+    color: $secondary-text;
+    font-size: $fontSizeS;
+}
+
+.status-icon {
+    margin-top: $spacing-4;
+}

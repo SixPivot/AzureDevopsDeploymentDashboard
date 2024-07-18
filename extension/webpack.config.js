@@ -35,23 +35,23 @@ module.exports = {
     rules: [
       {
         test: /\.tsx?$/,
-        use: "ts-loader"
+        loader: "ts-loader"
+      },
+      {
+        test: /\.scss$/,
+        use: ["style-loader", "css-loader", "sass-loader"],
       },
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"]
+        use: ["style-loader", "css-loader"],
       },
       {
-        test: /\.woff$/,
-        use: [
-          {
-            loader: "base64-inline-loader"
-          }
-        ]
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        type: 'asset/inline'
       },
       {
         test: /\.html$/,
-        use: "file-loader"
+        type: 'asset/resource'
       }
     ]
   },

@@ -9,8 +9,9 @@ import { ITableColumn, renderSimpleCell, SimpleTableCell, Table } from "azure-de
 import { ArrayItemProvider } from "azure-devops-ui/Utilities/Provider";
 import { EnvironmentPipelines, IPipelineContentState, IStatusIndicatorData } from "./api/types";
 import { getPipelines } from "./api/AzureDevopsClient";
-import "./dashboard.css";
+import "./dashboard.scss";
 import { Status, Statuses, StatusSize } from "azure-devops-ui/Status";
+import { Link } from "azure-devops-ui/Link";
 
 class Dashboard extends React.Component<{}, IPipelineContentState> {
   constructor(props: {}) {
@@ -45,14 +46,14 @@ class Dashboard extends React.Component<{}, IPipelineContentState> {
           <div>{tableItem.name}</div>
         ) : (
           tableItem[tableColumn.id] ? (
-            <div className="pipeline-details">
+            <div className="flex-row flex-start">
               <Status
                 {...this.getStatusIndicatorData(tableItem[tableColumn.id].result).statusProps}
                 className="icon-large-margin status-icon"
                 size={StatusSize.m}
               />
               <div className="flex-column wrap-text">
-                <div className="link">{tableItem[tableColumn.id].value}</div>
+                <Link>{tableItem[tableColumn.id].value}</Link>
                 <div className="finish-date">{tableItem[tableColumn.id].finishTime}</div>
               </div>
             </div>
@@ -153,7 +154,6 @@ class Dashboard extends React.Component<{}, IPipelineContentState> {
                 <Table
                   columns={this.state.columns}
                   itemProvider={this.state.pipelines}
-                  className="release-table"
                 />
               }
             </div>
