@@ -204,7 +204,6 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
     });
   }
   
-
   public componentDidMount() {
     SDK.init();
 
