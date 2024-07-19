@@ -30,19 +30,6 @@ export interface IStatusIndicatorData {
   label: string;
 }
 
-// export interface TableColumn {
-//   id: string,
-//   name: string,
-//   renderCell: (
-//     rowIndex: number,
-//     columnIndex: number,
-//     tableColumn: ITableColumn<any>,
-//     tableItem: any
-//   ) => JSX.Element,
-//   width: number,
-//   sortOrder: number | undefined
-// }
-
 export interface IDashboardColumn<T> extends ITableColumn<T> {
   sortOrder: number | undefined
 }
