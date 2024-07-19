@@ -25,7 +25,6 @@ import { getPipelines } from "./api/AzureDevopsClient";
 import "./dashboard.scss";
 import { Status, Statuses, StatusSize } from "azure-devops-ui/Status";
 import { Link } from "azure-devops-ui/Link";
-import { Button } from "azure-devops-ui/Button";
 
 export class Dashboard extends React.Component<{}, IPipelineContentState> {
   constructor(props: {}) {
