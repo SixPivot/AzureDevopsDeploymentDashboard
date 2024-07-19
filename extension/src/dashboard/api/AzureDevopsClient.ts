@@ -1,14 +1,16 @@
 import { ArrayItemProvider } from "azure-devops-ui/Utilities/Provider";
 import { getClient } from "azure-devops-extension-api";
 import { PipelinesRestClient } from "azure-devops-extension-api/Pipelines/PipelinesClient";
+import { TaskAgentRestClient } from "azure-devops-extension-api/TaskAgent";
 import {
-  TaskAgentRestClient,
-} from "azure-devops-extension-api/TaskAgent";
-import { EnvironmentPipelines } from "./types";
+  DashboardEnvironmentPipelineInfo,
+  EnvironmentPipelines,
+  PipelineInfo,
+} from "./types";
 import moment = require("moment");
 
 const project = "ReleaseDashboard";
-export async function getPipelines() {
+export async function getPipelines(): Promise<DashboardEnvironmentPipelineInfo> {
   const taskAgentClient = getClient(TaskAgentRestClient);
   const pipelinesClient = getClient(PipelinesRestClient);
 
@@ -19,10 +21,10 @@ export async function getPipelines() {
 
   const environmentPipelines: EnvironmentPipelines[] = [];
   for (const environment of environments) {
-    const deployments = await taskAgentClient
-      .getEnvironmentDeploymentExecutionRecords(
+    const deployments =
+      await taskAgentClient.getEnvironmentDeploymentExecutionRecords(
         project,
-        environment.id,
+        environment.id
       );
     const environmentPipeline: EnvironmentPipelines = {
       name: environment.name,
@@ -30,10 +32,12 @@ export async function getPipelines() {
     };
     for (const deployment of deployments) {
       if (!environmentPipeline.pipelines[deployment.definition.name]) {
-        const pipeline = pipelines.find(p => p.id == deployment.definition.id);
+        const pipeline = pipelines.find(
+          (p) => p.id == deployment.definition.id
+        );
         environmentPipeline.pipelines[deployment.definition.name] = {
           deployment: deployment,
-          pipeline: pipeline
+          pipeline: pipeline,
         };
       }
     }
@@ -47,36 +51,33 @@ export async function getPipelines() {
   };
 }
 
-function generateRows(environments: EnvironmentPipelines[]): Array<any> {
-  const rows: Array<any> = [];
+function generateRows(
+  environments: EnvironmentPipelines[]
+): Array<PipelineInfo> {
+  const rows: Array<PipelineInfo> = [];
 
-  for(const environment of environments){
-
-    console.log(Object.keys(environment.pipelines));
-
-    for(const pipelineName of Object.keys(environment.pipelines)){
+  for (const environment of environments) {
+    for (const pipelineName of Object.keys(environment.pipelines)) {
       let row = rows.find((pr) => pr.name == pipelineName);
-      
+
       if (!row) {
-        row = { name: pipelineName };
+        row = { name: pipelineName, environments: {} };
         rows.push(row);
       }
 
-      var finishDate = environment.pipelines[pipelineName].deployment.finishTime as Date;
+      var finishDate = environment.pipelines[pipelineName].deployment
+        .finishTime as Date;
 
-      row[environment.name] = {
+      row.environments[environment.name] = {
         value: environment.pipelines[pipelineName].deployment.owner.name,
-        finishTime: finishDate ? moment(finishDate).format('d MMM yyyy, hh:mm A') : '',
+        finishTime: finishDate
+          ? moment(finishDate).format("d MMM yyyy, hh:mm A")
+          : "",
         result: environment.pipelines[pipelineName].deployment.result,
-        folder: environment.pipelines[pipelineName].pipeline?.folder
-      }
+        folder: environment.pipelines[pipelineName].pipeline?.folder,
+      };
     }
   }
 
-  console.log(rows);
-
   return rows;
 }
-
-
-

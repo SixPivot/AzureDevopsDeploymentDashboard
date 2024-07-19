@@ -2,37 +2,55 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as SDK from "azure-devops-extension-sdk";
-import { CustomHeader, HeaderDescription, HeaderTitle, HeaderTitleArea, HeaderTitleRow, TitleSize } from "azure-devops-ui/Header";
+import {
+  CustomHeader,
+  HeaderDescription,
+  HeaderTitle,
+  HeaderTitleArea,
+  HeaderTitleRow,
+  TitleSize,
+} from "azure-devops-ui/Header";
 import { Page } from "azure-devops-ui/Page";
 import { Card } from "azure-devops-ui/Card";
-import { ITableColumn, renderSimpleCell, SimpleTableCell, Table } from "azure-devops-ui/Table";
+import { ITableColumn, SimpleTableCell, Table } from "azure-devops-ui/Table";
 import { ArrayItemProvider } from "azure-devops-ui/Utilities/Provider";
-import { EnvironmentPipelines, IPipelineContentState, IStatusIndicatorData, TableColumn } from "./api/types";
+import {
+  DashboardEnvironmentPipelineInfo,
+  EnvironmentPipelines,
+  IDashboardColumn,
+  IPipelineContentState,
+  IStatusIndicatorData,
+  PipelineInfo
+} from "./api/types";
 import { getPipelines } from "./api/AzureDevopsClient";
 import "./dashboard.scss";
 import { Status, Statuses, StatusSize } from "azure-devops-ui/Status";
 import { Link } from "azure-devops-ui/Link";
+import { Ago } from "azure-devops-ui/Ago";
+import { AgoFormat } from "azure-devops-ui/Utilities/Date";
 
-class Dashboard extends React.Component<{}, IPipelineContentState> {
+export class Dashboard extends React.Component<{}, IPipelineContentState> {
   constructor(props: {}) {
     super(props);
 
     this.state = {
-      columns: [{
-        id: "name",
-        name: "",
-        renderCell: this.renderReleaseInfo,
-        width: 300
-      }],
-      pipelines: new ArrayItemProvider([])
+      columns: [
+        {
+          id: "name",
+          name: "",
+          renderCell: this.renderReleaseInfo,
+          width: 300,
+        } as IDashboardColumn<any>,
+      ],
+      pipelines: new ArrayItemProvider<PipelineInfo>([]),
     };
   }
 
   renderReleaseInfo = (
     rowIndex: number,
     columnIndex: number,
-    tableColumn: ITableColumn<any>,
-    tableItem: any
+    tableColumn: IDashboardColumn<any>,
+    tableItem: PipelineInfo
   ): JSX.Element => {
     return (
       <SimpleTableCell
@@ -41,29 +59,31 @@ class Dashboard extends React.Component<{}, IPipelineContentState> {
         key={"col-" + columnIndex}
         contentClassName="fontWeightSemiBold font-weight-semibold fontSizeM font-size-m"
       >
-
-        {tableColumn.id === 'name' ? (
+        {tableColumn.id === "name" ? (
           <div>{tableItem.name}</div>
-        ) : (
-          tableItem[tableColumn.id] ? (
-            <div className="flex-row flex-start">
-              <Status
-                {...this.getStatusIndicatorData(tableItem[tableColumn.id].result).statusProps}
-                className="icon-large-margin status-icon"
-                size={StatusSize.m}
-              />
-              <div className="flex-column wrap-text">
-                <Link>{tableItem[tableColumn.id].value}</Link>
-                <div className="finish-date">{tableItem[tableColumn.id].finishTime}</div>
+        ) : tableItem.environments[tableColumn.id] ? (
+          <div className="flex-row flex-start">
+            <Status
+              {...this.getStatusIndicatorData(
+                tableItem.environments[tableColumn.id].result
+              ).statusProps}
+              className="icon-large-margin status-icon"
+              size={StatusSize.m}
+            />
+            <div className="flex-column wrap-text">
+              <Link>{tableItem.environments[tableColumn.id].value}</Link>
+              <div className="finish-date">
+                {/* {tableItem.environments[tableColumn.id].finishTime} */}
+                <Ago date={tableItem.environments[tableColumn.id].finishTime} format={AgoFormat.Extended} />
               </div>
             </div>
-          ) : (
-            <div className="no-data">-</div>
-          )
+          </div>
+        ) : (
+          <div className="no-data">-</div>
         )}
       </SimpleTableCell>
     );
-  }
+  };
 
   getStatusIndicatorData = (status: number): IStatusIndicatorData => {
     const indicatorData: IStatusIndicatorData = {
@@ -77,15 +97,24 @@ class Dashboard extends React.Component<{}, IPipelineContentState> {
         indicatorData.label = "Failed";
         break;
       case 3:
-        indicatorData.statusProps = { ...Statuses.Canceled, ariaLabel: "Canceled" };
+        indicatorData.statusProps = {
+          ...Statuses.Canceled,
+          ariaLabel: "Canceled",
+        };
         indicatorData.label = "Canceled";
         break;
       case 4:
-        indicatorData.statusProps = { ...Statuses.Skipped, ariaLabel: "Skipped" };
+        indicatorData.statusProps = {
+          ...Statuses.Skipped,
+          ariaLabel: "Skipped",
+        };
         indicatorData.label = "Skipped";
         break;
       case 5:
-        indicatorData.statusProps = { ...Statuses.Skipped, ariaLabel: "Abandoned" };
+        indicatorData.statusProps = {
+          ...Statuses.Skipped,
+          ariaLabel: "Abandoned",
+        };
         indicatorData.label = "Abandoned";
         break;
     }
@@ -93,8 +122,8 @@ class Dashboard extends React.Component<{}, IPipelineContentState> {
     return indicatorData;
   };
 
-  generateColumns(environments: EnvironmentPipelines[]): Array<TableColumn> {
-    let columns : TableColumn[] = [];
+  generateColumns(environments: EnvironmentPipelines[]): Array<IDashboardColumn<any>> {
+    let columns : IDashboardColumn<any>[] = [];
 
     columns.push({
       id: "name",
@@ -102,7 +131,7 @@ class Dashboard extends React.Component<{}, IPipelineContentState> {
       renderCell: this.renderReleaseInfo,
       width: 250,
       sortOrder: 0
-    } as TableColumn);
+    } as IDashboardColumn<any>);
 
     const dynamicColumns = environments.map((environment) => {
       return {
@@ -110,7 +139,7 @@ class Dashboard extends React.Component<{}, IPipelineContentState> {
         name: environment.name,
         renderCell: this.renderReleaseInfo,
         width: 200
-      } as TableColumn;
+      } as IDashboardColumn<any>;
     });
 
     const concatenated = columns.concat(dynamicColumns);
@@ -121,7 +150,7 @@ class Dashboard extends React.Component<{}, IPipelineContentState> {
     return sorted;
   }
 
-  applySortOrder(columns: TableColumn[]) {
+  applySortOrder(columns: IDashboardColumn<any>[]) {
     columns.forEach(column => {
       if (column.sortOrder === 0)
         return;
@@ -137,11 +166,11 @@ class Dashboard extends React.Component<{}, IPipelineContentState> {
     });
   }
 
-  applySortOrderToColumn(column: TableColumn, groupWord: string, groupSortOrder: number) {
+  applySortOrderToColumn(column: IDashboardColumn<any>, groupWord: string, groupSortOrder: number) {
     if (column.sortOrder)
       return;
 
-    const name = column.name.trim().toLowerCase();
+    const name = column.name!.trim().toLowerCase();
 
     if (name.startsWith(groupWord))
       column.sortOrder = groupSortOrder + 1;
@@ -151,7 +180,7 @@ class Dashboard extends React.Component<{}, IPipelineContentState> {
       column.sortOrder = groupSortOrder + 2;
   }
 
-  sortColumns(array: TableColumn[]): TableColumn[] {
+  sortColumns(array: IDashboardColumn<any>[]): IDashboardColumn<any>[] {
     return array.sort((a, b) => {
       // Compare by sortOrder first
       if (a.sortOrder !== undefined && b.sortOrder !== undefined) {
@@ -165,9 +194,9 @@ class Dashboard extends React.Component<{}, IPipelineContentState> {
       }
   
       // If sortOrder is the same or undefined for both, compare by name
-      if (a.name < b.name) {
+      if (a.name! < b.name!) {
         return -1;
-      } else if (a.name > b.name) {
+      } else if (a.name! > b.name!) {
         return 1;
       } else {
         return 0;
@@ -179,15 +208,14 @@ class Dashboard extends React.Component<{}, IPipelineContentState> {
   public componentDidMount() {
     SDK.init();
 
-    getPipelines().then((arg: any) => {
+    getPipelines().then((arg: DashboardEnvironmentPipelineInfo) => {
       const { environments, pipelines } = arg;
       this.setState({
         columns: this.generateColumns(environments),
-        pipelines: pipelines
+        pipelines: pipelines,
       });
     });
   }
-
 
   public render(): JSX.Element {
     return (
@@ -195,12 +223,17 @@ class Dashboard extends React.Component<{}, IPipelineContentState> {
         <CustomHeader className="bolt-header-with-commandbar">
           <HeaderTitleArea>
             <HeaderTitleRow>
-              <HeaderTitle ariaLevel={3} className="text-ellipsis" titleSize={TitleSize.Large}>
+              <HeaderTitle
+                ariaLevel={3}
+                className="text-ellipsis"
+                titleSize={TitleSize.Large}
+              >
                 SixPivot Release Dashboard
               </HeaderTitle>
             </HeaderTitleRow>
             <HeaderDescription>
-              Provides a view of your products, releases and environments over your organisation's build pipelines.
+              Provides a view of your products, releases and environments over
+              your organisation's build pipelines.
             </HeaderDescription>
           </HeaderTitleArea>
         </CustomHeader>
@@ -208,17 +241,14 @@ class Dashboard extends React.Component<{}, IPipelineContentState> {
         <div className="page-content page-content-top">
           <Card>
             <div>
-              {
-                !this.state.pipelines &&
-                <p>Loading...</p>
-              }
-              {
-                this.state.pipelines &&
+              {!this.state.pipelines && <p>Loading...</p>}
+              {this.state.pipelines && (
                 <Table
+                  className="release-table"
                   columns={this.state.columns}
                   itemProvider={this.state.pipelines}
                 />
-              }
+              )}
             </div>
           </Card>
         </div>
