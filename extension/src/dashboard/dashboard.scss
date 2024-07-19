@@ -15,9 +15,15 @@ body {
 }
 
 .status-icon {
-    margin-top: $spacing-4;
+    margin-top: $spacing-8;
 }
 
 .release-table {
     width: 100% !important;
+}
+
+a .link-button {
+    color: $communication-tint-40;
+    padding: $spacing-4;
+    margin: $spacing-4;
 }

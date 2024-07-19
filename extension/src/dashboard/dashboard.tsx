@@ -25,6 +25,7 @@ import { getPipelines } from "./api/AzureDevopsClient";
 import "./dashboard.scss";
 import { Status, Statuses, StatusSize } from "azure-devops-ui/Status";
 import { Link } from "azure-devops-ui/Link";
+import { Button } from "azure-devops-ui/Button";
 
 export class Dashboard extends React.Component<{}, IPipelineContentState> {
   constructor(props: {}) {
@@ -54,10 +55,10 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
         columnIndex={columnIndex}
         tableColumn={tableColumn}
         key={"col-" + columnIndex}
-        contentClassName="fontWeightSemiBold font-weight-semibold fontSizeM font-size-m"
+        contentClassName="fontWeightSemiBold font-weight-semibold fontSizeM font-size-m bolt-table-cell-content-with-inline-link"
       >
         {tableColumn.id === "name" ? (
-          <Link target="_top" href={tableItem.uri}>{tableItem.name}</Link>
+          <Link className="bolt-table-inline-link bolt-table-link no-underline-link" target="_top" href={tableItem.uri}>{tableItem.name}</Link>
         ) : tableItem.environments[tableColumn.id] ? (
           <div className="flex-row flex-start">
             <Status
@@ -68,7 +69,7 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
               size={StatusSize.m}
             />
             <div className="flex-column wrap-text">
-            <Link target="_top" href={tableItem.environments[tableColumn.id].uri}>{tableItem.environments[tableColumn.id].value}</Link>
+            <Link className="bolt-table-inline-link bolt-table-link no-underline-link" target="_top" href={tableItem.environments[tableColumn.id].uri}>{tableItem.environments[tableColumn.id].value}</Link>
               <div className="finish-date">
                 {tableItem.environments[tableColumn.id].finishTime}
               </div>
