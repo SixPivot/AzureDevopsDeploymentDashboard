@@ -9,7 +9,9 @@ import {
 } from "./types";
 
 const project = "ReleaseDashboard";
-export async function getPipelines(): Promise<DashboardEnvironmentPipelineInfo> {
+export async function getPipelines(): Promise<
+  DashboardEnvironmentPipelineInfo
+> {
   const taskAgentClient = getClient(TaskAgentRestClient);
   const pipelinesClient = getClient(PipelinesRestClient);
 
@@ -20,11 +22,12 @@ export async function getPipelines(): Promise<DashboardEnvironmentPipelineInfo> 
 
   const environmentPipelines: EnvironmentPipelines[] = [];
   for (const environment of environments) {
-    const deployments =
-      await taskAgentClient.getEnvironmentDeploymentExecutionRecords(
+    const deployments = await taskAgentClient
+      .getEnvironmentDeploymentExecutionRecords(
         project,
-        environment.id
+        environment.id,
       );
+
     const environmentPipeline: EnvironmentPipelines = {
       name: environment.name,
       pipelines: {},
@@ -32,7 +35,7 @@ export async function getPipelines(): Promise<DashboardEnvironmentPipelineInfo> 
     for (const deployment of deployments) {
       if (!environmentPipeline.pipelines[deployment.definition.name]) {
         const pipeline = pipelines.find(
-          (p) => p.id == deployment.definition.id
+          (p) => p.id == deployment.definition.id,
         );
         environmentPipeline.pipelines[deployment.definition.name] = {
           deployment: deployment,
@@ -51,7 +54,7 @@ export async function getPipelines(): Promise<DashboardEnvironmentPipelineInfo> 
 }
 
 function generateRows(
-  environments: EnvironmentPipelines[]
+  environments: EnvironmentPipelines[],
 ): Array<PipelineInfo> {
   const rows: Array<PipelineInfo> = [];
 
@@ -60,7 +63,13 @@ function generateRows(
       let row = rows.find((pr) => pr.name == pipelineName);
 
       if (!row) {
-        row = { name: pipelineName, environments: {} };
+        row = {
+          name: pipelineName,
+          environments: {},
+          uri:
+            environment.pipelines[pipelineName].deployment.definition
+              ._links["web"].href,
+        };
         rows.push(row);
       }
 
@@ -69,6 +78,8 @@ function generateRows(
         finishTime: environment.pipelines[pipelineName].deployment.finishTime,
         result: environment.pipelines[pipelineName].deployment.result,
         folder: environment.pipelines[pipelineName].pipeline?.folder,
+        uri: environment.pipelines[pipelineName].deployment.owner?._links["web"]
+          .href,
       };
     }
   }

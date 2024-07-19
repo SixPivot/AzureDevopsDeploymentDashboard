@@ -39,6 +39,7 @@ export interface ReleaseInfo {
   result: TaskResult;
   folder?: string;
   finishTime: Date;
+  uri: string;
 }
 
 /* Example: {Dev: { value: "20240715.2", finishTime: "1 Jul 2024, 01:37 PM", result: 0}} Where Dev is environment name. And dynamically added as dictionary key*/
@@ -48,6 +49,7 @@ export interface EnvironmentReleaseDictionary {
 
 export interface PipelineInfo {
   name: string;
+  uri: string;
   environments: EnvironmentReleaseDictionary;
 }
 
