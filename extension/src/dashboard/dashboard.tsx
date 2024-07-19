@@ -28,6 +28,8 @@ import { Status, Statuses, StatusSize } from "azure-devops-ui/Status";
 import { Link } from "azure-devops-ui/Link";
 import { Ago } from "azure-devops-ui/Ago";
 import { AgoFormat } from "azure-devops-ui/Utilities/Date";
+import { Spinner, SpinnerSize } from "azure-devops-ui/Spinner";
+import { useState } from "react";
 
 export class Dashboard extends React.Component<{}, IPipelineContentState> {
   constructor(props: {}) {
@@ -43,6 +45,7 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
         } as IDashboardColumn<any>,
       ],
       pipelines: new ArrayItemProvider<PipelineInfo>([]),
+      isLoading: true
     };
   }
 
@@ -71,7 +74,7 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
               size={StatusSize.m}
             />
             <div className="flex-column wrap-text">
-            <Link className="bolt-table-inline-link bolt-table-link no-underline-link" target="_top" href={tableItem.environments[tableColumn.id].uri}>{tableItem.environments[tableColumn.id].value}</Link>
+              <Link className="bolt-table-inline-link bolt-table-link no-underline-link" target="_top" href={tableItem.environments[tableColumn.id].uri}>{tableItem.environments[tableColumn.id].value}</Link>
               <div className="finish-date">
                 {/* {tableItem.environments[tableColumn.id].finishTime} */}
                 <Ago date={tableItem.environments[tableColumn.id].finishTime} format={AgoFormat.Extended} />
@@ -123,7 +126,7 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
   };
 
   generateColumns(environments: EnvironmentPipelines[]): Array<IDashboardColumn<any>> {
-    let columns : IDashboardColumn<any>[] = [];
+    let columns: IDashboardColumn<any>[] = [];
 
     columns.push({
       id: "name",
@@ -192,7 +195,7 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
       } else if (b.sortOrder !== undefined) {
         return 1;
       }
-  
+
       // If sortOrder is the same or undefined for both, compare by name
       if (a.name! < b.name!) {
         return -1;
@@ -203,7 +206,7 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
       }
     });
   }
-  
+
   public componentDidMount() {
     SDK.init();
 
@@ -212,6 +215,7 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
       this.setState({
         columns: this.generateColumns(environments),
         pipelines: pipelines,
+        isLoading: false
       });
     });
   }
@@ -239,16 +243,19 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
 
         <div className="page-content page-content-top">
           <Card>
-            <div>
-              {!this.state.pipelines && <p>Loading...</p>}
-              {this.state.pipelines && (
-                <Table
-                  className="release-table"
-                  columns={this.state.columns}
-                  itemProvider={this.state.pipelines}
-                />
-              )}
-            </div>
+            {this.state.isLoading ? (
+              <div className="flex-grow padding-vertical-20 font-size-m">
+                <Spinner label="Loading data..." size={SpinnerSize.large} />
+              </div>
+            ) : (this.state.pipelines && this.state.pipelines.length === 0) ? (
+              <Table
+                className="release-table"
+                columns={this.state.columns}
+                itemProvider={this.state.pipelines}
+              />
+            ) : (
+              <div className="font-size-m flex-grow text-center padding-vertical-20">No release data available for display.</div>
+            )}
           </Card>
         </div>
       </Page>

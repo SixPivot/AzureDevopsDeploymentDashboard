@@ -10,6 +10,7 @@ import { IStatusProps } from "azure-devops-ui/Status";
 export interface IPipelineContentState {
   pipelines?: ArrayItemProvider<any>;
   columns: ITableColumn<any>[];
+  isLoading: boolean;
 }
 
 export interface LatestPipeline {
