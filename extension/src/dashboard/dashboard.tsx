@@ -93,7 +93,7 @@ class Dashboard extends React.Component<{}, IPipelineContentState> {
     return indicatorData;
   };
 
-  private generateColumns(environments: EnvironmentPipelines[]): Array<TableColumn> {
+  generateColumns(environments: EnvironmentPipelines[]): Array<TableColumn> {
     let columns : TableColumn[] = [];
 
     columns.push({
@@ -121,7 +121,7 @@ class Dashboard extends React.Component<{}, IPipelineContentState> {
     return sorted;
   }
 
-  private applySortOrder(columns: TableColumn[]) {
+  applySortOrder(columns: TableColumn[]) {
     columns.forEach(column => {
       if (column.sortOrder === 0)
         return;
@@ -137,7 +137,7 @@ class Dashboard extends React.Component<{}, IPipelineContentState> {
     });
   }
 
-  private applySortOrderToColumn(column: TableColumn, groupWord: string, groupSortOrder: number) {
+  applySortOrderToColumn(column: TableColumn, groupWord: string, groupSortOrder: number) {
     if (column.sortOrder)
       return;
 
@@ -151,7 +151,7 @@ class Dashboard extends React.Component<{}, IPipelineContentState> {
       column.sortOrder = groupSortOrder + 2;
   }
 
-  private sortColumns(array: TableColumn[]): TableColumn[] {
+  sortColumns(array: TableColumn[]): TableColumn[] {
     return array.sort((a, b) => {
       // Compare by sortOrder first
       if (a.sortOrder !== undefined && b.sortOrder !== undefined) {
