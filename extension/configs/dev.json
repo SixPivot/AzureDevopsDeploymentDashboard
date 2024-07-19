@@ -1,6 +1,6 @@
 {
-  "id": "sixpivot-release-dashboard-dev",
-  "name": "Release Dashboard (Dev)",
-  "public": false,
-  "baseUri": "https://localhost:3000"
+    "id": "sixpivot-release-dashboard-dev",
+    "name": "Release Dashboard (Dev)",
+    "public": false,
+    "baseUri": "https://localhost:3000"
 }

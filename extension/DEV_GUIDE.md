@@ -9,13 +9,16 @@ New? Onboard yourself on the [wiki](https://dev.azure.com/sixpivot/ReleaseDashbo
 ## Get started
 
 1. Clone the repo
+1. Copy `pre-commit` file from `git-hooks` folder to `.git\hooks`
 1. `cd extensions` and `npm install`
 1. `npm run start:dev`
 1. Go to `localhost:3000` in your browser. You should get an untrusted certificate error page. Select **Advanced** and then select **Accept the Risk and Continue**.
 1. Go [here](https://dev.azure.com/sixpivot/ReleaseDashboard/_apps/hub/SixPivot.sixpivot-release-dashboard-dev.deployment-dashboard)
 
 This link should go to the Release Dashboard project, and to the developer extension running in our organisation. This extension is pointing to `https://localhost:3000` and you should be ready to make changes to your code and see it hot-reload.
+
 > Although most code changes will be reflected immediately, you may still need to occasionally update your extension in the marketplace. The dev extension loads all its resources from the webpack-dev-server, but the manifest itself is being loaded from the published code. Therefore, any changes to the manifest file will not be properly reflected in Azure DevOps until the extension has been republished.
+
 ## Publishing extensions
 
 1. Get an Azure DevOps PAT (personal access token) with the **Marketplace (Publish)** scope and access set to **All accessible organizations**. For more information, see [Authenticate access with personal access tokens](https://docs.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate).
@@ -35,19 +38,25 @@ The extensions are probably already installed in the SixPivot org in Azure-devop
 1. enter "sixpivot" as the organisation.
 1. Now go to the sixpivot org in azure devops and go to settings -> extensions `https://dev.azure.com/sixpivot/_settings/extensions`
 1. Go to the Shared tab
-1. Install the extension. 
+1. Install the extension.
 
 ### Debug in VS Code
 
 1. In VS Code, press **F5** to start debugging (making sure the webpack-dev-server is still running). The default launch configuration should be set to ~~**Launch Firefox**~~ this should work now.
 
-   > ~~Chrome configurations are included in the sample as well in case the Debugger for Chrome extension eventually supports iframes. However, debugging iframes is only supported in the Debugger for Firefox extension at this time.~~ this should work now. 
+    > ~~Chrome configurations are included in the sample as well in case the Debugger for Chrome extension eventually supports iframes. However, debugging iframes is only supported in the Debugger for Firefox extension at this time.~~ this should work now.
 
 1. Allow the `localhost:3000` certificate again and log into your Azure DevOps account.
 
-   > If you leave the Firefox window open that VS Code launches, the debugger will reattach instead of starting a clean Firefox instance each time.
+    > If you leave the Firefox window open that VS Code launches, the debugger will reattach instead of starting a clean Firefox instance each time.
 
 1. Navigate to your extension and set a breakpoint in a method in VS Code. You should see that breakpoint hit when that method executes.
+
+## Before committing code
+
+Before committing your code. Run `npm run prettier-check` to validate the code with prettier. Either fix issues (error or warnings) manually or run `npm run prettier-write` to let prettier do the job for you. Please note that this could update files your didn't touch.
+
+The pre-commit hook will prevent you from commiting code if prettier encounters errors code.
 
 ## Developer resources
 

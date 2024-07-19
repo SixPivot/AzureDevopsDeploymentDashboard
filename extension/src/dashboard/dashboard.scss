@@ -1,11 +1,11 @@
-@import "node_modules/azure-devops-ui/Core/_platformCommon.scss";
+@import 'node_modules/azure-devops-ui/Core/_platformCommon.scss';
 body {
-    font-family: $fontFamily
+    font-family: $fontFamily;
 }
 
 // todo: replace with zero data control
 .no-data {
-    color: #CCC;
+    color: #ccc;
     font-style: italic;
 }
 

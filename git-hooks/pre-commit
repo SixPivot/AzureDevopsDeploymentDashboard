@@ -1,0 +1,14 @@
+#!/bin/sh
+FILES=$(git diff --cached --name-only --diff-filter=ACMR "*.js" "*.jsx" "*.ts" "*.htm" "*.html" "*.css" "*.scss" | sed 's| |\\ |g')
+[ -z "$FILES" ] && exit 0
+
+# Check for prettier issues
+FAILED=0
+for FILE in $FILES
+do
+  ./extension/node_modules/.bin/prettier --list-different "$FILE" || FAILED=1
+done
+
+[ "$FAILED" -eq 0 ] && exit 0
+echo "Prettier found issues in the above files. Please fix them and try committing again."
+exit 1
