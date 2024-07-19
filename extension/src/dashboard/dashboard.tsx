@@ -2,14 +2,7 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as SDK from 'azure-devops-extension-sdk'
-import {
-    CustomHeader,
-    HeaderDescription,
-    HeaderTitle,
-    HeaderTitleArea,
-    HeaderTitleRow,
-    TitleSize,
-} from 'azure-devops-ui/Header'
+import { CustomHeader, HeaderDescription, HeaderTitle, HeaderTitleArea, HeaderTitleRow, TitleSize } from 'azure-devops-ui/Header'
 import { Page } from 'azure-devops-ui/Page'
 import { Card } from 'azure-devops-ui/Card'
 import { SimpleTableCell, Table } from 'azure-devops-ui/Table'
@@ -41,7 +34,7 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
                     name: '',
                     renderCell: this.renderReleaseInfo,
                     width: 300,
-                } as IDashboardColumn<any>,
+                } as IDashboardColumn<PipelineInfo>,
             ],
             pipelines: new ArrayItemProvider<PipelineInfo>([]),
             isLoading: true,
@@ -51,7 +44,7 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
     renderReleaseInfo = (
         rowIndex: number,
         columnIndex: number,
-        tableColumn: IDashboardColumn<any>,
+        tableColumn: IDashboardColumn<PipelineInfo>,
         tableItem: PipelineInfo
     ): JSX.Element => {
         return (
@@ -62,19 +55,13 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
                 contentClassName="fontWeightSemiBold font-weight-semibold fontSizeM font-size-m bolt-table-cell-content-with-inline-link"
             >
                 {tableColumn.id === 'name' ? (
-                    <Link
-                        className="bolt-table-inline-link bolt-table-link no-underline-link"
-                        target="_top"
-                        href={tableItem.uri}
-                    >
+                    <Link className="bolt-table-inline-link bolt-table-link no-underline-link" target="_top" href={tableItem.uri}>
                         {tableItem.name}
                     </Link>
                 ) : tableItem.environments[tableColumn.id] ? (
                     <div className="flex-row flex-start">
                         <Status
-                            {...this.getStatusIndicatorData(
-                                tableItem.environments[tableColumn.id].result
-                            ).statusProps}
+                            {...this.getStatusIndicatorData(tableItem.environments[tableColumn.id].result).statusProps}
                             className="icon-large-margin status-icon"
                             size={StatusSize.m}
                         />
@@ -82,21 +69,12 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
                             <Link
                                 className="bolt-table-inline-link bolt-table-link no-underline-link"
                                 target="_top"
-                                href={
-                                    tableItem.environments[tableColumn.id].uri
-                                }
+                                href={tableItem.environments[tableColumn.id].uri}
                             >
                                 {tableItem.environments[tableColumn.id].value}
                             </Link>
                             <div className="finish-date">
-                                {/* {tableItem.environments[tableColumn.id].finishTime} */}
-                                <Ago
-                                    date={
-                                        tableItem.environments[tableColumn.id]
-                                            .finishTime
-                                    }
-                                    format={AgoFormat.Extended}
-                                />
+                                <Ago date={tableItem.environments[tableColumn.id].finishTime} format={AgoFormat.Extended} />
                             </div>
                         </div>
                     </div>
@@ -147,10 +125,8 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
         return indicatorData
     }
 
-    generateColumns(
-        environments: EnvironmentPipelines[]
-    ): Array<IDashboardColumn<any>> {
-        let columns: IDashboardColumn<any>[] = []
+    generateColumns(environments: EnvironmentPipelines[]): Array<IDashboardColumn<PipelineInfo>> {
+        let columns: IDashboardColumn<PipelineInfo>[] = []
 
         columns.push({
             id: 'name',
@@ -158,7 +134,7 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
             renderCell: this.renderReleaseInfo,
             width: 250,
             sortOrder: 0,
-        } as IDashboardColumn<any>)
+        } as IDashboardColumn<PipelineInfo>)
 
         const dynamicColumns = environments.map((environment) => {
             return {
@@ -166,7 +142,7 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
                 name: environment.name,
                 renderCell: this.renderReleaseInfo,
                 width: 200,
-            } as IDashboardColumn<any>
+            } as IDashboardColumn<PipelineInfo>
         })
 
         const concatenated = columns.concat(dynamicColumns)
@@ -177,7 +153,7 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
         return sorted
     }
 
-    applySortOrder(columns: IDashboardColumn<any>[]) {
+    applySortOrder(columns: IDashboardColumn<PipelineInfo>[]) {
         columns.forEach((column) => {
             if (column.sortOrder === 0) return
 
@@ -191,22 +167,17 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
         })
     }
 
-    applySortOrderToColumn(
-        column: IDashboardColumn<any>,
-        groupWord: string,
-        groupSortOrder: number
-    ) {
+    applySortOrderToColumn(column: IDashboardColumn<PipelineInfo>, groupWord: string, groupSortOrder: number) {
         if (column.sortOrder) return
 
         const name = column.name!.trim().toLowerCase()
 
         if (name.startsWith(groupWord)) column.sortOrder = groupSortOrder + 1
         else if (name.endsWith(groupWord)) column.sortOrder = groupSortOrder + 3
-        else if (name.indexOf(groupWord) >= 0)
-            column.sortOrder = groupSortOrder + 2
+        else if (name.indexOf(groupWord) >= 0) column.sortOrder = groupSortOrder + 2
     }
 
-    sortColumns(array: IDashboardColumn<any>[]): IDashboardColumn<any>[] {
+    sortColumns(array: IDashboardColumn<PipelineInfo>[]): IDashboardColumn<PipelineInfo>[] {
         return array.sort((a, b) => {
             // Compare by sortOrder first
             if (a.sortOrder !== undefined && b.sortOrder !== undefined) {
@@ -249,18 +220,12 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
                 <CustomHeader className="bolt-header-with-commandbar">
                     <HeaderTitleArea>
                         <HeaderTitleRow>
-                            <HeaderTitle
-                                ariaLevel={3}
-                                className="text-ellipsis"
-                                titleSize={TitleSize.Large}
-                            >
+                            <HeaderTitle ariaLevel={3} className="text-ellipsis" titleSize={TitleSize.Large}>
                                 SixPivot Release Dashboard
                             </HeaderTitle>
                         </HeaderTitleRow>
                         <HeaderDescription>
-                            Provides a view of your products, releases and
-                            environments over your organisation's build
-                            pipelines.
+                            Provides a view of your products, releases and environments over your organisation's build pipelines.
                         </HeaderDescription>
                     </HeaderTitleArea>
                 </CustomHeader>
@@ -269,18 +234,10 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
                     <Card>
                         {this.state.isLoading ? (
                             <div className="flex-grow padding-vertical-20 font-size-m">
-                                <Spinner
-                                    label="Loading data..."
-                                    size={SpinnerSize.large}
-                                />
+                                <Spinner label="Loading data..." size={SpinnerSize.large} />
                             </div>
-                        ) : this.state.pipelines &&
-                          this.state.pipelines.length > 0 ? (
-                            <Table
-                                className="release-table"
-                                columns={this.state.columns}
-                                itemProvider={this.state.pipelines}
-                            />
+                        ) : this.state.pipelines && this.state.pipelines.length > 0 ? (
+                            <Table className="release-table" columns={this.state.columns} itemProvider={this.state.pipelines} />
                         ) : (
                             <div className="font-size-m flex-grow text-center padding-vertical-20">
                                 No release data available for display.

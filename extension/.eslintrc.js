@@ -4,12 +4,7 @@ module.exports = {
     extends: ['plugin:prettier/recommended'],
     rules: {
         'prettier/prettier': 'error',
-        'eslint.validate': [
-            'javascript',
-            'javascriptreact',
-            'typescript',
-            'typescriptreact',
-        ],
+        'eslint.validate': ['javascript', 'javascriptreact', 'typescript', 'typescriptreact'],
         semi: 'always',
     },
 }

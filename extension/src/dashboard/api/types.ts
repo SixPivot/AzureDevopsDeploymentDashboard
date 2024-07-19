@@ -1,7 +1,4 @@
-import {
-    EnvironmentDeploymentExecutionRecord,
-    TaskResult,
-} from 'azure-devops-extension-api/TaskAgent'
+import { EnvironmentDeploymentExecutionRecord, TaskResult } from 'azure-devops-extension-api/TaskAgent'
 import { Pipeline } from 'azure-devops-extension-api/Pipelines/Pipelines'
 import { ITableColumn } from 'azure-devops-ui/Table'
 import { ArrayItemProvider } from 'azure-devops-ui/Utilities/Provider'
