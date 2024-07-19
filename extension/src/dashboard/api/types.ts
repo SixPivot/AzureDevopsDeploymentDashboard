@@ -10,6 +10,7 @@ import { IStatusProps } from 'azure-devops-ui/Status'
 export interface IPipelineContentState {
     pipelines?: ArrayItemProvider<any>
     columns: ITableColumn<any>[]
+    isLoading: boolean
 }
 
 export interface LatestPipeline {
@@ -22,6 +23,7 @@ export interface LatestPipeline {
 export interface EnvironmentPipelines {
     name: string
     pipelines: LatestPipeline
+    sortOrder?: number
 }
 
 export interface IStatusIndicatorData {
@@ -29,11 +31,15 @@ export interface IStatusIndicatorData {
     label: string
 }
 
+export interface IDashboardColumn<T> extends ITableColumn<T> {
+    sortOrder: number | undefined
+}
+
 export interface ReleaseInfo {
     value: string
     result: TaskResult
     folder?: string
-    finishTime: string
+    finishTime: Date
     uri: string
 }
 

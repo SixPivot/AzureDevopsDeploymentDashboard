@@ -7,7 +7,6 @@ import {
     EnvironmentPipelines,
     PipelineInfo,
 } from './types'
-import moment from 'moment'
 
 const project = 'ReleaseDashboard'
 export async function getPipelines(): Promise<DashboardEnvironmentPipelineInfo> {
@@ -70,15 +69,12 @@ function generateRows(
                 }
                 rows.push(row)
             }
-            var finishDate = environment.pipelines[pipelineName].deployment
-                .finishTime as Date
 
             row.environments[environment.name] = {
                 value: environment.pipelines[pipelineName].deployment.owner
                     .name,
-                finishTime: finishDate
-                    ? moment(finishDate).format('d MMM yyyy, hh:mm A')
-                    : '',
+                finishTime:
+                    environment.pipelines[pipelineName].deployment.finishTime,
                 result: environment.pipelines[pipelineName].deployment.result,
                 folder: environment.pipelines[pipelineName].pipeline?.folder,
                 uri: environment.pipelines[pipelineName].deployment.owner
