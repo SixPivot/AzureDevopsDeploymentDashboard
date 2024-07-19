@@ -247,7 +247,7 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
               <div className="flex-grow padding-vertical-20 font-size-m">
                 <Spinner label="Loading data..." size={SpinnerSize.large} />
               </div>
-            ) : (this.state.pipelines && this.state.pipelines.length === 0) ? (
+            ) : (this.state.pipelines && this.state.pipelines.length > 0) ? (
               <Table
                 className="release-table"
                 columns={this.state.columns}
