@@ -12,7 +12,7 @@ export interface IPipelineContentState {
     project?: string
 }
 
-export interface LatestPipeline {
+export interface DeploymentPipeline {
     [key: string]: {
         deployment: EnvironmentDeploymentExecutionRecord
         pipeline: Pipeline | undefined
@@ -21,7 +21,7 @@ export interface LatestPipeline {
 
 export interface EnvironmentPipelines {
     name: string
-    pipelines: LatestPipeline
+    pipelines: DeploymentPipeline
     sortOrder?: number
 }
 

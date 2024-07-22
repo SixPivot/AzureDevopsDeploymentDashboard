@@ -9,7 +9,7 @@ import { Card } from 'azure-devops-ui/Card'
 import { SimpleTableCell, Table } from 'azure-devops-ui/Table'
 import { ArrayItemProvider } from 'azure-devops-ui/Utilities/Provider'
 import { EnvironmentPipelines, IDashboardColumn, IPipelineContentState, IStatusIndicatorData, PipelineInfo } from './api/types'
-import { getPipelines } from './api/AzureDevopsClient'
+import { getDashboardEnvironmentPipelineInfo } from './api/AzureDevopsClient'
 import './dashboard.scss'
 import { Status, Statuses, StatusSize } from 'azure-devops-ui/Status'
 import { Link } from 'azure-devops-ui/Link'
@@ -120,8 +120,8 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
         return indicatorData
     }
 
-    generateColumns(environments: EnvironmentPipelines[]): Array<IDashboardColumn<PipelineInfo>> {
-        let columns: IDashboardColumn<PipelineInfo>[] = []
+    generateEnvironmentsAsColumns(environments: EnvironmentPipelines[]): Array<IDashboardColumn<PipelineInfo>> {
+        const columns: IDashboardColumn<PipelineInfo>[] = []
 
         columns.push({
             id: 'name',
@@ -204,10 +204,10 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
         const project = await projectPageService.getProject()
         const projectName = project?.name ?? ''
 
-        const { environments, pipelines } = await getPipelines(projectName)
+        const { environments, pipelines } = await getDashboardEnvironmentPipelineInfo(projectName)
 
         this.setState({
-            columns: this.generateColumns(environments),
+            columns: this.generateEnvironmentsAsColumns(environments),
             pipelines: pipelines,
             isLoading: false,
             organisation: SDK.getHost().name,
