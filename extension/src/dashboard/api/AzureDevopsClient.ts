@@ -4,16 +4,18 @@ import { PipelinesRestClient } from 'azure-devops-extension-api/Pipelines/Pipeli
 import { TaskAgentRestClient } from 'azure-devops-extension-api/TaskAgent'
 import { DashboardEnvironmentPipelineInfo, EnvironmentPipelines, PipelineInfo } from './types'
 
-const project = 'ReleaseDashboard'
-export async function getPipelines(): Promise<DashboardEnvironmentPipelineInfo> {
+export async function getPipelines(projectName: string): Promise<DashboardEnvironmentPipelineInfo> {
     const taskAgentClient = getClient(TaskAgentRestClient)
     const pipelinesClient = getClient(PipelinesRestClient)
 
-    const [pipelines, environments] = await Promise.all([pipelinesClient.listPipelines(project), taskAgentClient.getEnvironments(project)])
+    const [pipelines, environments] = await Promise.all([
+        pipelinesClient.listPipelines(projectName),
+        taskAgentClient.getEnvironments(projectName),
+    ])
 
     const environmentPipelines: EnvironmentPipelines[] = []
     for (const environment of environments) {
-        const deployments = await taskAgentClient.getEnvironmentDeploymentExecutionRecords(project, environment.id)
+        const deployments = await taskAgentClient.getEnvironmentDeploymentExecutionRecords(projectName, environment.id)
 
         const environmentPipeline: EnvironmentPipelines = {
             name: environment.name,

@@ -8,14 +8,7 @@ import { Page } from 'azure-devops-ui/Page'
 import { Card } from 'azure-devops-ui/Card'
 import { SimpleTableCell, Table } from 'azure-devops-ui/Table'
 import { ArrayItemProvider } from 'azure-devops-ui/Utilities/Provider'
-import {
-    DashboardEnvironmentPipelineInfo,
-    EnvironmentPipelines,
-    IDashboardColumn,
-    IPipelineContentState,
-    IStatusIndicatorData,
-    PipelineInfo,
-} from './api/types'
+import { EnvironmentPipelines, IDashboardColumn, IPipelineContentState, IStatusIndicatorData, PipelineInfo } from './api/types'
 import { getPipelines } from './api/AzureDevopsClient'
 import './dashboard.scss'
 import { Status, Statuses, StatusSize } from 'azure-devops-ui/Status'
@@ -203,27 +196,23 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
         })
     }
 
-    public componentDidMount() {
-        SDK.init()
+    public async componentDidMount() {
+        await SDK.init();
 
-        SDK.ready().then(() => {
-            SDK.getService<IProjectPageService>(CommonServiceIds.ProjectPageService).then((projectService) => {
-                projectService.getProject().then((project) => {
-                    this.setState({
-                        organisation: SDK.getHost().name,
-                        project: project?.name,
-                    })
-                })
-            })
-        })
+        //CommonServiceIds.ProjectPageServic = ms.vss-tfs-web.tfs-page-data-service
+        //Note: Couldn't use SDK.getWebContext().project.name. Because for some reason SDK.getWebContext() returns an empty object. Maybe it's not mean to work with local dev
+        const projectPageService = await SDK.getService<IProjectPageService>('ms.vss-tfs-web.tfs-page-data-service')
+        const project = await projectPageService.getProject()
+        const projectName = project?.name ?? ''
 
-        getPipelines().then((arg: DashboardEnvironmentPipelineInfo) => {
-            const { environments, pipelines } = arg
-            this.setState({
-                columns: this.generateColumns(environments),
-                pipelines: pipelines,
-                isLoading: false,
-            })
+        const { environments, pipelines } = await getPipelines(projectName)
+
+        this.setState({
+            columns: this.generateColumns(environments),
+            pipelines: pipelines,
+            isLoading: false,
+            organisation: SDK.getHost().name,
+            project: projectName
         })
     }
 
