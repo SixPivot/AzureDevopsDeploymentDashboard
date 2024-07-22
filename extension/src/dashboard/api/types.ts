@@ -8,6 +8,8 @@ export interface IPipelineContentState {
     pipelines?: ArrayItemProvider<any>
     columns: ITableColumn<any>[]
     isLoading: boolean
+    organisation?: string
+    project?: string
 }
 
 export interface LatestPipeline {

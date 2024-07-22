@@ -2,6 +2,7 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as SDK from 'azure-devops-extension-sdk'
+import { CommonServiceIds, IProjectPageService } from 'azure-devops-extension-api'
 import { CustomHeader, HeaderDescription, HeaderTitle, HeaderTitleArea, HeaderTitleRow, TitleSize } from 'azure-devops-ui/Header'
 import { Page } from 'azure-devops-ui/Page'
 import { Card } from 'azure-devops-ui/Card'
@@ -15,7 +16,7 @@ import { Link } from 'azure-devops-ui/Link'
 import { Ago } from 'azure-devops-ui/Ago'
 import { AgoFormat } from 'azure-devops-ui/Utilities/Date'
 import { Spinner, SpinnerSize } from 'azure-devops-ui/Spinner'
-import { IProjectPageService } from 'azure-devops-extension-api'
+import { Button } from 'azure-devops-ui/Button'
 
 export class Dashboard extends React.Component<{}, IPipelineContentState> {
     constructor(props: {}) {
@@ -210,6 +211,8 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
             columns: this.generateColumns(environments),
             pipelines: pipelines,
             isLoading: false,
+            organisation: SDK.getHost().name,
+            project: projectName
         })
     }
 
@@ -239,7 +242,25 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
                             <Table className="release-table" columns={this.state.columns} itemProvider={this.state.pipelines} />
                         ) : (
                             <div className="font-size-m flex-grow text-center padding-vertical-20">
-                                No release data available for display.
+                                <div className="margin-bottom-16 font-weight-heavy font-size-l">
+                                    No deployments were found in any pipelines
+                                </div>
+                                <Link
+                                    className="no-underline-link"
+                                    target="_top"
+                                    href="https://learn.microsoft.com/en-us/azure/devops/pipelines/process/deployment-jobs?view=azure-devops"
+                                >
+                                    Learn more
+                                </Link>{' '}
+                                about deployment jobs and how to set them up in your pipelines.
+                                <div className="margin-top-16">
+                                    <Button
+                                        text="View pipelines"
+                                        primary={true}
+                                        target="_top"
+                                        href={`https://dev.azure.com/${this.state.organisation}/${this.state.project}/_build`}
+                                    />
+                                </div>
                             </div>
                         )}
                     </Card>
