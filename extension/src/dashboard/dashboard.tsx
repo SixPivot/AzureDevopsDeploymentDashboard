@@ -197,7 +197,7 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
     }
 
     public async componentDidMount() {
-        await SDK.init();
+        await SDK.init()
 
         //CommonServiceIds.ProjectPageServic = ms.vss-tfs-web.tfs-page-data-service
         //Note: Couldn't use SDK.getWebContext().project.name. Because for some reason SDK.getWebContext() returns an empty object. Maybe it's not mean to work with local dev
