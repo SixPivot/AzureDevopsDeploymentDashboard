@@ -37,7 +37,7 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
     }
 
     renderReleaseInfo = (
-        rowIndex: number,
+        _: number,
         columnIndex: number,
         tableColumn: IDashboardColumn<PipelineInfo>,
         tableItem: PipelineInfo
@@ -199,9 +199,8 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
     public async componentDidMount() {
         await SDK.init()
 
-        //CommonServiceIds.ProjectPageServic = ms.vss-tfs-web.tfs-page-data-service
         //Note: Couldn't use SDK.getWebContext().project.name. Because for some reason SDK.getWebContext() returns an empty object. Maybe it's not mean to work with local dev
-        const projectPageService = await SDK.getService<IProjectPageService>('ms.vss-tfs-web.tfs-page-data-service')
+        const projectPageService = await SDK.getService<IProjectPageService>(CommonServiceIds.ProjectPageService)
         const project = await projectPageService.getProject()
         const projectName = project?.name ?? ''
 
