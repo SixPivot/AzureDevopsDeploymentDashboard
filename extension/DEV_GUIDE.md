@@ -1,6 +1,6 @@
-# Release Dashboard
+# Deployment Dashboard
 
-This is now the SixPivot Azure Devops Pipelines Release Dashboard!
+This is now the SixPivot Azure Devops Pipelines Deployment Dashboard!
 
 New? Onboard yourself on the [wiki](https://dev.azure.com/sixpivot/ReleaseDashboard/_wiki/wikis/ReleaseDashboard.wiki/272/Release-Dashboard-Onboarding).
 
@@ -15,7 +15,7 @@ New? Onboard yourself on the [wiki](https://dev.azure.com/sixpivot/ReleaseDashbo
 1. Go to `localhost:3000` in your browser. You should get an untrusted certificate error page. Select **Advanced** and then select **Accept the Risk and Continue**.
 1. Go [here](https://dev.azure.com/sixpivot/ReleaseDashboard/_apps/hub/SixPivot.sixpivot-release-dashboard-dev.deployment-dashboard)
 
-This link should go to the Release Dashboard project, and to the developer extension running in our organisation. This extension is pointing to `https://localhost:3000` and you should be ready to make changes to your code and see it hot-reload.
+This link should go to the Deployment Dashboard project, and to the developer extension running in our organisation. This extension is pointing to `https://localhost:3000` and you should be ready to make changes to your code and see it hot-reload.
 
 > Although most code changes will be reflected immediately, you may still need to occasionally update your extension in the marketplace. The dev extension loads all its resources from the webpack-dev-server, but the manifest itself is being loaded from the published code. Therefore, any changes to the manifest file will not be properly reflected in Azure DevOps until the extension has been republished.
 

@@ -1,4 +1,4 @@
-# Release Dashboard for Pipelines
+# Deployment Dashboard for Pipelines
 
 Provides at-a-glance information about the latest deployments to all your environments. Stop wondering which version is deployed to what environment. See all your deployments in one place!
 

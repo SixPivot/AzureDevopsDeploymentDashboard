@@ -27,7 +27,7 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
                 {
                     id: 'name',
                     name: '',
-                    renderCell: this.renderReleaseInfo,
+                    renderCell: this.renderCell,
                     width: 300,
                 } as IDashboardColumn<PipelineInfo>,
             ],
@@ -36,7 +36,7 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
         }
     }
 
-    renderReleaseInfo = (
+    renderCell = (
         _: number,
         columnIndex: number,
         tableColumn: IDashboardColumn<PipelineInfo>,
@@ -126,7 +126,7 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
         columns.push({
             id: 'name',
             name: '',
-            renderCell: this.renderReleaseInfo,
+            renderCell: this.renderCell,
             width: 250,
             sortOrder: 0,
         } as IDashboardColumn<PipelineInfo>)
@@ -135,7 +135,7 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
             return {
                 id: environment.name,
                 name: environment.name,
-                renderCell: this.renderReleaseInfo,
+                renderCell: this.renderCell,
                 width: 200,
             } as IDashboardColumn<PipelineInfo>
         })
@@ -222,11 +222,11 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
                     <HeaderTitleArea>
                         <HeaderTitleRow>
                             <HeaderTitle ariaLevel={3} className="text-ellipsis" titleSize={TitleSize.Large}>
-                                SixPivot Release Dashboard
+                                Deployment Dashboard
                             </HeaderTitle>
                         </HeaderTitleRow>
                         <HeaderDescription>
-                            Provides a view of your products, releases and environments over your organisation's build pipelines.
+                            Provides a view of your products, deployments, and environments in your project's build pipelines.
                         </HeaderDescription>
                     </HeaderTitleArea>
                 </CustomHeader>
@@ -238,7 +238,7 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
                                 <Spinner label="Loading data..." size={SpinnerSize.large} />
                             </div>
                         ) : this.state.pipelines && this.state.pipelines.length > 0 ? (
-                            <Table className="release-table" columns={this.state.columns} itemProvider={this.state.pipelines} />
+                            <Table className="deployments-table" columns={this.state.columns} itemProvider={this.state.pipelines} />
                         ) : (
                             <div className="font-size-m flex-grow text-center padding-vertical-20">
                                 <div className="margin-bottom-16 font-weight-heavy font-size-l">
