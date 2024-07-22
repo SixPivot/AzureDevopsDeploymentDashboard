@@ -37,7 +37,7 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
     }
 
     renderReleaseInfo = (
-        rowIndex: number,
+        _: number,
         columnIndex: number,
         tableColumn: IDashboardColumn<PipelineInfo>,
         tableItem: PipelineInfo
