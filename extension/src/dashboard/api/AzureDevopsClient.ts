@@ -2,9 +2,9 @@ import { ArrayItemProvider } from 'azure-devops-ui/Utilities/Provider'
 import { getClient } from 'azure-devops-extension-api'
 import { PipelinesRestClient } from 'azure-devops-extension-api/Pipelines/PipelinesClient'
 import { TaskAgentRestClient } from 'azure-devops-extension-api/TaskAgent'
-import { DashboardEnvironmentPipelineInfo, EnvironmentPipelines, EnvironmentReleaseDictionary, PipelineInfo } from './types'
+import { IDashboardEnvironmentPipelineInfo, IEnvironmentPipelines, IEnvironmentReleaseDictionary, IPipelineInfo } from './types'
 
-export async function getDashboardEnvironmentPipelineInfo(projectName: string): Promise<DashboardEnvironmentPipelineInfo> {
+export async function getDashboardEnvironmentPipelineInfo(projectName: string): Promise<IDashboardEnvironmentPipelineInfo> {
     const taskAgentClient = getClient(TaskAgentRestClient)
     const pipelinesClient = getClient(PipelinesRestClient)
 
@@ -13,11 +13,11 @@ export async function getDashboardEnvironmentPipelineInfo(projectName: string): 
         taskAgentClient.getEnvironments(projectName),
     ])
 
-    const environmentPipelines: EnvironmentPipelines[] = []
+    const environmentPipelines: IEnvironmentPipelines[] = []
     for (const environment of environments) {
         const deployments = await taskAgentClient.getEnvironmentDeploymentExecutionRecords(projectName, environment.id)
 
-        const environmentPipeline: EnvironmentPipelines = {
+        const environmentPipeline: IEnvironmentPipelines = {
             name: environment.name,
             pipelines: {},
         }
@@ -40,14 +40,14 @@ export async function getDashboardEnvironmentPipelineInfo(projectName: string): 
     }
 }
 
-function generatePipelineInfoArray(environments: EnvironmentPipelines[]): Array<PipelineInfo> {
-    const pipelineInfoArray: Array<PipelineInfo> = []
+function generatePipelineInfoArray(environments: IEnvironmentPipelines[]): Array<IPipelineInfo> {
+    const pipelineInfoArray: Array<IPipelineInfo> = []
 
     for (const environment of environments) {
         for (const pipelineName of Object.keys(environment.pipelines)) {
             const pipelineInfo = pipelineInfoArray.find((pr) => pr.name == pipelineName) ?? {
                 name: pipelineName,
-                environments: {} as EnvironmentReleaseDictionary,
+                environments: {} as IEnvironmentReleaseDictionary,
                 uri: environment.pipelines[pipelineName].deployment.definition._links['web'].href,
             }
 

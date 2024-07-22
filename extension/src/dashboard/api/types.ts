@@ -4,24 +4,16 @@ import { ITableColumn } from 'azure-devops-ui/Table'
 import { ArrayItemProvider } from 'azure-devops-ui/Utilities/Provider'
 import { IStatusProps } from 'azure-devops-ui/Status'
 
-export interface IPipelineContentState {
-    pipelines?: ArrayItemProvider<any>
-    columns: ITableColumn<any>[]
-    isLoading: boolean
-    organisation?: string
-    project?: string
-}
-
-export interface DeploymentPipeline {
+export interface IDeploymentPipeline {
     [key: string]: {
         deployment: EnvironmentDeploymentExecutionRecord
         pipeline: Pipeline | undefined
     }
 }
 
-export interface EnvironmentPipelines {
+export interface IEnvironmentPipelines {
     name: string
-    pipelines: DeploymentPipeline
+    pipelines: IDeploymentPipeline
     sortOrder?: number
 }
 
@@ -30,11 +22,14 @@ export interface IStatusIndicatorData {
     label: string
 }
 
-export interface IDashboardColumn<T> extends ITableColumn<T> {
+export interface IDashboardEnvironmentColumn extends ITableColumn<IPipelineInfo> {
     sortOrder: number | undefined
 }
 
-export interface ReleaseInfo {
+/**
+Type represents release information
+*/
+export interface IReleaseInfo {
     value: string
     result: TaskResult
     folder?: string
@@ -42,18 +37,24 @@ export interface ReleaseInfo {
     uri: string
 }
 
-/* Example: {Dev: { value: "20240715.2", finishTime: "1 Jul 2024, 01:37 PM", result: 0}} Where Dev is environment name. And dynamically added as dictionary key*/
-export interface EnvironmentReleaseDictionary {
-    [index: string]: ReleaseInfo
+/**
+Type represents dictionary of releases (ReleaseInfo}. Where dictionary key is environment name and value is ReleaseInfo
+Example: {Dev: { value: "20240715.2", finishTime: "1 Jul 2024, 01:37 PM", result: 0}} Where Dev is environment name. And dynamically added as dictionary key
+*/
+export interface IEnvironmentReleaseDictionary {
+    [index: string]: IReleaseInfo
 }
 
-export interface PipelineInfo {
+/**
+Type represents Pipeline information and environments associated with this pipeline
+*/
+export interface IPipelineInfo {
     name: string
     uri: string
-    environments: EnvironmentReleaseDictionary
+    environments: IEnvironmentReleaseDictionary
 }
 
-export interface DashboardEnvironmentPipelineInfo {
-    environments: EnvironmentPipelines[]
-    pipelines: ArrayItemProvider<PipelineInfo>
+export interface IDashboardEnvironmentPipelineInfo {
+    environments: IEnvironmentPipelines[]
+    pipelines: ArrayItemProvider<IPipelineInfo>
 }

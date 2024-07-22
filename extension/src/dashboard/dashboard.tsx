@@ -8,7 +8,7 @@ import { Page } from 'azure-devops-ui/Page'
 import { Card } from 'azure-devops-ui/Card'
 import { SimpleTableCell, Table } from 'azure-devops-ui/Table'
 import { ArrayItemProvider } from 'azure-devops-ui/Utilities/Provider'
-import { EnvironmentPipelines, IDashboardColumn, IPipelineContentState, IStatusIndicatorData, PipelineInfo } from './api/types'
+import { IEnvironmentPipelines, IDashboardEnvironmentColumn, IStatusIndicatorData, IPipelineInfo } from './api/types'
 import { getDashboardEnvironmentPipelineInfo } from './api/AzureDevopsClient'
 import './dashboard.scss'
 import { Status, Statuses, StatusSize } from 'azure-devops-ui/Status'
@@ -17,8 +17,17 @@ import { Ago } from 'azure-devops-ui/Ago'
 import { AgoFormat } from 'azure-devops-ui/Utilities/Date'
 import { Spinner, SpinnerSize } from 'azure-devops-ui/Spinner'
 import { Button } from 'azure-devops-ui/Button'
+import { sortEnvironmentsByconvention } from './api/Utilities'
 
-export class Dashboard extends React.Component<{}, IPipelineContentState> {
+interface IDashboardContentState {
+    pipelines?: ArrayItemProvider<any>
+    columns: IDashboardEnvironmentColumn[]
+    isLoading: boolean
+    organisation?: string
+    project?: string
+}
+
+export class Dashboard extends React.Component<{}, IDashboardContentState> {
     constructor(props: {}) {
         super(props)
 
@@ -29,19 +38,14 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
                     name: '',
                     renderCell: this.renderCell,
                     width: 300,
-                } as IDashboardColumn<PipelineInfo>,
+                } as IDashboardEnvironmentColumn,
             ],
-            pipelines: new ArrayItemProvider<PipelineInfo>([]),
+            pipelines: new ArrayItemProvider<IPipelineInfo>([]),
             isLoading: true,
         }
     }
 
-    renderCell = (
-        _: number,
-        columnIndex: number,
-        tableColumn: IDashboardColumn<PipelineInfo>,
-        tableItem: PipelineInfo
-    ): JSX.Element => {
+    renderCell = (_: number, columnIndex: number, tableColumn: IDashboardEnvironmentColumn, tableItem: IPipelineInfo): JSX.Element => {
         return (
             <SimpleTableCell
                 columnIndex={columnIndex}
@@ -120,8 +124,8 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
         return indicatorData
     }
 
-    generateEnvironmentsAsColumns(environments: EnvironmentPipelines[]): Array<IDashboardColumn<PipelineInfo>> {
-        const columns: IDashboardColumn<PipelineInfo>[] = []
+    generateEnvironmentsAsColumns(environments: IEnvironmentPipelines[]): Array<IDashboardEnvironmentColumn> {
+        const columns: IDashboardEnvironmentColumn[] = []
 
         columns.push({
             id: 'name',
@@ -129,7 +133,7 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
             renderCell: this.renderCell,
             width: 250,
             sortOrder: 0,
-        } as IDashboardColumn<PipelineInfo>)
+        } as IDashboardEnvironmentColumn)
 
         const dynamicColumns = environments.map((environment) => {
             return {
@@ -137,63 +141,14 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
                 name: environment.name,
                 renderCell: this.renderCell,
                 width: 200,
-            } as IDashboardColumn<PipelineInfo>
+            } as IDashboardEnvironmentColumn
         })
 
         const concatenated = columns.concat(dynamicColumns)
 
-        this.applySortOrder(concatenated)
-        const sorted = this.sortColumns(concatenated)
+        const sorted = sortEnvironmentsByconvention(concatenated)
 
         return sorted
-    }
-
-    applySortOrder(columns: IDashboardColumn<PipelineInfo>[]) {
-        columns.forEach((column) => {
-            if (column.sortOrder === 0) return
-
-            this.applySortOrderToColumn(column, 'dev', 10)
-            this.applySortOrderToColumn(column, 'test', 30)
-            this.applySortOrderToColumn(column, 'uat', 40)
-            this.applySortOrderToColumn(column, 'preprod', 50)
-            this.applySortOrderToColumn(column, 'prod', 60)
-
-            if (!column.sortOrder) column.sortOrder = 20
-        })
-    }
-
-    applySortOrderToColumn(column: IDashboardColumn<PipelineInfo>, groupWord: string, groupSortOrder: number) {
-        if (column.sortOrder) return
-
-        const name = column.name!.trim().toLowerCase()
-
-        if (name.startsWith(groupWord)) column.sortOrder = groupSortOrder + 1
-        else if (name.endsWith(groupWord)) column.sortOrder = groupSortOrder + 3
-        else if (name.indexOf(groupWord) >= 0) column.sortOrder = groupSortOrder + 2
-    }
-
-    sortColumns(array: IDashboardColumn<PipelineInfo>[]): IDashboardColumn<PipelineInfo>[] {
-        return array.sort((a, b) => {
-            // Compare by sortOrder first
-            if (a.sortOrder !== undefined && b.sortOrder !== undefined) {
-                if (a.sortOrder !== b.sortOrder) {
-                    return a.sortOrder - b.sortOrder
-                }
-            } else if (a.sortOrder !== undefined) {
-                return -1
-            } else if (b.sortOrder !== undefined) {
-                return 1
-            }
-
-            // If sortOrder is the same or undefined for both, compare by name
-            if (a.name! < b.name!) {
-                return -1
-            } else if (a.name! > b.name!) {
-                return 1
-            } else {
-                return 0
-            }
-        })
     }
 
     public async componentDidMount() {
@@ -211,7 +166,7 @@ export class Dashboard extends React.Component<{}, IPipelineContentState> {
             pipelines: pipelines,
             isLoading: false,
             organisation: SDK.getHost().name,
-            project: projectName
+            project: projectName,
         })
     }
 
