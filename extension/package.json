@@ -18,6 +18,7 @@
         "prettier-check": "prettier --check '**/*.{js,ts,jsx,tsx,css,scss,htm,html}'"
     },
     "dependencies": {
+        "@microsoft/applicationinsights-web": "^3.3.0",
         "azure-devops-extension-api": "^4.239.0",
         "azure-devops-extension-sdk": "^4.0.2",
         "azure-devops-ui": "^2.241.1",

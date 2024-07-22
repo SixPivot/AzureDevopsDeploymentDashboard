@@ -39,6 +39,15 @@ steps:
     displayName: "Script: Package"
     workingDirectory: extension
 
+  - pwsh: |
+      $inputFile = "./dist/dashboard/dashboard.js"
+      $token = "#applicationInsightsConnectionString#"
+      $tokenValue = "$(APPLICATION_INSIGHTS_CONNECTIONSTRING)"
+      (Get-Content $inputFile) | ForEach-Object { $_ -replace $token, $tokenValue } | Set-Content $inputFile
+    workingDirectory: extension
+    displayName: 'Replace tokens'
+      
+
   - script: |
       npx tfx extension publish --token $(MARKETPLACE_TOKEN) --manifest-globs vss-extension.json --overrides-file configs/dev.json --output-path out-dev
     displayName: 'Script: Publish to Marketplace (Dev)'

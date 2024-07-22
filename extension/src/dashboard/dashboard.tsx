@@ -18,6 +18,7 @@ import { AgoFormat } from 'azure-devops-ui/Utilities/Date'
 import { Spinner, SpinnerSize } from 'azure-devops-ui/Spinner'
 import { Button } from 'azure-devops-ui/Button'
 import { sortEnvironmentsByconvention } from './api/Utilities'
+import { InitTelemetry } from './telemetry/applicationInsights'
 
 interface IDashboardContentState {
     pipelines?: ArrayItemProvider<any>
@@ -223,5 +224,7 @@ export class Dashboard extends React.Component<{}, IDashboardContentState> {
         )
     }
 }
+
+InitTelemetry()
 
 ReactDOM.render(<Dashboard />, document.getElementById('root'))
