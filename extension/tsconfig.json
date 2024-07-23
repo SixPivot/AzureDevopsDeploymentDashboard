@@ -18,7 +18,8 @@
         "esModuleInterop": true,
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
-        "types": ["react", "vss-web-extension-sdk", "jest"]
+        "types": ["react", "vss-web-extension-sdk", "jest"],
+        "allowJs": true
     },
     "include": ["src"]
 }

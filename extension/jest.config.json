@@ -1,0 +1,22 @@
+{
+    "testEnvironment": "jsdom",
+    "rootDir": "src",
+    "extensionsToTreatAsEsm": [
+        ".ts"
+    ],
+    "transform": {
+        "^.+\\.(ts|tsx)$": [
+            "ts-jest",
+            {
+                "useESM": true
+            }
+        ],
+        "^.+\\.(js|jsx)?$": [
+            "babel-jest",
+            {}
+        ]
+    },
+    "transformIgnorePatterns": [
+        "node_modules/(?!(azure-devops-ui|azure-devops-extension-sdk)/)"
+    ]
+}
