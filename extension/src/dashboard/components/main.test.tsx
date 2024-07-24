@@ -1,23 +1,19 @@
-import { render } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import * as React from 'react'
 import '@testing-library/jest-dom'
 import '@testing-library/jest-dom/jest-globals'
-import { Main } from './main'
+import { MainContent } from './main-content'
+import state from './state.json'
+import { IDashboardContentState } from './IDashboardContentState'
 
-jest.mock('azure-devops-extension-sdk', () => {
-    return {
-        init: () => {},
-        getService() {},
-    }
-})
-jest.mock('azure-devops-extension-api', () => {})
-jest.mock('azure-devops-extension-api/Pipelines/PipelinesClient', () => {})
-jest.mock('azure-devops-extension-api/TaskAgent', () => {})
+test('Render and check layout', async () => {
+    render(
+        <MainContent
+            state={state as unknown as IDashboardContentState}
+        />
+    )
 
-test('check basic test', async () => {
-    render(<Main />)
-})
+    await screen.findByRole('heading')
 
-test('check basic test', async () => {
-    expect(1 + 1).toBe(2)
+    expect(screen.getByRole('heading')).toHaveTextContent('Deployment Dashboard')
 })

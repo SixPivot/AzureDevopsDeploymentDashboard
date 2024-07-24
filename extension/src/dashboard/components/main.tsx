@@ -2,29 +2,18 @@
 import * as React from 'react'
 import * as SDK from 'azure-devops-extension-sdk'
 import { CommonServiceIds, IProjectPageService } from 'azure-devops-extension-api'
-import { CustomHeader, HeaderDescription, HeaderTitle, HeaderTitleArea, HeaderTitleRow, TitleSize } from 'azure-devops-ui/Header'
-import { Page } from 'azure-devops-ui/Page'
-import { Card } from 'azure-devops-ui/Card'
-import { SimpleTableCell, Table } from 'azure-devops-ui/Table'
+import { SimpleTableCell } from 'azure-devops-ui/Table'
 import { ArrayItemProvider } from 'azure-devops-ui/Utilities/Provider'
 import { IEnvironmentPipelines, IDashboardEnvironmentColumn, IStatusIndicatorData, IPipelineInfo } from '../api/types'
 import { getDashboardEnvironmentPipelineInfo } from '../api/AzureDevopsClient'
-import './dashboard.scss'
+import './main.scss'
 import { Status, Statuses, StatusSize } from 'azure-devops-ui/Status'
 import { Link } from 'azure-devops-ui/Link'
 import { Ago } from 'azure-devops-ui/Ago'
 import { AgoFormat } from 'azure-devops-ui/Utilities/Date'
-import { Spinner, SpinnerSize } from 'azure-devops-ui/Spinner'
-import { Button } from 'azure-devops-ui/Button'
 import { sortEnvironmentsByconvention } from '../api/Utilities'
-
-interface IDashboardContentState {
-    pipelines?: ArrayItemProvider<any>
-    columns: IDashboardEnvironmentColumn[]
-    isLoading: boolean
-    organisation?: string
-    project?: string
-}
+import { MainContent } from './main-content'
+import { IDashboardContentState } from './IDashboardContentState'
 
 export class Main extends React.Component<{}, IDashboardContentState> {
     constructor(props: {}) {
@@ -170,55 +159,6 @@ export class Main extends React.Component<{}, IDashboardContentState> {
     }
 
     public render(): JSX.Element {
-        return (
-            <Page className="flex-grow">
-                <CustomHeader className="bolt-header-with-commandbar">
-                    <HeaderTitleArea>
-                        <HeaderTitleRow>
-                            <HeaderTitle ariaLevel={3} className="text-ellipsis" titleSize={TitleSize.Large}>
-                                Deployment Dashboard
-                            </HeaderTitle>
-                        </HeaderTitleRow>
-                        <HeaderDescription>
-                            Provides a view of your products, deployments, and environments in your project's build pipelines.
-                        </HeaderDescription>
-                    </HeaderTitleArea>
-                </CustomHeader>
-
-                <div className="page-content page-content-top">
-                    <Card>
-                        {this.state.isLoading ? (
-                            <div className="flex-grow padding-vertical-20 font-size-m">
-                                <Spinner label="Loading data..." size={SpinnerSize.large} />
-                            </div>
-                        ) : this.state.pipelines && this.state.pipelines.length > 0 ? (
-                            <Table className="deployments-table" columns={this.state.columns} itemProvider={this.state.pipelines} />
-                        ) : (
-                            <div className="font-size-m flex-grow text-center padding-vertical-20">
-                                <div className="margin-bottom-16 font-weight-heavy font-size-l">
-                                    No deployments were found in any pipelines
-                                </div>
-                                <Link
-                                    className="no-underline-link"
-                                    target="_top"
-                                    href="https://learn.microsoft.com/en-us/azure/devops/pipelines/process/deployment-jobs?view=azure-devops"
-                                >
-                                    Learn more
-                                </Link>{' '}
-                                about deployment jobs and how to set them up in your pipelines.
-                                <div className="margin-top-16">
-                                    <Button
-                                        text="View pipelines"
-                                        primary={true}
-                                        target="_top"
-                                        href={`https://dev.azure.com/${this.state.organisation}/${this.state.project}/_build`}
-                                    />
-                                </div>
-                            </div>
-                        )}
-                    </Card>
-                </div>
-            </Page>
-        )
+        return <MainContent state={this.state}></MainContent>
     }
 }

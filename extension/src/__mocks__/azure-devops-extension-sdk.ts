@@ -188,6 +188,9 @@ export function getService(contributionId: string) {
                 setError: mockSetError,
                 getId: mockGetId,
             }
+
+        default:
+            return undefined
     }
 }
 

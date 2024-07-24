@@ -23,7 +23,8 @@
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
         "types": ["react", "vss-web-extension-sdk", "jest"],
-        "allowJs": true
+        "allowJs": true,
+        "resolveJsonModule": true
     },
     "include": ["src"]
 }
