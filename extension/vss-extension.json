@@ -19,7 +19,7 @@
         }
     },
     "icons": {
-        "default": "img/sixpivot.png"
+        "default": "img/icon128_white.png"
     },
     "files": [
         {
@@ -41,7 +41,11 @@
             "properties": {
                 "name": "Deployment Dashboard",
                 "uri": "dist/dashboard/dashboard.html",
-                "order": 1
+                "order": 1,
+                "icon": {
+                    "light": "img/icon32_light.png",
+                    "dark": "img/icon32_dark.png"
+                }
             }
         }
     ]
