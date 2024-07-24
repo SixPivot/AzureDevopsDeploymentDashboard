@@ -1,7 +1,11 @@
 {
     "compilerOptions": {
-        "module": "ESNext",
-        "lib": ["esnext", "dom", "dom.iterable"],
+        "module": "amd",
+        "lib": [
+            "es5",
+            "es6",
+            "dom",
+            "es2015.promise"],
         "importHelpers": true,
         "declaration": true,
         "sourceMap": true,
