@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "sixpivot-release-dashboard",
     "publisher": "sixpivot",
-    "version": "1.0.15",
+    "version": "1.0.128",
     "name": "Release Dashboard",
     "description": "A dashboard to view a summary of all deployments",
     "demands": ["api-version/3.0"],
