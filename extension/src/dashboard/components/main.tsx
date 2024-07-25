@@ -11,9 +11,10 @@ import { Status, Statuses, StatusSize } from 'azure-devops-ui/Status'
 import { Link } from 'azure-devops-ui/Link'
 import { Ago } from 'azure-devops-ui/Ago'
 import { AgoFormat } from 'azure-devops-ui/Utilities/Date'
-import { sortEnvironmentsByconvention } from '../api/Utilities'
+import { sortByConvention } from '../../api/Utilities'
 import { MainContent } from './main-content'
 import { IDashboardContentState } from './IDashboardContentState'
+import { ISortableByConvention } from '../../api/types'
 
 export class Main extends React.Component<{}, IDashboardContentState> {
     constructor(props: {}) {
@@ -120,7 +121,7 @@ export class Main extends React.Component<{}, IDashboardContentState> {
             name: '',
             renderCell: this.renderCell,
             width: 250,
-            sortOrder: 0,
+            conventionSortOrder: 0,
         } as IDashboardEnvironmentColumn)
 
         const dynamicColumns = environments.map((environment) => {
@@ -134,9 +135,9 @@ export class Main extends React.Component<{}, IDashboardContentState> {
 
         const concatenated = columns.concat(dynamicColumns)
 
-        const sorted = sortEnvironmentsByconvention(concatenated)
+        const sorted = sortByConvention(concatenated as ISortableByConvention[])
 
-        return sorted
+        return sorted as IDashboardEnvironmentColumn[]
     }
 
     public async componentDidMount() {

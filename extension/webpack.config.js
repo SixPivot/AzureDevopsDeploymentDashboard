@@ -4,7 +4,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
     target: 'web',
-    entry: { dashboard: './src/dashboard/dashboard' },
+    entry: { dashboard: './src/dashboard/dashboard', settings: './src/settings/settings' },
     output: {
         filename: '[name]/[name].js',
         publicPath: '/dist/',

@@ -1,0 +1,12 @@
+@import 'node_modules/azure-devops-ui/Core/_platformCommon.scss';
+body {
+    font-family: $fontFamily;
+}
+
+.setting-page {
+    background-color: transparent;
+}
+
+.environments-table {
+    width: 100%;
+}

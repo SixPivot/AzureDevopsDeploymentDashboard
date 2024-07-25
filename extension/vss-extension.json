@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "sixpivot-release-dashboard",
     "publisher": "sixpivot",
-    "version": "1.0.128",
+    "version": "1.0.1283",
     "name": "Release Dashboard",
     "description": "A dashboard to view a summary of all deployments",
     "demands": ["api-version/3.0"],
@@ -31,7 +31,7 @@
             "addressable": true
         }
     ],
-    "scopes": ["vso.build", "vso.release", "vso.environment_manage", "vso.settings_write"],
+    "scopes": ["vso.build", "vso.release", "vso.environment_manage"],
     "contributions": [
         {
             "id": "deployment-dashboard",
@@ -55,8 +55,12 @@
             "targets": ["ms.vss-web.project-admin-hub-group"],
             "properties": {
                 "name": "Deployment dashboard settings",
-                "uri": "dist/DashboardSettings/DashboardSettings.html",
-                "order": 1
+                "uri": "dist/settings/settings.html",
+                "order": 1,
+                "icon": {
+                    "light": "img/icon32_light.png",
+                    "dark": "img/icon32_dark.png"
+                }
             }
         }
     ]

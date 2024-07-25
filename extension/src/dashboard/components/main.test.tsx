@@ -7,11 +7,7 @@ import state from './state.test.json'
 import { IDashboardContentState } from './IDashboardContentState'
 
 test('Render and check layout', async () => {
-    render(
-        <MainContent
-            state={state as unknown as IDashboardContentState}
-        />
-    )
+    render(<MainContent state={state as unknown as IDashboardContentState} />)
 
     await screen.findByRole('heading')
 

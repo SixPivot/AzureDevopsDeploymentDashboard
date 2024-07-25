@@ -54,7 +54,7 @@ The extensions are probably already installed in the SixPivot org in Azure-devop
 
 ## Before committing code
 
-Before committing your code. Run `npm run prettier-check` to validate the code with prettier. Either fix issues (error or warnings) manually or run `npm run prettier-write` to let prettier do the job for you. Please note that this could update files your didn't touch.
+Before committing your code. Run `npm run prettier:check` to validate the code with prettier. Either fix issues (error or warnings) manually or run `npm run prettier:write` to let prettier do the job for you. Please note that this could update files your didn't touch.
 
 The pre-commit hook will prevent you from commiting code if prettier encounters errors code.
 

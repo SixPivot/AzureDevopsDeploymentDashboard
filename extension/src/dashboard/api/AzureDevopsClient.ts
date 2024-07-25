@@ -2,7 +2,7 @@ import { ArrayItemProvider } from 'azure-devops-ui/Utilities/Provider'
 import { getClient } from 'azure-devops-extension-api'
 import { PipelinesRestClient } from 'azure-devops-extension-api/Pipelines/PipelinesClient'
 import { TaskAgentRestClient } from 'azure-devops-extension-api/TaskAgent'
-import { IDashboardEnvironmentPipelineInfo, IEnvironmentPipelines, IEnvironmentReleaseDictionary, IPipelineInfo } from './types'
+import { IDashboardEnvironmentPipelineInfo, IEnvironmentPipelines, IEnvironmentDeploymentDictionary, IPipelineInfo } from './types'
 
 export async function getDashboardEnvironmentPipelineInfo(projectName: string): Promise<IDashboardEnvironmentPipelineInfo> {
     const taskAgentClient = getClient(TaskAgentRestClient)
@@ -47,7 +47,7 @@ function generatePipelineInfoArray(environments: IEnvironmentPipelines[]): Array
         for (const pipelineName of Object.keys(environment.pipelines)) {
             const pipelineInfo = pipelineInfoArray.find((pr) => pr.name == pipelineName) ?? {
                 name: pipelineName,
-                environments: {} as IEnvironmentReleaseDictionary,
+                environments: {} as IEnvironmentDeploymentDictionary,
                 uri: environment.pipelines[pipelineName].deployment.definition._links['web'].href,
             }
 
