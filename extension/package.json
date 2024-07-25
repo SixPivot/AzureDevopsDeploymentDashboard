@@ -6,7 +6,7 @@
         "clean": "rimraf ./dist ./out",
         "compile": "npm run clean && webpack --mode production",
         "compile:dev": "npm run clean && webpack --mode development",
-        "test": "cross-env NODE_OPTIONS=\"--experimental-vm-modules\" jest",
+        "test": "jest",
         "check": "npx tsc --noEmit",
         "package": "npm run compile && tfx extension create --manifest-globs vss-extension.json --overrides-file configs/release.json --output-path out",
         "package:dev": "npm run compile:dev && tfx extension create --manifest-globs vss-extension.json --overrides-file configs/dev.json --output-path out",
@@ -26,6 +26,7 @@
         "react-dom": "^16.8.6"
     },
     "devDependencies": {
+        "@babel/preset-env": "^7.24.8",
         "@jest/globals": "^29.7.0",
         "@testing-library/dom": "^10.3.2",
         "@testing-library/jest-dom": "^6.4.6",
@@ -36,9 +37,9 @@
         "@types/react-dom": "^16.8.4",
         "@typescript-eslint/eslint-plugin": "^7.16.1",
         "@typescript-eslint/parser": "^7.16.1",
+        "babel-jest": "^29.7.0",
         "base64-inline-loader": "^2.0.1",
         "copy-webpack-plugin": "^5.0.3",
-        "cross-env": "^7.0.3",
         "css-loader": "^7.1.2",
         "eslint": "^8.57.0",
         "eslint-config-prettier": "^9.1.0",

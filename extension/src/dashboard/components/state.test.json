@@ -1,0 +1,201 @@
+{
+    "columns": [
+        {
+            "id": "name",
+            "name": "",
+            "width": 250,
+            "sortOrder": 0
+        },
+        {
+            "id": "Dev",
+            "name": "Dev",
+            "width": 200,
+            "sortOrder": 11
+        },
+        {
+            "id": "Test",
+            "name": "Test",
+            "width": 200,
+            "sortOrder": 31
+        },
+        {
+            "id": "UAT",
+            "name": "UAT",
+            "width": 200,
+            "sortOrder": 41
+        },
+        {
+            "id": "Preprod",
+            "name": "Preprod",
+            "width": 200,
+            "sortOrder": 51
+        },
+        {
+            "id": "Prod",
+            "name": "Prod",
+            "width": 200,
+            "sortOrder": 61
+        }
+    ],
+    "pipelines": {
+        "items": [
+            {
+                "name": "Release Pipeline E",
+                "environments": {
+                    "Dev": {
+                        "value": "20240717.1",
+                        "finishTime": "2024-07-17T05:48:39.270Z",
+                        "result": 2,
+                        "folder": "\\Services",
+                        "uri": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/results?buildId=3924"
+                    }
+                },
+                "uri": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/definition?definitionId=73"
+            },
+            {
+                "name": "ReleaseDashboard",
+                "environments": {
+                    "Dev": {
+                        "value": "20240717.1",
+                        "finishTime": "2024-07-17T04:25:14.406Z",
+                        "result": 0,
+                        "folder": "\\More Services",
+                        "uri": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/results?buildId=3923"
+                    },
+                    "UAT": {
+                        "value": "20240717.1",
+                        "finishTime": "2024-07-17T04:36:31.850Z",
+                        "result": 2,
+                        "folder": "\\More Services",
+                        "uri": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/results?buildId=3923"
+                    }
+                },
+                "uri": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/definition?definitionId=72"
+            },
+            {
+                "name": "Release Pipeline B",
+                "environments": {
+                    "Dev": {
+                        "value": "20240717.1",
+                        "finishTime": "2024-07-17T04:21:16.983Z",
+                        "result": 3,
+                        "folder": "\\Services",
+                        "uri": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/results?buildId=3922"
+                    },
+                    "Test": {
+                        "value": "20240715.1",
+                        "finishTime": "2024-07-15T03:23:17.250Z",
+                        "result": 0,
+                        "folder": "\\Services",
+                        "uri": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/results?buildId=3913"
+                    }
+                },
+                "uri": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/definition?definitionId=69"
+            },
+            {
+                "name": "Release Pipeline C",
+                "environments": {
+                    "Dev": {
+                        "value": "20240715.2",
+                        "finishTime": "2024-07-15T03:37:07.730Z",
+                        "result": 0,
+                        "folder": "\\More Services\\yet more services",
+                        "uri": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/results?buildId=3915"
+                    },
+                    "Preprod": {
+                        "value": "20240715.2",
+                        "finishTime": "2024-07-15T03:37:22.430Z",
+                        "result": 0,
+                        "folder": "\\More Services\\yet more services",
+                        "uri": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/results?buildId=3915"
+                    },
+                    "Prod": {
+                        "value": "20240715.2",
+                        "finishTime": "2024-07-15T03:41:36.970Z",
+                        "result": 0,
+                        "folder": "\\More Services\\yet more services",
+                        "uri": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/results?buildId=3915"
+                    },
+                    "UAT": {
+                        "value": "20240715.2",
+                        "finishTime": "2024-07-15T03:37:48.856Z",
+                        "result": 0,
+                        "folder": "\\More Services\\yet more services",
+                        "uri": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/results?buildId=3915"
+                    }
+                },
+                "uri": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/definition?definitionId=71"
+            },
+            {
+                "name": "Release Pipeline A",
+                "environments": {
+                    "Dev": {
+                        "value": "20240715.1",
+                        "finishTime": "2024-07-15T03:22:05.226Z",
+                        "result": 0,
+                        "folder": "\\Services",
+                        "uri": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/results?buildId=3912"
+                    },
+                    "Test": {
+                        "value": "20240715.1",
+                        "finishTime": "2024-07-15T03:22:52.186Z",
+                        "result": 0,
+                        "folder": "\\Services",
+                        "uri": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/results?buildId=3912"
+                    }
+                },
+                "uri": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/definition?definitionId=68"
+            },
+            {
+                "name": "Sample Pipeline 1",
+                "environments": {
+                    "Dev": {
+                        "value": "20221209.28",
+                        "finishTime": "2022-12-09T03:06:59.406Z",
+                        "result": 0,
+                        "folder": "\\",
+                        "uri": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/results?buildId=919"
+                    },
+                    "Prod": {
+                        "value": "20221209.3",
+                        "finishTime": "2022-12-08T23:53:23.136Z",
+                        "result": 0,
+                        "folder": "\\",
+                        "uri": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/results?buildId=873"
+                    },
+                    "Test": {
+                        "value": "20221209.28",
+                        "finishTime": "2022-12-09T03:08:30.663Z",
+                        "result": 0,
+                        "folder": "\\",
+                        "uri": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/results?buildId=919"
+                    }
+                },
+                "uri": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/definition?definitionId=22"
+            },
+            {
+                "name": "OldDashboard",
+                "environments": {
+                    "Prod": {
+                        "value": "20221209.2",
+                        "finishTime": "2022-12-09T00:13:23.486Z",
+                        "result": 0,
+                        "folder": "\\",
+                        "uri": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/results?buildId=879"
+                    },
+                    "Test": {
+                        "value": "20221209.2",
+                        "finishTime": "2022-12-09T00:12:59.960Z",
+                        "result": 0,
+                        "folder": "\\",
+                        "uri": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/results?buildId=879"
+                    }
+                },
+                "uri": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/definition?definitionId=23"
+            }
+        ]
+    },
+    "isLoading": false,
+    "organisation": "sixpivot",
+    "project": "ReleaseDashboard"
+}

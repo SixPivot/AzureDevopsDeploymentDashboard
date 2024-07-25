@@ -1,7 +1,11 @@
 {
     "compilerOptions": {
-        "module": "ESNext",
-        "lib": ["esnext", "dom", "dom.iterable"],
+        "module": "amd",
+        "lib": [
+            "es5",
+            "es6",
+            "dom",
+            "es2015.promise"],
         "importHelpers": true,
         "declaration": true,
         "sourceMap": true,
@@ -18,7 +22,9 @@
         "esModuleInterop": true,
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
-        "types": ["react", "vss-web-extension-sdk", "jest"]
+        "types": ["react", "vss-web-extension-sdk", "jest"],
+        "allowJs": true,
+        "resolveJsonModule": true
     },
     "include": ["src"]
 }

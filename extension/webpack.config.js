@@ -2,15 +2,9 @@ const path = require('path')
 const fs = require('fs')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 
-const entries = {}
-const srcDir = path.join(__dirname, 'src')
-fs.readdirSync(srcDir)
-    .filter((dir) => fs.statSync(path.join(srcDir, dir)).isDirectory())
-    .forEach((dir) => (entries[dir] = './' + path.join('src', dir, dir)))
-
 module.exports = {
     target: 'web',
-    entry: entries,
+    entry: { dashboard: './src/dashboard/dashboard' },
     output: {
         filename: '[name]/[name].js',
         publicPath: '/dist/',
