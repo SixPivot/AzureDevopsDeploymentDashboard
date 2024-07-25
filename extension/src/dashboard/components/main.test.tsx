@@ -3,7 +3,7 @@ import * as React from 'react'
 import '@testing-library/jest-dom'
 import '@testing-library/jest-dom/jest-globals'
 import { MainContent } from './main-content'
-import state from './state.json'
+import state from './state.test.json'
 import { IDashboardContentState } from './IDashboardContentState'
 
 test('Render and check layout', async () => {
