@@ -16,11 +16,10 @@ export class Main extends React.Component<{}, MainContentProps> {
             environments: [],
             pipelines: new ArrayItemProvider<IPipelineInfo>([]),
             isLoading: true,
-            project: "",
-            organisation: ""
+            project: '',
+            organisation: '',
         }
     }
-
 
     public async componentDidMount() {
         await SDK.init()
@@ -31,13 +30,13 @@ export class Main extends React.Component<{}, MainContentProps> {
         const projectName = project?.name ?? ''
 
         const { environments, pipelines } = await getDashboardEnvironmentPipelineInfo(projectName)
-        
+
         this.setState({
             environments: environments,
             pipelines: pipelines,
             organisation: SDK.getHost().name,
             project: projectName,
-            isLoading: false
+            isLoading: false,
         })
     }
     public render(): JSX.Element {

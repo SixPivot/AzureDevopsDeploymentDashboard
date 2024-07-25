@@ -3,7 +3,7 @@ import { CustomHeader, HeaderDescription, HeaderTitle, HeaderTitleArea, HeaderTi
 import { Page } from 'azure-devops-ui/Page'
 import { Spinner, SpinnerSize } from 'azure-devops-ui/Spinner'
 import { Table } from 'azure-devops-ui/Table'
-import React, { useState } from 'react'
+import React from 'react'
 import { Link } from 'azure-devops-ui/Link'
 import { Button } from 'azure-devops-ui/Button'
 import { IDashboardEnvironmentColumn, IEnvironmentPipelines, IPipelineInfo } from '../api/types'
@@ -11,9 +11,8 @@ import { sortEnvironmentsByconvention } from '../api/Utilities'
 import { DeploymentTableCell } from './deployment-table-cell'
 import { ArrayItemProvider } from 'azure-devops-ui/Utilities/Provider'
 
-
 export interface IMainContentState {
-    pipelines?: ArrayItemProvider<any>
+    pipelines?: ArrayItemProvider<IPipelineInfo>
     columns: IDashboardEnvironmentColumn[]
     isLoading: boolean
     organisation?: string
@@ -21,24 +20,24 @@ export interface IMainContentState {
 }
 
 export type MainContentProps = {
-    environments: IEnvironmentPipelines[];
-    pipelines: ArrayItemProvider<IPipelineInfo>;
-    organisation: string;
-    project: string;
-    isLoading: boolean;
+    environments: IEnvironmentPipelines[]
+    pipelines: ArrayItemProvider<IPipelineInfo>
+    organisation: string
+    project: string
+    isLoading: boolean
 }
 
 export const MainContent = (props: MainContentProps) => {
     console.log(props)
     const { environments, pipelines, project, organisation, isLoading } = props
-    const columns = generateEnvironmentsAsColumns(environments);
-    const [state] = useState<IMainContentState>({
+    const columns = generateEnvironmentsAsColumns(environments)
+    const state = {
         columns,
         pipelines,
         project,
         organisation,
-        isLoading
-    });
+        isLoading,
+    }
     return (
         <Page className="flex-grow">
             <CustomHeader className="bolt-header-with-commandbar">
@@ -89,11 +88,12 @@ export const MainContent = (props: MainContentProps) => {
     )
 }
 
-
 function generateEnvironmentsAsColumns(environments: IEnvironmentPipelines[]): Array<IDashboardEnvironmentColumn> {
     const columns: IDashboardEnvironmentColumn[] = []
 
-    const renderCell = (_: number, columnIndex: number, tableColumn: IDashboardEnvironmentColumn, tableItem: IPipelineInfo) => { return (<DeploymentTableCell columnIndex={columnIndex} tableColumn={tableColumn} tableItem={tableItem} />) }
+    const renderCell = (_: number, columnIndex: number, tableColumn: IDashboardEnvironmentColumn, tableItem: IPipelineInfo) => {
+        return <DeploymentTableCell columnIndex={columnIndex} tableColumn={tableColumn} tableItem={tableItem} />
+    }
 
     columns.push({
         id: 'name',
