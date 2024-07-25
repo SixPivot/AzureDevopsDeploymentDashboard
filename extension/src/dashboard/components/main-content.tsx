@@ -3,13 +3,42 @@ import { CustomHeader, HeaderDescription, HeaderTitle, HeaderTitleArea, HeaderTi
 import { Page } from 'azure-devops-ui/Page'
 import { Spinner, SpinnerSize } from 'azure-devops-ui/Spinner'
 import { Table } from 'azure-devops-ui/Table'
-import React from 'react'
-import { IDashboardContentState } from './IDashboardContentState'
+import React, { useState } from 'react'
 import { Link } from 'azure-devops-ui/Link'
 import { Button } from 'azure-devops-ui/Button'
+import { IDashboardEnvironmentColumn, IEnvironmentPipelines, IPipelineInfo } from '../api/types'
+import { sortEnvironmentsByconvention } from '../api/Utilities'
+import { DeploymentTableCell } from './deployment-table-cell'
+import { ArrayItemProvider } from 'azure-devops-ui/Utilities/Provider'
 
-export const MainContent = (props: { state: IDashboardContentState }) => {
-    const { state } = props
+
+export interface IMainContentState {
+    pipelines?: ArrayItemProvider<any>
+    columns: IDashboardEnvironmentColumn[]
+    isLoading: boolean
+    organisation?: string
+    project?: string
+}
+
+export type MainContentProps = {
+    environments: IEnvironmentPipelines[];
+    pipelines: ArrayItemProvider<IPipelineInfo>;
+    organisation: string;
+    project: string;
+    isLoading: boolean;
+}
+
+export const MainContent = (props: MainContentProps) => {
+    console.log(props)
+    const { environments, pipelines, project, organisation, isLoading } = props
+    const columns = generateEnvironmentsAsColumns(environments);
+    const [state] = useState<IMainContentState>({
+        columns,
+        pipelines,
+        project,
+        organisation,
+        isLoading
+    });
     return (
         <Page className="flex-grow">
             <CustomHeader className="bolt-header-with-commandbar">
@@ -58,4 +87,34 @@ export const MainContent = (props: { state: IDashboardContentState }) => {
             </div>
         </Page>
     )
+}
+
+
+function generateEnvironmentsAsColumns(environments: IEnvironmentPipelines[]): Array<IDashboardEnvironmentColumn> {
+    const columns: IDashboardEnvironmentColumn[] = []
+
+    const renderCell = (_: number, columnIndex: number, tableColumn: IDashboardEnvironmentColumn, tableItem: IPipelineInfo) => { return (<DeploymentTableCell columnIndex={columnIndex} tableColumn={tableColumn} tableItem={tableItem} />) }
+
+    columns.push({
+        id: 'name',
+        name: '',
+        renderCell,
+        width: 250,
+        sortOrder: 0,
+    } as IDashboardEnvironmentColumn)
+
+    const dynamicColumns = environments.map((environment) => {
+        return {
+            id: environment.name,
+            name: environment.name,
+            renderCell,
+            width: 200,
+        } as IDashboardEnvironmentColumn
+    })
+
+    const concatenated = columns.concat(dynamicColumns)
+
+    const sorted = sortEnvironmentsByconvention(concatenated)
+
+    return sorted
 }

@@ -2,18 +2,16 @@ import { render, screen } from '@testing-library/react'
 import * as React from 'react'
 import '@testing-library/jest-dom'
 import '@testing-library/jest-dom/jest-globals'
-import { MainContent } from './main-content'
-import state from './state.test.json'
-import { IDashboardContentState } from './IDashboardContentState'
+import { MainContent, MainContentProps } from './main-content'
+import data from './state.test.json'
 
 test('Render and check layout', async () => {
+
     render(
-        <MainContent
-            state={state as unknown as IDashboardContentState}
-        />
-    )
+        <MainContent {...data as unknown as MainContentProps} />
+)
 
-    await screen.findByRole('heading')
+await screen.findByRole('heading')
 
-    expect(screen.getByRole('heading')).toHaveTextContent('Deployment Dashboard')
+expect(screen.getByRole('heading')).toHaveTextContent('Deployment Dashboard')
 })
