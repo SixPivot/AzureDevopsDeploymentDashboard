@@ -3,7 +3,7 @@ import { Pipeline } from 'azure-devops-extension-api/Pipelines/Pipelines'
 import { ITableColumn } from 'azure-devops-ui/Table'
 import { ArrayItemProvider } from 'azure-devops-ui/Utilities/Provider'
 import { IStatusProps } from 'azure-devops-ui/Status'
-import { ISortableByConvention } from '../../api/types'
+import { IEnvironmentInstance } from '../../api/types'
 
 /**
  Type represents deployment pipelines (pipelines used for deployment. Usually these are YAML pipelines with deployment environments)
@@ -18,10 +18,8 @@ export interface IDeploymentPipeline {
 /**
  Type represents environment pipelines (environment with associated deployment pipelines)
  */
-export interface IEnvironmentPipelines {
-    name: string
+export interface IEnvironmentPipelines extends IEnvironmentInstance {
     pipelines: IDeploymentPipeline
-    sortOrder?: number
 }
 
 export interface IStatusIndicatorData {
@@ -29,14 +27,12 @@ export interface IStatusIndicatorData {
     label: string
 }
 
-export interface IDashboardEnvironmentColumn extends ITableColumn<IPipelineInfo>, ISortableByConvention {
-    name?: string
-}
+export interface IDashboardEnvironmentColumn extends ITableColumn<IPipelineInstance>, IEnvironmentInstance {}
 
 /**
 Type represents release information
 */
-export interface IDeploymentInfo {
+export interface IDeploymentInstance {
     value: string
     result: TaskResult
     folder?: string
@@ -49,13 +45,13 @@ Type represents dictionary of releases (ReleaseInfo}. Where dictionary key is en
 Example: {Dev: { value: "20240715.2", finishTime: "1 Jul 2024, 01:37 PM", result: 0}} Where Dev is environment name. And dynamically added as dictionary key
 */
 export interface IEnvironmentDeploymentDictionary {
-    [index: string]: IDeploymentInfo
+    [index: string]: IDeploymentInstance
 }
 
 /**
 Type represents Pipeline information and environments associated with this pipeline
 */
-export interface IPipelineInfo {
+export interface IPipelineInstance {
     name: string
     uri: string
     environments: IEnvironmentDeploymentDictionary
@@ -64,7 +60,7 @@ export interface IPipelineInfo {
 /**
  Type represents Dashboard information (environments vs pipelines = release) 
  */
-export interface IDashboardEnvironmentPipelineInfo {
+export interface IDashboardEnvironmentPipeline {
     environments: IEnvironmentPipelines[]
-    pipelines: ArrayItemProvider<IPipelineInfo>
+    pipelines: ArrayItemProvider<IPipelineInstance>
 }

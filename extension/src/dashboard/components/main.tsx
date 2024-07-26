@@ -1,19 +1,21 @@
 /// <reference types="vss-web-extension-sdk" />
 import * as React from 'react'
 import * as SDK from 'azure-devops-extension-sdk'
-import { CommonServiceIds, IProjectPageService } from 'azure-devops-extension-api'
 import { SimpleTableCell } from 'azure-devops-ui/Table'
 import { ArrayItemProvider } from 'azure-devops-ui/Utilities/Provider'
-import { IEnvironmentPipelines, IDashboardEnvironmentColumn, IStatusIndicatorData, IPipelineInfo } from '../api/types'
-import { getDashboardEnvironmentPipelineInfo } from '../api/AzureDevopsClient'
-import './main.scss'
 import { Status, Statuses, StatusSize } from 'azure-devops-ui/Status'
 import { Link } from 'azure-devops-ui/Link'
 import { Ago } from 'azure-devops-ui/Ago'
 import { AgoFormat } from 'azure-devops-ui/Utilities/Date'
-import { sortByConvention } from '../../api/Utilities'
 import { MainContent } from './main-content'
 import { IDashboardContentState } from './IDashboardContentState'
+import { IDashboardEnvironmentColumn, IStatusIndicatorData, IPipelineInstance } from '../api/types'
+import { getDashboardEnvironmentPipelineInfo } from '../api/AzureDevopsClient'
+import { IEnvironmentInstance } from '../../api/types'
+import { sortByConvention } from '../../api/Utilities'
+import { ExtensionDataManagerWrapper } from '../../api/ExtensionDataManagerWrapper'
+
+import './main.scss'
 
 export class Main extends React.Component<{}, IDashboardContentState> {
     constructor(props: {}) {
@@ -28,12 +30,15 @@ export class Main extends React.Component<{}, IDashboardContentState> {
                     width: 300,
                 } as IDashboardEnvironmentColumn,
             ],
-            pipelines: new ArrayItemProvider<IPipelineInfo>([]),
+            pipelines: new ArrayItemProvider<IPipelineInstance>([]),
             isLoading: true,
         }
+        this._dataManager = new ExtensionDataManagerWrapper()
     }
 
-    renderCell = (_: number, columnIndex: number, tableColumn: IDashboardEnvironmentColumn, tableItem: IPipelineInfo): JSX.Element => {
+    private readonly _dataManager: ExtensionDataManagerWrapper
+
+    renderCell = (_: number, columnIndex: number, tableColumn: IDashboardEnvironmentColumn, tableItem: IPipelineInstance): JSX.Element => {
         return (
             <SimpleTableCell
                 columnIndex={columnIndex}
@@ -112,7 +117,7 @@ export class Main extends React.Component<{}, IDashboardContentState> {
         return indicatorData
     }
 
-    generateEnvironmentsAsColumns(environments: IEnvironmentPipelines[]): Array<IDashboardEnvironmentColumn> {
+    generateEnvironmentsAsColumns(environments: IEnvironmentInstance[], sort: boolean = true): Array<IDashboardEnvironmentColumn> {
         const columns: IDashboardEnvironmentColumn[] = []
 
         columns.push({
@@ -134,26 +139,32 @@ export class Main extends React.Component<{}, IDashboardContentState> {
 
         const concatenated = columns.concat(dynamicColumns)
 
-        const sorted = sortByConvention(concatenated)
+        if (sort) {
+            const sorted = sortByConvention(concatenated)
 
-        return sorted as IDashboardEnvironmentColumn[]
+            return sorted as IDashboardEnvironmentColumn[]
+        }
+        return concatenated
     }
 
     public async componentDidMount() {
         await SDK.init()
+        await this._dataManager.init()
 
-        //Note: Couldn't use SDK.getWebContext().project.name. Because for some reason SDK.getWebContext() returns an empty object. Maybe it's not mean to work with local dev
-        const projectPageService = await SDK.getService<IProjectPageService>(CommonServiceIds.ProjectPageService)
-        const project = await projectPageService.getProject()
-        const projectName = project?.name ?? ''
+        const projectName = this._dataManager.getProjectName()
 
         const { environments, pipelines } = await getDashboardEnvironmentPipelineInfo(projectName)
 
+        const manuallySortedEnvironments = await this._dataManager.getCustomEnvironmentSortOrder()
+
         this.setState({
-            columns: this.generateEnvironmentsAsColumns(environments),
+            columns: this.generateEnvironmentsAsColumns(
+                manuallySortedEnvironments ?? environments,
+                manuallySortedEnvironments === undefined
+            ),
             pipelines: pipelines,
             isLoading: false,
-            organisation: SDK.getHost().name,
+            organisation: this._dataManager.getOrgnaizationName(),
             project: projectName,
         })
     }

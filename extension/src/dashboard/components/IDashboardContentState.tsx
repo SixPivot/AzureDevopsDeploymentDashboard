@@ -1,8 +1,8 @@
 import { ArrayItemProvider } from 'azure-devops-ui/Utilities/Provider'
-import { IDashboardEnvironmentColumn, IPipelineInfo } from '../api/types'
+import { IDashboardEnvironmentColumn, IPipelineInstance } from '../api/types'
 
 export interface IDashboardContentState {
-    pipelines?: ArrayItemProvider<IPipelineInfo>
+    pipelines?: ArrayItemProvider<IPipelineInstance>
     columns: IDashboardEnvironmentColumn[]
     isLoading: boolean
     organisation?: string

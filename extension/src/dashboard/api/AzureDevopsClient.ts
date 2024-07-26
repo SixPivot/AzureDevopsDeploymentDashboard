@@ -2,9 +2,9 @@ import { ArrayItemProvider } from 'azure-devops-ui/Utilities/Provider'
 import { getClient } from 'azure-devops-extension-api'
 import { PipelinesRestClient } from 'azure-devops-extension-api/Pipelines/PipelinesClient'
 import { TaskAgentRestClient } from 'azure-devops-extension-api/TaskAgent'
-import { IDashboardEnvironmentPipelineInfo, IEnvironmentPipelines, IEnvironmentDeploymentDictionary, IPipelineInfo } from './types'
+import { IDashboardEnvironmentPipeline, IEnvironmentPipelines, IEnvironmentDeploymentDictionary, IPipelineInstance } from './types'
 
-export async function getDashboardEnvironmentPipelineInfo(projectName: string): Promise<IDashboardEnvironmentPipelineInfo> {
+export async function getDashboardEnvironmentPipelineInfo(projectName: string): Promise<IDashboardEnvironmentPipeline> {
     const taskAgentClient = getClient(TaskAgentRestClient)
     const pipelinesClient = getClient(PipelinesRestClient)
 
@@ -20,6 +20,7 @@ export async function getDashboardEnvironmentPipelineInfo(projectName: string): 
         const environmentPipeline: IEnvironmentPipelines = {
             name: environment.name,
             pipelines: {},
+            conventionSortOrder: 99,
         }
         for (const deployment of deployments) {
             if (!environmentPipeline.pipelines[deployment.definition.name]) {
@@ -40,8 +41,8 @@ export async function getDashboardEnvironmentPipelineInfo(projectName: string): 
     }
 }
 
-function generatePipelineInfoArray(environments: IEnvironmentPipelines[]): Array<IPipelineInfo> {
-    const pipelineInfoArray: Array<IPipelineInfo> = []
+function generatePipelineInfoArray(environments: IEnvironmentPipelines[]): Array<IPipelineInstance> {
+    const pipelineInfoArray: Array<IPipelineInstance> = []
 
     for (const environment of environments) {
         for (const pipelineName of Object.keys(environment.pipelines)) {
@@ -54,6 +55,8 @@ function generatePipelineInfoArray(environments: IEnvironmentPipelines[]): Array
             if (pipelineInfoArray.indexOf(pipelineInfo) === -1) {
                 pipelineInfoArray.push(pipelineInfo)
             }
+
+            if (environment.name === undefined) continue
 
             pipelineInfo.environments[environment.name] = {
                 value: environment.pipelines[pipelineName].deployment.owner.name,
