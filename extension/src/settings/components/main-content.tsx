@@ -2,14 +2,51 @@ import React from 'react'
 import { Card } from 'azure-devops-ui/Card'
 import { CustomHeader, HeaderDescription, HeaderTitle, HeaderTitleArea, HeaderTitleRow, TitleSize } from 'azure-devops-ui/Header'
 import { Spinner, SpinnerSize } from 'azure-devops-ui/Spinner'
-import { Table } from 'azure-devops-ui/Table'
+import { DragAndDropGripper, Table } from 'azure-devops-ui/Table'
 import { Link } from 'azure-devops-ui/Link'
 import { Button } from 'azure-devops-ui/Button'
-import { ISettingsContentState } from './ISettingsContentState'
 import { Page } from 'azure-devops-ui/Page'
+import { IHeaderCommandBarItem } from 'azure-devops-ui/HeaderCommandBar'
+import { ISettingsContentState } from './ISettingsContentState'
+import { ListDragDropBehavior, ListDragImage } from 'azure-devops-ui/List'
+import { IEnvironmentInstance } from '../../api/types'
 
 export const MainContent = (props: { state: ISettingsContentState }) => {
     const { state } = props
+    const commandBarItems: IHeaderCommandBarItem[] = [
+        {
+            id: 'reset-sort-order-settings',
+            text: 'Reset to default',
+            onActivate: state.onResetToDefaultSortOrder,
+            iconProps: {
+                iconName: 'Undo',
+            },
+        },
+        {
+            id: 'sort-order-save',
+            text: 'Save',
+            onActivate: state.onSaveCustomSortOrder,
+            iconProps: {
+                iconName: 'Save',
+            },
+        },
+    ]
+
+    const dragDropBehavior = new ListDragDropBehavior<IEnvironmentInstance>({
+        allowedTypes: ['IEnvironmentInstance'],
+        id: 'environment-dragndrop-behavior',
+        type: 'IEnvironmentInstance',
+        renderDragImage: (event) => <ListDragImage text={event.detail.dataTransfer.data.name ?? 'UNKNOWN ENVIRONMENT'} />,
+        onDrop: state.onTableRowDrop,
+    })
+
+    function renderGripper(_: number, left: boolean) {
+        if (left) {
+            return <DragAndDropGripper />
+        }
+        return null
+    }
+
     return (
         <Page className="flex-grow setting-page">
             <CustomHeader className="bolt-header-with-commandbar">
@@ -25,8 +62,9 @@ export const MainContent = (props: { state: ISettingsContentState }) => {
 
             <div className="page-content page-content-top">
                 <Card
+                    headerCommandBarItems={commandBarItems}
                     className="bolt-card-white bolt-table-card"
-                    titleProps={{ text: 'Sort environments' }}
+                    titleProps={{ text: 'Manual sort environments' }}
                     headerDescriptionProps={{ text: 'Sort environments in the order you wish them to appear in the dashboard' }}
                 >
                     {state.isLoading ? (
@@ -34,7 +72,15 @@ export const MainContent = (props: { state: ISettingsContentState }) => {
                             <Spinner label="Loading data..." size={SpinnerSize.large} />
                         </div>
                     ) : state.environments && state.environments.length > 0 ? (
-                        <Table className="environments-table" columns={state.columns} itemProvider={state.environments} />
+                        <Table<IEnvironmentInstance>
+                            id="environments-table"
+                            spacerWidth={20}
+                            className="environments-table"
+                            columns={state.columns}
+                            itemProvider={state.environments}
+                            behaviors={[dragDropBehavior]}
+                            renderSpacer={renderGripper}
+                        />
                     ) : (
                         <div className="font-size-m flex-grow text-center padding-vertical-20">
                             <div className="margin-bottom-16 font-weight-heavy font-size-l">No deployments were found in any pipelines</div>

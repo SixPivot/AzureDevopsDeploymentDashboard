@@ -14,7 +14,6 @@ import { AgoFormat } from 'azure-devops-ui/Utilities/Date'
 import { sortByConvention } from '../../api/Utilities'
 import { MainContent } from './main-content'
 import { IDashboardContentState } from './IDashboardContentState'
-import { ISortableByConvention } from '../../api/types'
 
 export class Main extends React.Component<{}, IDashboardContentState> {
     constructor(props: {}) {
@@ -135,7 +134,7 @@ export class Main extends React.Component<{}, IDashboardContentState> {
 
         const concatenated = columns.concat(dynamicColumns)
 
-        const sorted = sortByConvention(concatenated as ISortableByConvention[])
+        const sorted = sortByConvention(concatenated)
 
         return sorted as IDashboardEnvironmentColumn[]
     }
