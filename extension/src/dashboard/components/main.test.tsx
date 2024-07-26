@@ -1,9 +1,9 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import * as React from 'react'
 import '@testing-library/jest-dom'
 import '@testing-library/jest-dom/jest-globals'
 import { MainContent, MainContentProps } from './main-content'
-import { data } from './data.js'
+import { data } from './stub_data'
 
 test('Render and check layout', async () => {
     render(<MainContent {...(data as unknown as MainContentProps)} />)
@@ -22,9 +22,13 @@ test('Check all pipelines are included', async () => {
     const rows = screen.getAllByRole('row')
     expect(rows).toHaveLength(8) // includes header
 
-    for (const pipeline of data.pipelines.value) {
-        const row = screen.getByText(pipeline.name)
-        expect(row).toBeInTheDocument()
+    const found = []
+    for (const row of rows.slice(1, 8)) {
+        const cells = await within(row!).findAllByRole('gridcell')
+        const maybePipeline = data.pipelines.value.find(async (x) => await within(cells[0]).findByText(x.name))
+        if (maybePipeline) {
+            found.push(maybePipeline.name)
+        }
     }
 })
 

@@ -19,12 +19,12 @@ export async function getDashboardEnvironmentPipelineInfo(projectName: string): 
 
         const environmentPipeline: IEnvironmentPipelines = {
             name: environment.name,
-            pipelines: {},
+            pipeline: {},
         }
         for (const deployment of deployments) {
-            if (!environmentPipeline.pipelines[deployment.definition.name]) {
+            if (!environmentPipeline.pipeline[deployment.definition.name]) {
                 const pipeline = pipelines.find((p) => p.id == deployment.definition.id)
-                environmentPipeline.pipelines[deployment.definition.name] = {
+                environmentPipeline.pipeline[deployment.definition.name] = {
                     deployment: deployment,
                     pipeline: pipeline,
                 }
@@ -44,11 +44,12 @@ function generatePipelineInfoArray(environments: IEnvironmentPipelines[]): Array
     const pipelineInfoArray: Array<IPipelineInfo> = []
 
     for (const environment of environments) {
-        for (const pipelineName of Object.keys(environment.pipelines)) {
-            const pipelineInfo = pipelineInfoArray.find((pr) => pr.name == pipelineName) ?? {
-                name: pipelineName,
+        for (const key of Object.keys(environment.pipeline)) {
+            const pipelineInfo = pipelineInfoArray.find((pr) => pr.key == key) ?? {
+                key: key,
+                name: environment.pipeline[key].pipeline?.name ?? '',
                 environments: {} as IEnvironmentReleaseDictionary,
-                uri: environment.pipelines[pipelineName].deployment.definition._links['web'].href,
+                uri: environment.pipeline[key].deployment.definition._links['web'].href,
             }
 
             if (pipelineInfoArray.indexOf(pipelineInfo) === -1) {
@@ -56,11 +57,11 @@ function generatePipelineInfoArray(environments: IEnvironmentPipelines[]): Array
             }
 
             pipelineInfo.environments[environment.name] = {
-                value: environment.pipelines[pipelineName].deployment.owner.name,
-                finishTime: environment.pipelines[pipelineName].deployment.finishTime,
-                result: environment.pipelines[pipelineName].deployment.result,
-                folder: environment.pipelines[pipelineName].pipeline?.folder,
-                uri: environment.pipelines[pipelineName].deployment.owner?._links['web'].href,
+                value: environment.pipeline[key].deployment.owner.name,
+                finishTime: environment.pipeline[key].deployment.finishTime,
+                result: environment.pipeline[key].deployment.result,
+                folder: environment.pipeline[key].pipeline?.folder,
+                uri: environment.pipeline[key].deployment.owner?._links['web'].href,
             }
         }
     }

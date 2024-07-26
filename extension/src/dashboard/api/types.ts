@@ -19,7 +19,7 @@ export interface IDeploymentPipeline {
  */
 export interface IEnvironmentPipelines {
     name: string
-    pipelines: IDeploymentPipeline
+    pipeline: IDeploymentPipeline
     sortOrder?: number
 }
 
@@ -55,6 +55,7 @@ export interface IEnvironmentReleaseDictionary {
 Type represents Pipeline information and environments associated with this pipeline
 */
 export interface IPipelineInfo {
+    key: string
     name: string
     uri: string
     environments: IEnvironmentReleaseDictionary

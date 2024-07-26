@@ -28,7 +28,6 @@ export type MainContentProps = {
 }
 
 export const MainContent = (props: MainContentProps) => {
-    console.log(props)
     const { environments, pipelines, project, organisation, isLoading } = props
     const columns = generateEnvironmentsAsColumns(environments)
     const state = {
@@ -91,8 +90,15 @@ export const MainContent = (props: MainContentProps) => {
 function generateEnvironmentsAsColumns(environments: IEnvironmentPipelines[]): Array<IDashboardEnvironmentColumn> {
     const columns: IDashboardEnvironmentColumn[] = []
 
-    const renderCell = (_: number, columnIndex: number, tableColumn: IDashboardEnvironmentColumn, tableItem: IPipelineInfo) => {
-        return <DeploymentTableCell columnIndex={columnIndex} tableColumn={tableColumn} tableItem={tableItem} />
+    const renderCell = (index: number, columnIndex: number, tableColumn: IDashboardEnvironmentColumn, tableItem: IPipelineInfo) => {
+        return (
+            <DeploymentTableCell
+                key={`deployment-cell-${index}-${columnIndex}`}
+                columnIndex={columnIndex}
+                tableColumn={tableColumn}
+                tableItem={tableItem}
+            />
+        )
     }
 
     columns.push({
