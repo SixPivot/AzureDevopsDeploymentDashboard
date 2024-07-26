@@ -2,14 +2,15 @@
 import * as SDK from 'azure-devops-extension-sdk'
 import { CommonServiceIds, IExtensionDataService, IExtensionDataManager, IProjectPageService } from 'azure-devops-extension-api'
 import { IEnvironmentInstance, ExtensionDataKeys } from './types'
-export class ExtensionDataManagerWrapper {
+export class AzureDevOpsSdkManager {
     private _dataManager: IExtensionDataManager | undefined
     private _projectName: string | undefined
     private _organization: string | undefined
     /**
-     * Initialized ExtensionDataManagerWrapper. Must be called after SDK.init()
+     * Initialized AzureDevOpsSdkManager and calls SDK.init() at the begning
      */
     public async init() {
+        await SDK.init()
         const accessToken = await SDK.getAccessToken()
         const extDataService = await SDK.getService<IExtensionDataService>(CommonServiceIds.ExtensionDataService)
         const projectPageService = await SDK.getService<IProjectPageService>(CommonServiceIds.ProjectPageService)

@@ -1,7 +1,5 @@
 /// <reference types="vss-web-extension-sdk" />
 import * as React from 'react'
-import * as SDK from 'azure-devops-extension-sdk'
-import { CommonServiceIds, IProjectPageService } from 'azure-devops-extension-api'
 import { ITableColumn, SimpleTableCell, TableColumnLayout } from 'azure-devops-ui/Table'
 import { ObservableValue } from 'azure-devops-ui/Core/Observable'
 import { ArrayItemProvider } from 'azure-devops-ui/Utilities/Provider'
@@ -9,7 +7,7 @@ import { BoltListDragEvent, IListDropData } from 'azure-devops-ui/List'
 import { getEnvironmentsSortedByConvention } from '../api/AzureDevOpsClient'
 import { ISettingsContentState } from './ISettingsContentState'
 import { IEnvironmentInstance } from '../../api/types'
-import { ExtensionDataManagerWrapper } from '../../api/ExtensionDataManagerWrapper'
+import { AzureDevOpsSdkManager } from '../../api/AzureDevOpsSdkManager'
 import { MainContent } from './main-content'
 import './main.scss'
 
@@ -33,26 +31,24 @@ export class Main extends React.Component<{}, ISettingsContentState> {
             onSaveCustomSortOrder: this.onSaveCustomSortOrder,
             onResetToDefaultSortOrder: this.onResetToDefaultSortOrder,
         }
-        this._dataManager = new ExtensionDataManagerWrapper()
+
+        this._sdkManager = new AzureDevOpsSdkManager()
     }
 
-    private readonly _dataManager: ExtensionDataManagerWrapper
+    private readonly _sdkManager: AzureDevOpsSdkManager
 
     public async componentDidMount() {
-        await SDK.init()
-        await this._dataManager.init()
+        await this._sdkManager.init()
 
-        const projectPageService = await SDK.getService<IProjectPageService>(CommonServiceIds.ProjectPageService)
-        const project = await projectPageService.getProject()
-        const projectName = project?.name ?? ''
+        const projectName = this._sdkManager.getProjectName()
 
-        const environments = await getEnvironmentsSortedByConvention(projectName)
-        const manuallySortedEnvironments = await this._dataManager.getCustomEnvironmentSortOrder()
+        const environments =
+            (await this._sdkManager.getCustomEnvironmentSortOrder()) ?? (await getEnvironmentsSortedByConvention(projectName))
 
         this.setState({
-            environments: new ArrayItemProvider(manuallySortedEnvironments ?? environments),
+            environments: new ArrayItemProvider(environments),
             isLoading: false,
-            organisation: SDK.getHost().name,
+            organisation: this._sdkManager.getOrgnaizationName(),
             project: projectName,
             onTableRowDrop: this.onTableRowDrop,
         })
@@ -97,18 +93,18 @@ export class Main extends React.Component<{}, ISettingsContentState> {
     }
 
     onSaveCustomSortOrder = async () => {
-        if (this._dataManager) {
+        if (this._sdkManager) {
             this.setState({ isLoading: true })
-            await this._dataManager.setCustomEnvironmentSortOrder(this.state.environments.value)
+            await this._sdkManager.setCustomEnvironmentSortOrder(this.state.environments.value)
             this.setState({ isLoading: false })
         }
     }
 
     onResetToDefaultSortOrder = async () => {
-        if (this._dataManager) {
+        if (this._sdkManager) {
             this.setState({ isLoading: true })
-            await this._dataManager.clearCustomEnviromentsSortOrder()
-            const environments = await getEnvironmentsSortedByConvention(this._dataManager.getProjectName())
+            await this._sdkManager.clearCustomEnviromentsSortOrder()
+            const environments = await getEnvironmentsSortedByConvention(this._sdkManager.getProjectName())
             this.setState({ isLoading: false, environments: new ArrayItemProvider(environments) })
         }
     }

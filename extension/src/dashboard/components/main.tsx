@@ -1,6 +1,5 @@
 /// <reference types="vss-web-extension-sdk" />
 import * as React from 'react'
-import * as SDK from 'azure-devops-extension-sdk'
 import { SimpleTableCell } from 'azure-devops-ui/Table'
 import { ArrayItemProvider } from 'azure-devops-ui/Utilities/Provider'
 import { Status, Statuses, StatusSize } from 'azure-devops-ui/Status'
@@ -13,7 +12,7 @@ import { IDashboardEnvironmentColumn, IStatusIndicatorData, IPipelineInstance } 
 import { getDashboardEnvironmentPipelineInfo } from '../api/AzureDevopsClient'
 import { IEnvironmentInstance } from '../../api/types'
 import { sortByConvention } from '../../api/Utilities'
-import { ExtensionDataManagerWrapper } from '../../api/ExtensionDataManagerWrapper'
+import { AzureDevOpsSdkManager } from '../../api/AzureDevOpsSdkManager'
 
 import './main.scss'
 
@@ -33,10 +32,10 @@ export class Main extends React.Component<{}, IDashboardContentState> {
             pipelines: new ArrayItemProvider<IPipelineInstance>([]),
             isLoading: true,
         }
-        this._dataManager = new ExtensionDataManagerWrapper()
+        this._sdkManager = new AzureDevOpsSdkManager()
     }
 
-    private readonly _dataManager: ExtensionDataManagerWrapper
+    private readonly _sdkManager: AzureDevOpsSdkManager
 
     renderCell = (_: number, columnIndex: number, tableColumn: IDashboardEnvironmentColumn, tableItem: IPipelineInstance): JSX.Element => {
         return (
@@ -148,14 +147,13 @@ export class Main extends React.Component<{}, IDashboardContentState> {
     }
 
     public async componentDidMount() {
-        await SDK.init()
-        await this._dataManager.init()
+        await this._sdkManager.init()
 
-        const projectName = this._dataManager.getProjectName()
+        const projectName = this._sdkManager.getProjectName()
 
         const { environments, pipelines } = await getDashboardEnvironmentPipelineInfo(projectName)
 
-        const manuallySortedEnvironments = await this._dataManager.getCustomEnvironmentSortOrder()
+        const manuallySortedEnvironments = await this._sdkManager.getCustomEnvironmentSortOrder()
 
         this.setState({
             columns: this.generateEnvironmentsAsColumns(
@@ -164,7 +162,7 @@ export class Main extends React.Component<{}, IDashboardContentState> {
             ),
             pipelines: pipelines,
             isLoading: false,
-            organisation: this._dataManager.getOrgnaizationName(),
+            organisation: this._sdkManager.getOrgnaizationName(),
             project: projectName,
         })
     }
