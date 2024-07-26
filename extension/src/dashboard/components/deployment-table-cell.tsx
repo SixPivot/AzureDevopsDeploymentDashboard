@@ -35,7 +35,9 @@ export const DeploymentTableCell = (props: { tableItem: IPipelineInfo; columnInd
                             {tableItem.environments[tableColumn.id].value}
                         </Link>
                         <div className="finish-date">
-                            <Ago date={tableItem.environments[tableColumn.id].finishTime} format={AgoFormat.Extended} />
+                            {tableItem.environments[tableColumn.id].finishTime && (
+                                <Ago date={tableItem.environments[tableColumn.id].finishTime} format={AgoFormat.Extended} />
+                            )}
                         </div>
                     </div>
                 </div>

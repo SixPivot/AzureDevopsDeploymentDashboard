@@ -1040,7 +1040,7 @@ export const data = {
                 },
                 UAT: {
                     value: '20240715.2',
-                    finishTime: new Date(1721014642430),
+                    // finishTime is undefined because deployment can be in progress.
                     result: 0,
                     folder: '\\Service Group B\\Critical Services',
                     uri: 'https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/results?buildId=3915',
