@@ -30,16 +30,16 @@ export class AzureDevOpsSdkManager {
         return this._organization ?? ''
     }
 
-    public async setCustomEnvironmentSortOrder(enviroments: IEnvironmentInstance[]) {
-        await this.setValue(ExtensionDataKeys.CustomeEnvironmentSortOrder, enviroments)
+    public async storeEnvironmentsInSettings(enviroments: IEnvironmentInstance[]) {
+        await this.setValue(ExtensionDataKeys.Environments, enviroments)
     }
 
-    public async getCustomEnvironmentSortOrder(): Promise<IEnvironmentInstance[] | undefined> {
-        return await this.getValue(ExtensionDataKeys.CustomeEnvironmentSortOrder)
+    public async getEnvironmentsFromSettings(): Promise<IEnvironmentInstance[] | undefined> {
+        return await this.getValue(ExtensionDataKeys.Environments)
     }
 
-    public async clearCustomEnviromentsSortOrder() {
-        await this._dataManager?.setValue(ExtensionDataKeys.CustomeEnvironmentSortOrder, undefined)
+    public async clearEnvironmentsByCustomSortOrder() {
+        await this._dataManager?.setValue(ExtensionDataKeys.Environments, undefined)
     }
 
     private async setValue<T>(key: string, value: T): Promise<void> {

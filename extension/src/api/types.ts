@@ -6,5 +6,5 @@ export interface ISortableByConvention {
 export interface IEnvironmentInstance extends ISortableByConvention {}
 
 export enum ExtensionDataKeys {
-    CustomeEnvironmentSortOrder = 'CustomeEnvironmentSortOrder',
+    Environments = 'Environments',
 }

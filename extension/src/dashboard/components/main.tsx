@@ -153,13 +153,10 @@ export class Main extends React.Component<{}, IDashboardContentState> {
 
         const { environments, pipelines } = await getDashboardEnvironmentPipelineInfo(projectName)
 
-        const manuallySortedEnvironments = await this._sdkManager.getCustomEnvironmentSortOrder()
+        const customSortedEnvironments = await this._sdkManager.getEnvironmentsFromSettings()
 
         this.setState({
-            columns: this.generateEnvironmentsAsColumns(
-                manuallySortedEnvironments ?? environments,
-                manuallySortedEnvironments === undefined
-            ),
+            columns: this.generateEnvironmentsAsColumns(customSortedEnvironments ?? environments, customSortedEnvironments === undefined),
             pipelines: pipelines,
             isLoading: false,
             organisation: this._sdkManager.getOrgnaizationName(),

@@ -43,7 +43,7 @@ export class Main extends React.Component<{}, ISettingsContentState> {
         const projectName = this._sdkManager.getProjectName()
 
         const environments =
-            (await this._sdkManager.getCustomEnvironmentSortOrder()) ?? (await getEnvironmentsSortedByConvention(projectName))
+            (await this._sdkManager.getEnvironmentsFromSettings()) ?? (await getEnvironmentsSortedByConvention(projectName))
 
         this.setState({
             environments: new ArrayItemProvider(environments),
@@ -95,7 +95,7 @@ export class Main extends React.Component<{}, ISettingsContentState> {
     onSaveCustomSortOrder = async () => {
         if (this._sdkManager) {
             this.setState({ isLoading: true })
-            await this._sdkManager.setCustomEnvironmentSortOrder(this.state.environments.value)
+            await this._sdkManager.storeEnvironmentsInSettings(this.state.environments.value)
             this.setState({ isLoading: false })
         }
     }
@@ -103,7 +103,7 @@ export class Main extends React.Component<{}, ISettingsContentState> {
     onResetToDefaultSortOrder = async () => {
         if (this._sdkManager) {
             this.setState({ isLoading: true })
-            await this._sdkManager.clearCustomEnviromentsSortOrder()
+            await this._sdkManager.clearEnvironmentsByCustomSortOrder()
             const environments = await getEnvironmentsSortedByConvention(this._sdkManager.getProjectName())
             this.setState({ isLoading: false, environments: new ArrayItemProvider(environments) })
         }
