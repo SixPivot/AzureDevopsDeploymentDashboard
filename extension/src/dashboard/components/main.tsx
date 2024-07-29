@@ -38,6 +38,7 @@ export class Main extends React.Component<{}, MainContentProps> {
             isLoading: false,
         })
     }
+
     public render(): JSX.Element {
         return <MainContent {...this.state}></MainContent>
     }

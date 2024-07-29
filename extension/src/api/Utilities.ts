@@ -1,4 +1,6 @@
+import { Statuses } from 'azure-devops-ui/Status'
 import { IEnvironmentInstance, ISortableByConvention } from '../api/types'
+import { IStatusIndicatorData } from '../dashboard/api/types'
 
 function applySortOrder(item: ISortableByConvention, groupWord: string, groupSortOrder: number) {
     if (item.conventionSortOrder) return
@@ -57,4 +59,44 @@ export function merge(sourceOfTruth: IEnvironmentInstance[], comparisonArray: IE
     const removedItems = comparisonArray.filter((item) => !sourceNames.has(item.name))
 
     return comparisonArray.filter((i) => !removedItems.some((ri) => i.name === ri.name)).concat(newItems)
+}
+
+export function getStatusIndicatorData(status: number): IStatusIndicatorData {
+    const indicatorData: IStatusIndicatorData = {
+        label: 'Success',
+        statusProps: { ...Statuses.Success, ariaLabel: 'Success' },
+    }
+
+    switch (status) {
+        case 2:
+            indicatorData.statusProps = {
+                ...Statuses.Failed,
+                ariaLabel: 'Failed',
+            }
+            indicatorData.label = 'Failed'
+            break
+        case 3:
+            indicatorData.statusProps = {
+                ...Statuses.Canceled,
+                ariaLabel: 'Canceled',
+            }
+            indicatorData.label = 'Canceled'
+            break
+        case 4:
+            indicatorData.statusProps = {
+                ...Statuses.Skipped,
+                ariaLabel: 'Skipped',
+            }
+            indicatorData.label = 'Skipped'
+            break
+        case 5:
+            indicatorData.statusProps = {
+                ...Statuses.Skipped,
+                ariaLabel: 'Abandoned',
+            }
+            indicatorData.label = 'Abandoned'
+            break
+    }
+
+    return indicatorData
 }
