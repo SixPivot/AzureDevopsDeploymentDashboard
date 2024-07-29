@@ -2,10 +2,6 @@
 
 This is now the SixPivot Azure Devops Pipelines Deployment Dashboard!
 
-New? Onboard yourself on the [wiki](https://dev.azure.com/sixpivot/ReleaseDashboard/_wiki/wikis/ReleaseDashboard.wiki/272/Release-Dashboard-Onboarding).
-
-[PowerPoint Summary](https://sixpivot.sharepoint.com/:p:/s/Hackathon2022/EedyW2XmyDFNhTzg3wUubGgBb61nw-DWuuhCcLQNpZ2ciw?e=JZAuec)
-
 ## Get started
 
 1. Clone the repo
