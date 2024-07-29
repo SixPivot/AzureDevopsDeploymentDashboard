@@ -48,7 +48,7 @@ Be pragmatic, keep it as simple as possible (but no simpler), and keep to the fo
 - Avoid using `var`.
 - Use interfaces.
 - Write tests.
-- Encouraged to use functional components.
+- Encouraged to use functional React components.
 
 ### UI
 
