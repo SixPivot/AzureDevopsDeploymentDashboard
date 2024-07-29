@@ -4,7 +4,7 @@
 
 An Azure DevOps extension that shows a Deployment Summary page within the Azure Pipelines hub.
 
-Read about the extension [here](extension/README.md)
+Read about the extension marketplace description [here](extension/README.md)
 
 ## Getting Started
 
