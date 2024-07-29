@@ -1,7 +1,12 @@
 # Deployment Dashboard for Pipelines
 
-Provides at-a-glance information about the latest deployments to all your environments. Stop wondering which version is deployed to what environment. See all your deployments in one place!
+Hey there friend 👋 we built this extension out of frustration (in an internal hackathon) and thought hey-this is pretty useful. So we finished building it and polished it up. Our team like using it. It’s pretty nifty. Thought you might like it too so we’ve put it here - that’s the origin story.
 
-This extension adds a dashboard to your pipelines section, which shows each environment, the latest deployment to that environment, all the in the same place.
+What is it? Well we were getting frustrated that you couldn’t see an overview all your pipeline deployments. So we made this extension that adds a dashboard so you can see all your pipeline names, dates, times, status and environments in one place!
 
-This extension is for pipelines (not classic releases).
+It’s nifty if you have:
+
+- Automated deployments--you’ll be able to see which ones have failed so you can re-release or rollback/roll forward
+- Pipeline folders - you’ll have better visibility of yow many pipelines are sitting within
+- Multiple environments - you’ll be able to see which ones are on different deployments based on the name
+- Multiple components - you’ll be able deploy to the same environment
