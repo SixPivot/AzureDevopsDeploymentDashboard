@@ -35,6 +35,17 @@ stages:
                 - script: echo "Deploy to UAT"
                 - script: sleep 10
 
+  - stage: preprod
+    dependsOn: dev
+    jobs:
+      - deployment: preprod
+        environment: Preprod
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - script: echo "Deploy to Pre-prod"
+
   - stage: prod
     jobs:
       - deployment: prod
