@@ -1,45 +1,26 @@
-import { sortByConvention } from '../../api/Utilities'
-import { IDashboardEnvironmentColumn } from './types'
+import { sortByConvention } from './Utilities'
+import { ISortableByConvention } from './types'
 
 test('Items should be sorted by sortOrder, then by name', () => {
-    const renderCell = function (): JSX.Element {
-        throw new Error('Function not implemented.')
-    }
-
-    const items: IDashboardEnvironmentColumn[] = [
+    const items: ISortableByConvention[] = [
         {
             conventionSortOrder: 4,
-            id: '',
-            renderCell: renderCell,
-            width: 0,
             name: 'prod',
         },
         {
             conventionSortOrder: 2,
-            id: '',
-            renderCell: renderCell,
-            width: 0,
             name: 'uat-b',
         },
         {
             conventionSortOrder: 2,
-            id: '',
-            renderCell: renderCell,
-            width: 0,
             name: 'uat-a',
         },
         {
             conventionSortOrder: 3,
-            id: '',
-            renderCell: renderCell,
-            width: 0,
             name: 'preprod',
         },
         {
             conventionSortOrder: 1,
-            id: '',
-            renderCell: renderCell,
-            width: 0,
             name: 'dev',
         },
     ]

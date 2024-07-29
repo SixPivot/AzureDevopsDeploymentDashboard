@@ -9,9 +9,10 @@ export async function initAzureDevOpsSdk(): Promise<{
 }> {
     await SDK.init()
     const accessToken = await SDK.getAccessToken()
-    const extDataService = await SDK.getService<IExtensionDataService>(CommonServiceIds.ExtensionDataService)
-    const projectPageService = await SDK.getService<IProjectPageService>(CommonServiceIds.ProjectPageService)
-
+    const [extDataService, projectPageService] = await Promise.all([
+        SDK.getService<IExtensionDataService>(CommonServiceIds.ExtensionDataService),
+        SDK.getService<IProjectPageService>(CommonServiceIds.ProjectPageService),
+    ])
     const dataManager = await extDataService.getExtensionDataManager(SDK.getExtensionContext().id, accessToken)
 
     const projectService = await projectPageService.getProject()

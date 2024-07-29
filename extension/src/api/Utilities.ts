@@ -49,12 +49,12 @@ export function sortByConvention(array: ISortableByConvention[]): ISortableByCon
     })
 }
 
-export function merge(sourceOfTruth: Array<IEnvironmentInstance>, comparisonArray: Array<IEnvironmentInstance>): IEnvironmentInstance[] {
+export function merge(sourceOfTruth: IEnvironmentInstance[], comparisonArray: IEnvironmentInstance[]): IEnvironmentInstance[] {
     const comparisonNames = new Set(comparisonArray.map((item) => item.name))
     const sourceNames = new Set(sourceOfTruth.map((item) => item.name))
 
     const newItems = sourceOfTruth.filter((item) => !comparisonNames.has(item.name))
     const removedItems = comparisonArray.filter((item) => !sourceNames.has(item.name))
 
-    return comparisonArray.filter((i) => !removedItems.includes(i)).concat(newItems)
+    return comparisonArray.filter((i) => !removedItems.some((ri) => i.name === ri.name)).concat(newItems)
 }
