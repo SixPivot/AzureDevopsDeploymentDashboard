@@ -30,6 +30,11 @@ export type MainContentProps = {
     isLoading: boolean
 }
 
+enum ViewType {
+    List = 'List View',
+    Folder = 'Folder View'
+}
+
 export const MainContent = (props: MainContentProps) => {
     const { environments, pipelines, project, organisation, isLoading } = props
     const columns = generateEnvironmentsAsColumns(environments)
@@ -41,11 +46,12 @@ export const MainContent = (props: MainContentProps) => {
         isLoading,
     }
     const viewSelection = new DropdownSelection()
-    const [viewType, setViewType] = useState('list')
+    const [viewType, setViewType] = useState(ViewType.List.toString())
 
     useEffect(() => {
         viewSelection.select(0)
     }, [])
+
 
     return (
         <Page className="flex-grow">
@@ -63,11 +69,12 @@ export const MainContent = (props: MainContentProps) => {
                                 ariaLabel="Basic"
                                 className="example-dropdown"
                                 placeholder="Select an Option"
-                                items={[
-                                    { id: 'list', text: 'List View' },
-                                    { id: 'folder', text: 'Folder View' },
-                                ]}
+                                items={Object.entries(ViewType).map(([_, value]) => ({
+                                    id: value,
+                                    text: value
+                                }))}
                                 onSelect={(_, item) => {
+                                    console.log(item.id)
                                     setViewType(item.id)
                                 }}
                                 selection={viewSelection}
@@ -103,7 +110,7 @@ export const MainContent = (props: MainContentProps) => {
                                 />
                             </div>
                         </div>
-                    ) : viewType === 'list' ? (
+                    ) : viewType === ViewType.List ? (
                         <Table className="deployments-table" columns={state.columns} itemProvider={state.pipelines} />
                     ) : (
                         <TreeViewTable environments={environments} pipelines={state.pipelines!} />
