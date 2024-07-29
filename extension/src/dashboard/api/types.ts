@@ -19,7 +19,7 @@ export interface IDeploymentPipeline {
  Type represents environment pipelines (environment with associated deployment pipelines)
  */
 export interface IEnvironmentPipelines extends IEnvironmentInstance {
-    pipelines: IDeploymentPipeline
+    pipeline: IDeploymentPipeline
 }
 
 export interface IStatusIndicatorData {
@@ -52,6 +52,7 @@ export interface IEnvironmentDeploymentDictionary {
 Type represents Pipeline information and environments associated with this pipeline
 */
 export interface IPipelineInstance {
+    key: string
     name: string
     uri: string
     environments: IEnvironmentDeploymentDictionary

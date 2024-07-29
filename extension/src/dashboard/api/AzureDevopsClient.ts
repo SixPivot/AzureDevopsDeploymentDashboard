@@ -3,8 +3,9 @@ import { getClient } from 'azure-devops-extension-api'
 import { PipelinesRestClient } from 'azure-devops-extension-api/Pipelines/PipelinesClient'
 import { TaskAgentRestClient } from 'azure-devops-extension-api/TaskAgent'
 import { IDashboardEnvironmentPipeline, IEnvironmentPipelines, IEnvironmentDeploymentDictionary, IPipelineInstance } from './types'
+import { sortByConvention } from '../../api/Utilities'
 
-export async function getDashboardEnvironmentPipelineInfo(projectName: string): Promise<IDashboardEnvironmentPipeline> {
+export async function getDashboardEnvironmentPipeline(projectName: string): Promise<IDashboardEnvironmentPipeline> {
     const taskAgentClient = getClient(TaskAgentRestClient)
     const pipelinesClient = getClient(PipelinesRestClient)
 
@@ -19,13 +20,12 @@ export async function getDashboardEnvironmentPipelineInfo(projectName: string): 
 
         const environmentPipeline: IEnvironmentPipelines = {
             name: environment.name,
-            pipelines: {},
-            conventionSortOrder: 99,
+            pipeline: {},
         }
         for (const deployment of deployments) {
-            if (!environmentPipeline.pipelines[deployment.definition.name]) {
+            if (!environmentPipeline.pipeline[deployment.definition.name]) {
                 const pipeline = pipelines.find((p) => p.id == deployment.definition.id)
-                environmentPipeline.pipelines[deployment.definition.name] = {
+                environmentPipeline.pipeline[deployment.definition.name] = {
                     deployment: deployment,
                     pipeline: pipeline,
                 }
@@ -34,10 +34,11 @@ export async function getDashboardEnvironmentPipelineInfo(projectName: string): 
         environmentPipelines.push(environmentPipeline)
     }
 
-    const pipelineInfoArray = generatePipelineInstancesArray(environmentPipelines)
+    const pipelineInstancesArray = generatePipelineInstancesArray(environmentPipelines)
+
     return {
-        environments: environmentPipelines,
-        pipelines: new ArrayItemProvider(pipelineInfoArray),
+        environments: sortByConvention(environmentPipelines) as IEnvironmentPipelines[],
+        pipelines: new ArrayItemProvider(pipelineInstancesArray),
     }
 }
 
@@ -45,11 +46,12 @@ function generatePipelineInstancesArray(environments: IEnvironmentPipelines[]): 
     const pipelineInfoArray: Array<IPipelineInstance> = []
 
     for (const environment of environments) {
-        for (const pipelineName of Object.keys(environment.pipelines)) {
-            const pipelineInfo = pipelineInfoArray.find((pr) => pr.name == pipelineName) ?? {
-                name: pipelineName,
+        for (const key of Object.keys(environment.pipeline)) {
+            const pipelineInfo = pipelineInfoArray.find((pr) => pr.key == key) ?? {
+                key: key,
+                name: environment.pipeline[key].pipeline?.name ?? '',
                 environments: {} as IEnvironmentDeploymentDictionary,
-                uri: environment.pipelines[pipelineName].deployment.definition._links['web'].href,
+                uri: environment.pipeline[key].deployment.definition._links['web'].href,
             }
 
             if (pipelineInfoArray.indexOf(pipelineInfo) === -1) {
@@ -59,11 +61,11 @@ function generatePipelineInstancesArray(environments: IEnvironmentPipelines[]): 
             if (environment.name === undefined) continue
 
             pipelineInfo.environments[environment.name] = {
-                value: environment.pipelines[pipelineName].deployment.owner.name,
-                finishTime: environment.pipelines[pipelineName].deployment.finishTime,
-                result: environment.pipelines[pipelineName].deployment.result,
-                folder: environment.pipelines[pipelineName].pipeline?.folder,
-                uri: environment.pipelines[pipelineName].deployment.owner?._links['web'].href,
+                value: environment.pipeline[key].deployment.owner.name,
+                finishTime: environment.pipeline[key].deployment.finishTime,
+                result: environment.pipeline[key].deployment.result,
+                folder: environment.pipeline[key].pipeline?.folder,
+                uri: environment.pipeline[key].deployment.owner?._links['web'].href,
             }
         }
     }

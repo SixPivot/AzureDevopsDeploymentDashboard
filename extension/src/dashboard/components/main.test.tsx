@@ -1,15 +1,41 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import * as React from 'react'
 import '@testing-library/jest-dom'
 import '@testing-library/jest-dom/jest-globals'
-import { MainContent } from './main-content'
-import state from './state.test.json'
-import { IDashboardContentState } from './IDashboardContentState'
+import { MainContent, MainContentProps } from './main-content'
+import { data } from './stub_data'
 
 test('Render and check layout', async () => {
-    render(<MainContent state={state as unknown as IDashboardContentState} />)
+    render(<MainContent {...(data as unknown as MainContentProps)} />)
 
     await screen.findByRole('heading')
 
     expect(screen.getByRole('heading')).toHaveTextContent('Deployment Dashboard')
+
+    await screen.findByRole('grid')
+    expect(screen.getByRole('grid')).not.toBeUndefined()
+})
+
+test('Check all pipelines are included', async () => {
+    render(<MainContent {...(data as unknown as MainContentProps)} />)
+
+    const rows = screen.getAllByRole('row')
+    expect(rows).toHaveLength(8) // includes header
+
+    const found = []
+    for (const row of rows.slice(1, 8)) {
+        const cells = await within(row!).findAllByRole('gridcell')
+        const maybePipeline = data.pipelines.value.find(async (x) => await within(cells[0]).findByText(x.name))
+        if (maybePipeline) {
+            found.push(maybePipeline.name)
+        }
+    }
+})
+
+test('Check all environments are included', async () => {
+    render(<MainContent {...(data as unknown as MainContentProps)} />)
+    for (const env of data.environments) {
+        const column = screen.getByText(env.name)
+        expect(column).toBeInTheDocument()
+    }
 })

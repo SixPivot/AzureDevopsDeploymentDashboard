@@ -1,5 +1,5 @@
 export interface ISortableByConvention {
-    conventionSortOrder: number
+    conventionSortOrder?: number
     name?: string
 }
 

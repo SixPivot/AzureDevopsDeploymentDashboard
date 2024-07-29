@@ -1,16 +1,18 @@
 /// <reference types="vss-web-extension-sdk" />
 import * as React from 'react'
 import { ITableColumn, SimpleTableCell, TableColumnLayout } from 'azure-devops-ui/Table'
+import { IExtensionDataManager } from 'azure-devops-extension-api'
 import { ObservableValue } from 'azure-devops-ui/Core/Observable'
 import { ArrayItemProvider } from 'azure-devops-ui/Utilities/Provider'
 import { BoltListDragEvent, IListDropData } from 'azure-devops-ui/List'
 import { getEnvironmentsSortedByConvention } from '../api/AzureDevOpsClient'
 import { ISettingsContentState } from './ISettingsContentState'
-import { IEnvironmentInstance } from '../../api/types'
-import { AzureDevOpsSdkManager } from '../../api/AzureDevOpsSdkManager'
+import { ExtensionDataKeys, IEnvironmentInstance } from '../../api/types'
+import { initAzureDevOpsSdk } from '../../api/AzureDevOpsSdkManager'
 import { MainContent } from './main-content'
+
+import { merge } from '../../api/Utilities'
 import './main.scss'
-import { detectChanges } from '../../api/Utilities'
 
 export class Main extends React.Component<{}, ISettingsContentState> {
     constructor(props: {}) {
@@ -32,30 +34,24 @@ export class Main extends React.Component<{}, ISettingsContentState> {
             onSaveCustomSortOrder: this.onSaveCustomSortOrder,
             onResetToDefaultSortOrder: this.onResetToDefaultSortOrder,
         }
-
-        this._sdkManager = new AzureDevOpsSdkManager()
     }
 
-    private readonly _sdkManager: AzureDevOpsSdkManager
+    private _extensionDataManager?: IExtensionDataManager
+    private _projectName?: string
 
     public async componentDidMount() {
-        await this._sdkManager.init()
+        const { project, organization, extensionDataManager } = await initAzureDevOpsSdk()
+        this._extensionDataManager = extensionDataManager
+        this._projectName = project
+        const originalEnvironments = await getEnvironmentsSortedByConvention(project)
 
-        const projectName = this._sdkManager.getProjectName()
-
-        const originalEnvironments = await getEnvironmentsSortedByConvention(projectName)
-
-        let environments = await this._sdkManager.getEnvironmentsFromSettings() ?? []
-
-        const {newItems, removedItems} = detectChanges(originalEnvironments, environments);
-
-        environments = environments.filter(i=> removedItems.includes(i)).concat(newItems);
+        const environments = (await extensionDataManager.getValue<IEnvironmentInstance[]>(ExtensionDataKeys.Environments)) ?? []
 
         this.setState({
-            environments: new ArrayItemProvider(environments),
+            environments: new ArrayItemProvider(merge(originalEnvironments, environments)),
             isLoading: false,
-            organisation: this._sdkManager.getOrgnaizationName(),
-            project: projectName,
+            organisation: organization,
+            project: project,
             onTableRowDrop: this.onTableRowDrop,
         })
     }
@@ -99,18 +95,18 @@ export class Main extends React.Component<{}, ISettingsContentState> {
     }
 
     onSaveCustomSortOrder = async () => {
-        if (this._sdkManager) {
+        if (this._extensionDataManager) {
             this.setState({ isLoading: true })
-            await this._sdkManager.storeEnvironmentsInSettings(this.state.environments.value)
+            await this._extensionDataManager.setValue<IEnvironmentInstance[]>(ExtensionDataKeys.Environments, this.state.environments.value)
             this.setState({ isLoading: false })
         }
     }
 
     onResetToDefaultSortOrder = async () => {
-        if (this._sdkManager) {
+        if (this._extensionDataManager) {
             this.setState({ isLoading: true })
-            await this._sdkManager.clearEnvironmentsInSettings()
-            const environments = await getEnvironmentsSortedByConvention(this._sdkManager.getProjectName())
+            await this._extensionDataManager.setValue(ExtensionDataKeys.Environments, undefined)
+            const environments = await getEnvironmentsSortedByConvention(this._projectName ?? '')
             this.setState({ isLoading: false, environments: new ArrayItemProvider(environments) })
         }
     }
