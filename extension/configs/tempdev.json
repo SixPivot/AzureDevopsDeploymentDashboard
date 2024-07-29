@@ -1,6 +1,0 @@
-{
-    "id": "sixpivot-deployment-dashboard-temp-dev",
-    "name": "Deployment Dashboard (Temp Dev)",
-    "public": false,
-    "baseUri": "https://localhost:3000"
-}
