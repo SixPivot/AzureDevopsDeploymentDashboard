@@ -34,14 +34,14 @@ export async function getDashboardEnvironmentPipelineInfo(projectName: string): 
         environmentPipelines.push(environmentPipeline)
     }
 
-    const pipelineInfoArray = generatePipelineInfoArray(environmentPipelines)
+    const pipelineInfoArray = generatePipelineInstancesArray(environmentPipelines)
     return {
         environments: environmentPipelines,
         pipelines: new ArrayItemProvider(pipelineInfoArray),
     }
 }
 
-function generatePipelineInfoArray(environments: IEnvironmentPipelines[]): Array<IPipelineInstance> {
+function generatePipelineInstancesArray(environments: IEnvironmentPipelines[]): Array<IPipelineInstance> {
     const pipelineInfoArray: Array<IPipelineInstance> = []
 
     for (const environment of environments) {

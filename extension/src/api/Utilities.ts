@@ -1,4 +1,4 @@
-import { ISortableByConvention } from '../api/types'
+import { IEnvironmentInstance, ISortableByConvention } from '../api/types'
 
 function applySortOrder(item: ISortableByConvention, groupWord: string, groupSortOrder: number) {
     if (item.conventionSortOrder) return
@@ -47,4 +47,17 @@ export function sortByConvention(array: ISortableByConvention[]): ISortableByCon
             return 0
         }
     })
+}
+
+export function detectChanges(
+    sourceOfTruth: IEnvironmentInstance[],
+    comparisonArray: IEnvironmentInstance[]
+): { newItems: IEnvironmentInstance[]; removedItems: IEnvironmentInstance[] } {
+    const comparisonNames = new Set(comparisonArray.map((item) => item.name))
+    const sourceNames = new Set(sourceOfTruth.map((item) => item.name))
+
+    const newItems = sourceOfTruth.filter((item) => !comparisonNames.has(item.name))
+    const removedItems = comparisonArray.filter((item) => !sourceNames.has(item.name))
+
+    return { newItems, removedItems }
 }

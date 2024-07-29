@@ -10,6 +10,7 @@ import { IEnvironmentInstance } from '../../api/types'
 import { AzureDevOpsSdkManager } from '../../api/AzureDevOpsSdkManager'
 import { MainContent } from './main-content'
 import './main.scss'
+import { detectChanges } from '../../api/Utilities'
 
 export class Main extends React.Component<{}, ISettingsContentState> {
     constructor(props: {}) {
@@ -42,8 +43,13 @@ export class Main extends React.Component<{}, ISettingsContentState> {
 
         const projectName = this._sdkManager.getProjectName()
 
-        const environments =
-            (await this._sdkManager.getEnvironmentsFromSettings()) ?? (await getEnvironmentsSortedByConvention(projectName))
+        const originalEnvironments = await getEnvironmentsSortedByConvention(projectName)
+
+        let environments = await this._sdkManager.getEnvironmentsFromSettings() ?? []
+
+        const {newItems, removedItems} = detectChanges(originalEnvironments, environments);
+
+        environments = environments.filter(i=> removedItems.includes(i)).concat(newItems);
 
         this.setState({
             environments: new ArrayItemProvider(environments),
@@ -103,7 +109,7 @@ export class Main extends React.Component<{}, ISettingsContentState> {
     onResetToDefaultSortOrder = async () => {
         if (this._sdkManager) {
             this.setState({ isLoading: true })
-            await this._sdkManager.clearEnvironmentsByCustomSortOrder()
+            await this._sdkManager.clearEnvironmentsInSettings()
             const environments = await getEnvironmentsSortedByConvention(this._sdkManager.getProjectName())
             this.setState({ isLoading: false, environments: new ArrayItemProvider(environments) })
         }

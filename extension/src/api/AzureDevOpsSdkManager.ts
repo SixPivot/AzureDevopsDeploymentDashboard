@@ -2,6 +2,7 @@
 import * as SDK from 'azure-devops-extension-sdk'
 import { CommonServiceIds, IExtensionDataService, IExtensionDataManager, IProjectPageService } from 'azure-devops-extension-api'
 import { IEnvironmentInstance, ExtensionDataKeys } from './types'
+
 export class AzureDevOpsSdkManager {
     private _dataManager: IExtensionDataManager | undefined
     private _projectName: string | undefined
@@ -38,7 +39,7 @@ export class AzureDevOpsSdkManager {
         return await this.getValue(ExtensionDataKeys.Environments)
     }
 
-    public async clearEnvironmentsByCustomSortOrder() {
+    public async clearEnvironmentsInSettings() {
         await this._dataManager?.setValue(ExtensionDataKeys.Environments, undefined)
     }
 
