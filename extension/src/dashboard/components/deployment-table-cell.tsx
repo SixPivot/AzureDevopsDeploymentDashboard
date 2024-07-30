@@ -1,10 +1,11 @@
 import { SimpleTableCell } from 'azure-devops-ui/Table'
-import { IDashboardEnvironmentColumn, IPipelineInstance, IStatusIndicatorData } from '../api/types'
+import { IDashboardEnvironmentColumn, IPipelineInstance } from '../api/types'
 import { Link } from 'azure-devops-ui/Link'
 import React from 'react'
-import { Status, Statuses, StatusSize } from 'azure-devops-ui/Status'
+import { Status, StatusSize } from 'azure-devops-ui/Status'
 import { AgoFormat } from 'azure-devops-ui/Utilities/Date'
 import { Ago } from 'azure-devops-ui/Ago'
+import { getStatusIndicatorData } from '../../api/Utilities'
 
 export const DeploymentTableCell = (props: {
     tableItem: IPipelineInstance
@@ -50,44 +51,4 @@ export const DeploymentTableCell = (props: {
             )}
         </SimpleTableCell>
     )
-}
-
-const getStatusIndicatorData = (status: number): IStatusIndicatorData => {
-    const indicatorData: IStatusIndicatorData = {
-        label: 'Success',
-        statusProps: { ...Statuses.Success, ariaLabel: 'Success' },
-    }
-
-    switch (status) {
-        case 2:
-            indicatorData.statusProps = {
-                ...Statuses.Failed,
-                ariaLabel: 'Failed',
-            }
-            indicatorData.label = 'Failed'
-            break
-        case 3:
-            indicatorData.statusProps = {
-                ...Statuses.Canceled,
-                ariaLabel: 'Canceled',
-            }
-            indicatorData.label = 'Canceled'
-            break
-        case 4:
-            indicatorData.statusProps = {
-                ...Statuses.Skipped,
-                ariaLabel: 'Skipped',
-            }
-            indicatorData.label = 'Skipped'
-            break
-        case 5:
-            indicatorData.statusProps = {
-                ...Statuses.Skipped,
-                ariaLabel: 'Abandoned',
-            }
-            indicatorData.label = 'Abandoned'
-            break
-    }
-
-    return indicatorData
 }

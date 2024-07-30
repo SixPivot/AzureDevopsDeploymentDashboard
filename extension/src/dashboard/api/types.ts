@@ -1,6 +1,6 @@
 import { EnvironmentDeploymentExecutionRecord, TaskResult } from 'azure-devops-extension-api/TaskAgent'
 import { Pipeline } from 'azure-devops-extension-api/Pipelines/Pipelines'
-import { ITableColumn } from 'azure-devops-ui/Table'
+import { ISimpleTableCell, ITableColumn } from 'azure-devops-ui/Table'
 import { ArrayItemProvider } from 'azure-devops-ui/Utilities/Provider'
 import { IStatusProps } from 'azure-devops-ui/Status'
 import { IEnvironmentInstance } from '../../api/types'
@@ -64,4 +64,14 @@ export interface IPipelineInstance {
 export interface IDashboardEnvironmentPipeline {
     environments: IEnvironmentPipelines[]
     pipelines: ArrayItemProvider<IPipelineInstance>
+}
+
+/**
+ Type represents folder / pipeline information item for tree view
+ */
+export type IDeploymentTableItem = {
+    [P in keyof ISimpleTableCell]: ISimpleTableCell[P]
+} & {
+    pipeline: IPipelineInstance
+    name: string
 }

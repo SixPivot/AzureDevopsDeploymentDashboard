@@ -3,13 +3,16 @@ import { CustomHeader, HeaderDescription, HeaderTitle, HeaderTitleArea, HeaderTi
 import { Page } from 'azure-devops-ui/Page'
 import { Spinner, SpinnerSize } from 'azure-devops-ui/Spinner'
 import { Table } from 'azure-devops-ui/Table'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'azure-devops-ui/Link'
 import { Button } from 'azure-devops-ui/Button'
 import { IDashboardEnvironmentColumn, IPipelineInstance } from '../api/types'
 import { DeploymentTableCell } from './deployment-table-cell'
 import { ArrayItemProvider } from 'azure-devops-ui/Utilities/Provider'
 import { IEnvironmentInstance } from '../../api/types'
+import { TreeViewTable } from './tree-view-table'
+import { DropdownSelection } from 'azure-devops-ui/Utilities/DropdownSelection'
+import { Dropdown } from 'azure-devops-ui/Dropdown'
 
 export interface IMainContentState {
     pipelines?: ArrayItemProvider<IPipelineInstance>
@@ -27,6 +30,11 @@ export type MainContentProps = {
     isLoading: boolean
 }
 
+enum ViewType {
+    List = 'List View',
+    Folder = 'Folder View',
+}
+
 export const MainContent = (props: MainContentProps) => {
     const { environments, pipelines, project, organisation, isLoading } = props
     const columns = generateEnvironmentsAsColumns(environments)
@@ -37,6 +45,20 @@ export const MainContent = (props: MainContentProps) => {
         organisation,
         isLoading,
     }
+    const viewSelection = new DropdownSelection()
+    const [viewType, setViewType] = useState(ViewType.List.toString())
+
+    useEffect(() => {
+        viewSelection.select(0)
+    }, [])
+
+    const mapViewTypeToDropdownItems = () => {
+        return Object.entries(ViewType).map(([_, value]) => ({
+            id: value,
+            text: value,
+        }))
+    }
+
     return (
         <Page className="flex-grow">
             <CustomHeader className="bolt-header-with-commandbar">
@@ -46,8 +68,17 @@ export const MainContent = (props: MainContentProps) => {
                             Deployment Dashboard
                         </HeaderTitle>
                     </HeaderTitleRow>
-                    <HeaderDescription>
-                        Provides a view of your products, deployments, and environments in your project's build pipelines.
+                    <HeaderDescription className="flex-row flex-center justify-space-between">
+                        <div>Provides a view of your products, deployments, and environments in your project's build pipelines.</div>
+                        <div>
+                            <Dropdown
+                                items={mapViewTypeToDropdownItems()}
+                                onSelect={(_, item) => {
+                                    setViewType(item.id)
+                                }}
+                                selection={viewSelection}
+                            />
+                        </div>
                     </HeaderDescription>
                 </HeaderTitleArea>
             </CustomHeader>
@@ -58,9 +89,7 @@ export const MainContent = (props: MainContentProps) => {
                         <div className="flex-grow padding-vertical-20 font-size-m">
                             <Spinner label="Loading data..." size={SpinnerSize.large} />
                         </div>
-                    ) : state.pipelines && state.pipelines.length > 0 ? (
-                        <Table className="deployments-table" columns={state.columns} itemProvider={state.pipelines} />
-                    ) : (
+                    ) : state.pipelines && state.pipelines.length === 0 ? (
                         <div className="font-size-m flex-grow text-center padding-vertical-20">
                             <div className="margin-bottom-16 font-weight-heavy font-size-l">No deployments were found in any pipelines</div>
                             <Link
@@ -80,6 +109,10 @@ export const MainContent = (props: MainContentProps) => {
                                 />
                             </div>
                         </div>
+                    ) : viewType === ViewType.List ? (
+                        <Table className="deployments-table" columns={state.columns} itemProvider={state.pipelines} />
+                    ) : (
+                        <TreeViewTable environments={environments} pipelines={state.pipelines!} />
                     )}
                 </Card>
             </div>
