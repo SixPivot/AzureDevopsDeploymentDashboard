@@ -14,10 +14,7 @@ import { useState, useEffect } from 'react'
 import { ITreeItemProvider } from 'azure-devops-ui/Utilities/TreeItemProvider'
 import { AgoFormat } from 'azure-devops-ui/Utilities/Date'
 
-export const TreeViewDeploymentsTable = (props: {
-    environments: IEnvironmentInstance[]
-    pipelines: IPipelineInstance[]
-}): JSX.Element => {
+export const TreeViewDeploymentsTable = (props: { environments: IEnvironmentInstance[]; pipelines: IPipelineInstance[] }): JSX.Element => {
     const { environments, pipelines } = props
     const [folderViewItemProvider, setFolderViewItemProvider] = useState<ITreeItemProvider<IDeploymentTableItem>>()
 

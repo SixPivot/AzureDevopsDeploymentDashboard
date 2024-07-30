@@ -7,6 +7,7 @@
         "compile": "npm run clean && webpack --mode production",
         "compile:dev": "npm run clean && webpack --mode development",
         "test": "jest",
+        "test:watch": "jest --watch",
         "check": "npx tsc --noEmit",
         "package": "npm run compile && tfx extension create --manifest-globs vss-extension.json --overrides-file configs/release.json --output-path out",
         "package:dev": "npm run compile:dev && tfx extension create --manifest-globs vss-extension.json --overrides-file configs/dev.json --output-path out",

@@ -1,7 +1,13 @@
 import { getClient } from 'azure-devops-extension-api'
 import { PipelinesRestClient } from 'azure-devops-extension-api/Pipelines/PipelinesClient'
 import { TaskAgentRestClient } from 'azure-devops-extension-api/TaskAgent'
-import { IDashboardEnvironmentPipeline, IEnvironmentPipelines, IEnvironmentDeploymentDictionary, IPipelineInstance, IEnvironmentInstance } from '../types'
+import {
+    IDashboardEnvironmentPipeline,
+    IEnvironmentPipelines,
+    IEnvironmentDeploymentDictionary,
+    IPipelineInstance,
+    IEnvironmentInstance,
+} from '../types'
 import { sortByConvention } from '../utilities'
 
 export async function getDashboardEnvironmentPipeline(projectName: string): Promise<IDashboardEnvironmentPipeline> {

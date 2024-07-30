@@ -25,7 +25,7 @@ test('Check all pipelines are included', async () => {
     const found = []
     for (const row of rows.slice(1, 8)) {
         const cells = await within(row!).findAllByRole('gridcell')
-        const maybePipeline = data.pipelines.value.find(async (x) => await within(cells[0]).findByText(x.name))
+        const maybePipeline = data.pipelines.find(async (x) => await within(cells[0]).findByText(x.name))
         if (maybePipeline) {
             found.push(maybePipeline.name)
         }

@@ -8,10 +8,7 @@ import { getStatusIndicatorData } from '../utilities'
 import { IDashboardEnvironmentColumn, IEnvironmentInstance, IPipelineInstance } from '../types'
 import { ArrayItemProvider } from 'azure-devops-ui/Utilities/Provider'
 
-export const ListViewDeploymentsTable = (props: {
-    environments: IEnvironmentInstance[]
-    pipelines: IPipelineInstance[]
-}): JSX.Element => {
+export const ListViewDeploymentsTable = (props: { environments: IEnvironmentInstance[]; pipelines: IPipelineInstance[] }): JSX.Element => {
     const { environments, pipelines } = props
 
     function getListViewColumns(environments: IEnvironmentInstance[]): Array<IDashboardEnvironmentColumn> {
@@ -78,5 +75,7 @@ export const ListViewDeploymentsTable = (props: {
         )
     }
 
-    return <Table className="deployments-table" columns={getListViewColumns(environments)} itemProvider={new ArrayItemProvider(pipelines)} />
+    return (
+        <Table className="deployments-table" columns={getListViewColumns(environments)} itemProvider={new ArrayItemProvider(pipelines)} />
+    )
 }
