@@ -956,7 +956,7 @@ export const data = {
             },
         },
     ],
-    pipelines: new ArrayItemProvider([
+    pipelines: [
         {
             key: 'Release Pipeline E',
             name: 'Release Pipeline E',
@@ -1118,7 +1118,7 @@ export const data = {
             },
             uri: 'https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/definition?definitionId=23',
         },
-    ]),
+    ],
     isLoading: false,
     project: 'ReleaseDashboard',
     organisation: 'sixpivot',
