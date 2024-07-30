@@ -28,6 +28,11 @@ steps:
   - script: printenv
     displayName: "Script: printenv"
 
+    
+  - script: npm run test
+    displayName: "Script: Test"
+    workingDirectory: extension
+
   - pwsh: |
       $config = (Get-Content vss-extension.json) | ConvertFrom-Json
       $config.version = $env:NBGV_NPMPACKAGEVERSION
