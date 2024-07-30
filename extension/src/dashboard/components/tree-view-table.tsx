@@ -86,7 +86,7 @@ export const TreeViewTable = (props: {
                 id: env.name!,
                 name: env.name,
                 width: !env.name ? 300 : 200,
-                renderCell: !env.name ? renderExpandableTreeCell : renderTreeViewCell,
+                renderCell: renderTreeViewCell,
                 isFixedColumn: true,
             }
         })
@@ -150,15 +150,13 @@ export const TreeViewTable = (props: {
             {folderViewItemProvider && (
                 <Tree<IDeploymentTableItem>
                     className="deployments-table"
-                    ariaLabel="Basic tree"
                     columns={getFolderViewColumns()}
                     itemProvider={
                         folderViewItemProvider as IItemProvider<
                             ITreeItemEx<IDeploymentTableItem> | IReadonlyObservableValue<ITreeItemEx<IDeploymentTableItem>>
                         >
                     }
-                    onToggle={(event, treeItem: ITreeItemEx<IDeploymentTableItem>) => {
-                        console.log('event', event)
+                    onToggle={(_, treeItem: ITreeItemEx<IDeploymentTableItem>) => {
                         folderViewItemProvider!.toggle(treeItem.underlyingItem)
                     }}
                     scrollable={true}

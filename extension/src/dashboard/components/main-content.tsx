@@ -32,7 +32,7 @@ export type MainContentProps = {
 
 enum ViewType {
     List = 'List View',
-    Folder = 'Folder View'
+    Folder = 'Folder View',
 }
 
 export const MainContent = (props: MainContentProps) => {
@@ -52,6 +52,12 @@ export const MainContent = (props: MainContentProps) => {
         viewSelection.select(0)
     }, [])
 
+    const mapViewTypeToDropdownItems = () => {
+        return Object.entries(ViewType).map(([_, value]) => ({
+            id: value,
+            text: value,
+        }))
+    }
 
     return (
         <Page className="flex-grow">
@@ -66,15 +72,8 @@ export const MainContent = (props: MainContentProps) => {
                         <div>Provides a view of your products, deployments, and environments in your project's build pipelines.</div>
                         <div>
                             <Dropdown
-                                ariaLabel="Basic"
-                                className="example-dropdown"
-                                placeholder="Select an Option"
-                                items={Object.entries(ViewType).map(([_, value]) => ({
-                                    id: value,
-                                    text: value
-                                }))}
+                                items={mapViewTypeToDropdownItems()}
                                 onSelect={(_, item) => {
-                                    console.log(item.id)
                                     setViewType(item.id)
                                 }}
                                 selection={viewSelection}
