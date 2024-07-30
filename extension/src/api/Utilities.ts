@@ -26,6 +26,21 @@ function applySortOrderByConvention(array: ISortableByConvention[]) {
     })
 }
 
+/**
+ * 
+ * Using convention to order environments in the Dashboard UI in the following manner:
+ * Dev environments come first, followed by miscellaneous environments (ones can't be matched), followed by test environments, then by pre-production/pre-release environments and finally production environments
+ * Example:
+ * DEV-General | TeamDev | Test-QA | UAT | PreProdAU | Prod-AUE | AUEprod01 | AUE-Prod
+ * In order to fulfill this we will have a list of words (that commonly used in environment names) to consider when ordering:
+    Dev
+    Test
+    UAT
+    PreProd
+    Prod
+ * @param array sortable items
+ * @returns Sorted items by convention
+ */
 export function sortByConvention(array: ISortableByConvention[]): ISortableByConvention[] {
     applySortOrderByConvention(array)
     return array.sort((a, b) => {
