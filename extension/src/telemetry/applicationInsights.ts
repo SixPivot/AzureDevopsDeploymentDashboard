@@ -1,5 +1,5 @@
 import { ApplicationInsights } from '@microsoft/applicationinsights-web'
-import { Config } from '../config'
+import { Config } from './config'
 
 export const InitTelemetry = (enabled: boolean) => {
     if (!enabled) {

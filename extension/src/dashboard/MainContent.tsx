@@ -2,31 +2,20 @@ import { Card } from 'azure-devops-ui/Card'
 import { CustomHeader, HeaderDescription, HeaderTitle, HeaderTitleArea, HeaderTitleRow, TitleSize } from 'azure-devops-ui/Header'
 import { Page } from 'azure-devops-ui/Page'
 import { Spinner, SpinnerSize } from 'azure-devops-ui/Spinner'
-import { Table } from 'azure-devops-ui/Table'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'azure-devops-ui/Link'
 import { Button } from 'azure-devops-ui/Button'
-import { IDashboardEnvironmentColumn, IPipelineInstance } from '../api/types'
-import { DeploymentTableCell } from './deployment-table-cell'
-import { ArrayItemProvider } from 'azure-devops-ui/Utilities/Provider'
-import { IEnvironmentInstance } from '../../api/types'
-import { TreeViewTable } from './tree-view-table'
+import { IEnvironmentInstance, IPipelineInstance } from '../types'
+import { TreeViewDeploymentsTable } from '../components/TreeViewDeploymentsTable'
 import { DropdownSelection } from 'azure-devops-ui/Utilities/DropdownSelection'
 import { Dropdown } from 'azure-devops-ui/Dropdown'
-
-export interface IMainContentState {
-    pipelines?: ArrayItemProvider<IPipelineInstance>
-    columns: IDashboardEnvironmentColumn[]
-    isLoading: boolean
-    organisation?: string
-    project?: string
-}
+import { ListViewDeploymentsTable } from '../components/ListViewDeploymentsTable'
 
 export type MainContentProps = {
     environments: IEnvironmentInstance[]
-    pipelines: ArrayItemProvider<IPipelineInstance>
-    organisation: string
-    project: string
+    pipelines: IPipelineInstance[]
+    organisation?: string
+    project?: string
     isLoading: boolean
 }
 
@@ -37,14 +26,7 @@ enum ViewType {
 
 export const MainContent = (props: MainContentProps) => {
     const { environments, pipelines, project, organisation, isLoading } = props
-    const columns = generateEnvironmentsAsColumns(environments)
-    const state: IMainContentState = {
-        columns,
-        pipelines,
-        project,
-        organisation,
-        isLoading,
-    }
+
     const viewSelection = new DropdownSelection()
     const [viewType, setViewType] = useState(ViewType.List.toString())
 
@@ -85,11 +67,11 @@ export const MainContent = (props: MainContentProps) => {
 
             <div className="page-content page-content-top">
                 <Card>
-                    {state.isLoading ? (
+                    {isLoading ? (
                         <div className="flex-grow padding-vertical-20 font-size-m">
                             <Spinner label="Loading data..." size={SpinnerSize.large} />
                         </div>
-                    ) : state.pipelines && state.pipelines.length === 0 ? (
+                    ) : pipelines && pipelines.length === 0 ? (
                         <div className="font-size-m flex-grow text-center padding-vertical-20">
                             <div className="margin-bottom-16 font-weight-heavy font-size-l">No deployments were found in any pipelines</div>
                             <Link
@@ -105,51 +87,17 @@ export const MainContent = (props: MainContentProps) => {
                                     text="View pipelines"
                                     primary={true}
                                     target="_top"
-                                    href={`https://dev.azure.com/${state.organisation}/${state.project}/_build`}
+                                    href={`https://dev.azure.com/${organisation}/${project}/_build`}
                                 />
                             </div>
                         </div>
                     ) : viewType === ViewType.List ? (
-                        <Table className="deployments-table" columns={state.columns} itemProvider={state.pipelines} />
+                        <ListViewDeploymentsTable environments={environments} pipelines={pipelines} />
                     ) : (
-                        <TreeViewTable environments={environments} pipelines={state.pipelines!} />
+                        <TreeViewDeploymentsTable environments={environments} pipelines={pipelines} />
                     )}
                 </Card>
             </div>
         </Page>
     )
-}
-
-function generateEnvironmentsAsColumns(environments: IEnvironmentInstance[]): Array<IDashboardEnvironmentColumn> {
-    const columns: IDashboardEnvironmentColumn[] = []
-
-    const renderCell = (index: number, columnIndex: number, tableColumn: IDashboardEnvironmentColumn, tableItem: IPipelineInstance) => {
-        return (
-            <DeploymentTableCell
-                key={`deployment-cell-${index}-${columnIndex}`}
-                columnIndex={columnIndex}
-                tableColumn={tableColumn}
-                tableItem={tableItem}
-            />
-        )
-    }
-
-    columns.push({
-        id: 'name',
-        name: '',
-        renderCell,
-        width: 250,
-        conventionSortOrder: 0,
-    } as IDashboardEnvironmentColumn)
-
-    const dynamicColumns = environments.map((environment) => {
-        return {
-            id: environment.name,
-            name: environment.name,
-            renderCell,
-            width: 200,
-        } as IDashboardEnvironmentColumn
-    })
-
-    return columns.concat(dynamicColumns)
 }

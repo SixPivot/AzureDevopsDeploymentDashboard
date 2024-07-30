@@ -1,9 +1,8 @@
-import { ArrayItemProvider } from 'azure-devops-ui/Utilities/Provider'
 import { getClient } from 'azure-devops-extension-api'
 import { PipelinesRestClient } from 'azure-devops-extension-api/Pipelines/PipelinesClient'
 import { TaskAgentRestClient } from 'azure-devops-extension-api/TaskAgent'
-import { IDashboardEnvironmentPipeline, IEnvironmentPipelines, IEnvironmentDeploymentDictionary, IPipelineInstance } from './types'
-import { sortByConvention } from '../../api/Utilities'
+import { IDashboardEnvironmentPipeline, IEnvironmentPipelines, IEnvironmentDeploymentDictionary, IPipelineInstance, IEnvironmentInstance } from '../types'
+import { sortByConvention } from '../utilities'
 
 export async function getDashboardEnvironmentPipeline(projectName: string): Promise<IDashboardEnvironmentPipeline> {
     const taskAgentClient = getClient(TaskAgentRestClient)
@@ -38,7 +37,7 @@ export async function getDashboardEnvironmentPipeline(projectName: string): Prom
 
     return {
         environments: sortByConvention(environmentPipelines) as IEnvironmentPipelines[],
-        pipelines: new ArrayItemProvider(pipelineInstancesArray),
+        pipelines: pipelineInstancesArray,
     }
 }
 
@@ -71,4 +70,20 @@ function generatePipelineInstancesArray(environments: IEnvironmentPipelines[]): 
     }
 
     return pipelineInfoArray
+}
+
+/**
+ * Fetchs enviroments from pipelines
+ * @param projectName : project name
+ * @returns Promise: Array of IEnvironmentInstance
+ */
+export async function getEnvironmentsSortedByConvention(projectName: string): Promise<IEnvironmentInstance[]> {
+    const taskAgentClient = getClient(TaskAgentRestClient)
+
+    const environments = (await taskAgentClient.getEnvironments(projectName)).map((i) => {
+        return {
+            name: i.name,
+        } as IEnvironmentInstance
+    })
+    return sortByConvention(environments) as IEnvironmentInstance[]
 }

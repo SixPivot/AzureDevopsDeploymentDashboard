@@ -1,6 +1,5 @@
 import { Statuses } from 'azure-devops-ui/Status'
-import { IEnvironmentInstance, ISortableByConvention } from '../api/types'
-import { IStatusIndicatorData } from '../dashboard/api/types'
+import { IEnvironmentInstance, ISortableByConvention, IStatusIndicatorData } from './types'
 
 function applySortOrder(item: ISortableByConvention, groupWord: string, groupSortOrder: number) {
     if (item.conventionSortOrder) return

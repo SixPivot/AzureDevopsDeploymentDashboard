@@ -1,22 +1,22 @@
 import * as React from 'react'
 import { ITreeColumn, renderExpandableTreeCell, Tree } from 'azure-devops-ui/TreeEx'
 import { ITreeItem, ITreeItemEx, TreeItemProvider } from 'azure-devops-ui/Utilities/TreeItemProvider'
-import { ArrayItemProvider, IItemProvider } from 'azure-devops-ui/Utilities/Provider'
+import { IItemProvider } from 'azure-devops-ui/Utilities/Provider'
 import { IReadonlyObservableValue } from 'azure-devops-ui/Core/Observable'
-import { IDeploymentTableItem, IPipelineInstance } from '../api/types'
-import { IEnvironmentInstance } from '../../api/types'
+import { IDeploymentTableItem, IPipelineInstance } from '../types'
+import { IEnvironmentInstance } from '../types'
 import { SimpleTableCell } from 'azure-devops-ui/Table'
 import { Status, StatusSize } from 'azure-devops-ui/Status'
-import { getStatusIndicatorData } from '../../api/Utilities'
+import { getStatusIndicatorData } from '../utilities'
 import { Link } from 'azure-devops-ui/Link'
 import { Ago } from 'azure-devops-ui/Ago'
 import { useState, useEffect } from 'react'
 import { ITreeItemProvider } from 'azure-devops-ui/Utilities/TreeItemProvider'
 import { AgoFormat } from 'azure-devops-ui/Utilities/Date'
 
-export const TreeViewTable = (props: {
+export const TreeViewDeploymentsTable = (props: {
     environments: IEnvironmentInstance[]
-    pipelines: ArrayItemProvider<IPipelineInstance>
+    pipelines: IPipelineInstance[]
 }): JSX.Element => {
     const { environments, pipelines } = props
     const [folderViewItemProvider, setFolderViewItemProvider] = useState<ITreeItemProvider<IDeploymentTableItem>>()
@@ -27,7 +27,7 @@ export const TreeViewTable = (props: {
 
     const buildTreeView = () => {
         let treeNodeItems: ITreeItem<IDeploymentTableItem>[] = []
-        pipelines!.value.forEach((pipeline: IPipelineInstance) => {
+        pipelines!.forEach((pipeline: IPipelineInstance) => {
             let folder = pipeline.environments[Object.keys(pipeline.environments)[0]]?.folder!
             let paths = folder.split('\\')
 

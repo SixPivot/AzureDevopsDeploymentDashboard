@@ -7,9 +7,8 @@ import { Link } from 'azure-devops-ui/Link'
 import { Button } from 'azure-devops-ui/Button'
 import { Page } from 'azure-devops-ui/Page'
 import { IHeaderCommandBarItem } from 'azure-devops-ui/HeaderCommandBar'
-import { ISettingsContentState } from './ISettingsContentState'
 import { ListDragDropBehavior, ListDragImage } from 'azure-devops-ui/List'
-import { IEnvironmentInstance } from '../../api/types'
+import { IEnvironmentInstance, ISettingsContentState } from '../types'
 
 export const MainContent = (props: { state: ISettingsContentState }) => {
     const { state } = props

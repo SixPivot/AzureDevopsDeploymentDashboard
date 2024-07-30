@@ -1,4 +1,4 @@
-import { sortByConvention, merge } from './Utilities'
+import { merge, sortByConvention } from './utilities'
 import { ISortableByConvention } from './types'
 
 describe('sortByConvention', () => {

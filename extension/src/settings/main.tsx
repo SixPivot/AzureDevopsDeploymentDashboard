@@ -5,14 +5,12 @@ import { IExtensionDataManager } from 'azure-devops-extension-api'
 import { ObservableValue } from 'azure-devops-ui/Core/Observable'
 import { ArrayItemProvider } from 'azure-devops-ui/Utilities/Provider'
 import { BoltListDragEvent, IListDropData } from 'azure-devops-ui/List'
-import { getEnvironmentsSortedByConvention } from '../api/AzureDevOpsClient'
-import { ISettingsContentState } from './ISettingsContentState'
-import { ExtensionDataKeys, IEnvironmentInstance } from '../../api/types'
-import { initAzureDevOpsSdk } from '../../api/AzureDevOpsSdkManager'
-import { MainContent } from './main-content'
-
-import { merge } from '../../api/Utilities'
+import { ExtensionDataKeys, IEnvironmentInstance, ISettingsContentState } from '../types'
+import { initAzureDevOpsSdk } from '../api/AzureDevOpsSdkManager'
+import { MainContent } from './MainContent'
+import { merge } from '../utilities'
 import './main.scss'
+import { getEnvironmentsSortedByConvention } from '../api/AzureDevopsClient'
 
 export class Main extends React.Component<{}, ISettingsContentState> {
     constructor(props: {}) {

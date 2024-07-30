@@ -1,22 +1,20 @@
 /// <reference types="vss-web-extension-sdk" />
 import * as React from 'react'
-import { ArrayItemProvider } from 'azure-devops-ui/Utilities/Provider'
-import { MainContent, MainContentProps } from './main-content'
-import { IPipelineInstance } from '../api/types'
-import { getDashboardEnvironmentPipeline } from '../api/AzureDevopsClient'
-import { ExtensionDataKeys, IEnvironmentInstance } from '../../api/types'
-import { merge } from '../../api/Utilities'
-import { initAzureDevOpsSdk } from '../../api/AzureDevOpsSdkManager'
+import { MainContent } from './MainContent'
+import { ExtensionDataKeys, IEnvironmentInstance, IDashboardMainState } from '../types'
 
 import './main.scss'
+import { initAzureDevOpsSdk } from '../api/AzureDevOpsSdkManager'
+import { getDashboardEnvironmentPipeline } from '../api/AzureDevopsClient'
+import { merge } from '../utilities'
 
-export class Main extends React.Component<{}, MainContentProps> {
+export class Main extends React.Component<{}, IDashboardMainState> {
     constructor(props: {}) {
         super(props)
 
         this.state = {
             environments: [],
-            pipelines: new ArrayItemProvider<IPipelineInstance>([]),
+            pipelines: [],
             isLoading: true,
             project: '',
             organisation: '',

@@ -3,7 +3,7 @@ import { Pipeline } from 'azure-devops-extension-api/Pipelines/Pipelines'
 import { ISimpleTableCell, ITableColumn } from 'azure-devops-ui/Table'
 import { ArrayItemProvider } from 'azure-devops-ui/Utilities/Provider'
 import { IStatusProps } from 'azure-devops-ui/Status'
-import { IEnvironmentInstance } from '../../api/types'
+import { BoltListDragEvent, IListDropData } from 'azure-devops-ui/List'
 
 /**
  Type represents deployment pipelines (pipelines used for deployment. Usually these are YAML pipelines with deployment environments)
@@ -63,7 +63,7 @@ export interface IPipelineInstance {
  */
 export interface IDashboardEnvironmentPipeline {
     environments: IEnvironmentPipelines[]
-    pipelines: ArrayItemProvider<IPipelineInstance>
+    pipelines: IPipelineInstance[]
 }
 
 /**
@@ -74,4 +74,34 @@ export type IDeploymentTableItem = {
 } & {
     pipeline: IPipelineInstance
     name: string
+}
+
+export interface IDashboardMainState {
+    environments: IEnvironmentInstance[]
+    pipelines: IPipelineInstance[]
+    isLoading: boolean
+    organisation?: string
+    project?: string
+}
+
+export interface ISortableByConvention {
+    conventionSortOrder?: number
+    name?: string
+}
+
+export interface IEnvironmentInstance extends ISortableByConvention {}
+
+export enum ExtensionDataKeys {
+    Environments = 'Environments',
+}
+
+export interface ISettingsContentState {
+    columns: ITableColumn<IEnvironmentInstance>[]
+    environments: ArrayItemProvider<IEnvironmentInstance>
+    project?: string
+    organisation?: string
+    isLoading: boolean
+    onTableRowDrop?: (event: BoltListDragEvent<HTMLElement, IEnvironmentInstance>, dropData: IListDropData) => void
+    onSaveCustomSortOrder: () => void
+    onResetToDefaultSortOrder: () => void
 }

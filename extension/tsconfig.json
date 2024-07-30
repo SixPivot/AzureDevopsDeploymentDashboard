@@ -20,7 +20,7 @@
         "forceConsistentCasingInFileNames": true,
         "types": ["react", "vss-web-extension-sdk", "jest"],
         "allowJs": true,
-        "resolveJsonModule": true
+        "resolveJsonModule": true,
     },
     "include": ["src"],
     "exclude": ["src/__mocks__/*.js"]

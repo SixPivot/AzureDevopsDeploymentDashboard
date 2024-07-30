@@ -2,8 +2,8 @@ import { render, screen, within } from '@testing-library/react'
 import * as React from 'react'
 import '@testing-library/jest-dom'
 import '@testing-library/jest-dom/jest-globals'
-import { MainContent, MainContentProps } from './main-content'
-import { data } from './stub_data'
+import { MainContent, MainContentProps } from './MainContent'
+import { data } from './MainContent.test.data'
 
 test('Render and check layout', async () => {
     render(<MainContent {...(data as unknown as MainContentProps)} />)
