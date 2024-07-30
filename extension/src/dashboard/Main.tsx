@@ -16,23 +16,21 @@ export class Main extends React.Component<{}, IDashboardMainState> {
             environments: [],
             pipelines: [],
             isLoading: true,
-            project: '',
-            organisation: '',
         }
     }
 
     public async componentDidMount() {
-        const { project, organization, extensionDataManager } = await initAzureDevOpsSdk()
+        const projectInfo = await initAzureDevOpsSdk()
 
-        const { environments, pipelines } = await getDashboardEnvironmentPipeline(project)
+        const { environments, pipelines } = await getDashboardEnvironmentPipeline(projectInfo.name)
 
-        const sortedEnvironments = (await extensionDataManager.getValue<IEnvironmentInstance[]>(ExtensionDataKeys.Environments)) ?? []
+        const sortedEnvironments =
+            (await projectInfo.extensionDataManager.getValue<IEnvironmentInstance[]>(ExtensionDataKeys.Environments)) ?? []
 
         this.setState({
             environments: merge(environments, sortedEnvironments) ?? environments,
             pipelines: pipelines,
-            organisation: organization,
-            project: project,
+            projectInfo: projectInfo,
             isLoading: false,
         })
     }

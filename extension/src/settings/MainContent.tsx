@@ -6,13 +6,13 @@ import { DragAndDropGripper, Table } from 'azure-devops-ui/Table'
 import { Link } from 'azure-devops-ui/Link'
 import { Button } from 'azure-devops-ui/Button'
 import { Page } from 'azure-devops-ui/Page'
-import { IHeaderCommandBarItem } from 'azure-devops-ui/HeaderCommandBar'
+import { HeaderCommandBar, IHeaderCommandBarItem } from 'azure-devops-ui/HeaderCommandBar'
 import { ListDragDropBehavior, ListDragImage } from 'azure-devops-ui/List'
 import { IEnvironmentInstance, ISettingsContentState } from '../types'
 
 export const MainContent = (props: { state: ISettingsContentState }) => {
     const { state } = props
-    const commandBarItems: IHeaderCommandBarItem[] = [
+    const environmentsCardHeaderCommandBarItems: IHeaderCommandBarItem[] = [
         {
             id: 'reset-sort-order-settings',
             text: 'Reset to default',
@@ -24,10 +24,24 @@ export const MainContent = (props: { state: ISettingsContentState }) => {
         {
             id: 'sort-order-save',
             text: 'Save',
+            isPrimary: true,
             onActivate: state.onSaveCustomSortOrder,
             iconProps: {
                 iconName: 'Save',
             },
+        },
+    ]
+
+    const pageHeaderCommandBarItems: IHeaderCommandBarItem[] = [
+        {
+            iconProps: { iconName: 'ViewDashboard' },
+            id: 'deployment-dashboard',
+            tooltipProps: { text: 'Navigate to deployment dashboard' },
+            isPrimary: true,
+            important: true,
+            href: state.projectInfo?.deploymentDashboardUri,
+            target: '_top',
+            text: 'View dashboard',
         },
     ]
 
@@ -57,11 +71,12 @@ export const MainContent = (props: { state: ISettingsContentState }) => {
                     </HeaderTitleRow>
                     <HeaderDescription>Customise deployment dashboard</HeaderDescription>
                 </HeaderTitleArea>
+                <HeaderCommandBar items={pageHeaderCommandBarItems} />
             </CustomHeader>
 
             <div className="page-content page-content-top">
                 <Card
-                    headerCommandBarItems={commandBarItems}
+                    headerCommandBarItems={environmentsCardHeaderCommandBarItems}
                     className="bolt-card-white bolt-table-card"
                     titleProps={{ text: 'Manual sort environments' }}
                     headerDescriptionProps={{ text: 'Sort environments in the order you wish them to appear in the dashboard' }}
@@ -92,12 +107,7 @@ export const MainContent = (props: { state: ISettingsContentState }) => {
                             </Link>{' '}
                             about deployment jobs and how to set them up in your pipelines.
                             <div className="margin-top-16">
-                                <Button
-                                    text="View pipelines"
-                                    primary={true}
-                                    target="_top"
-                                    href={`https://dev.azure.com/${state.organisation}/${state.project}/_build`}
-                                />
+                                <Button text="View pipelines" primary={true} target="_top" href={state.projectInfo?.pipelinesUri} />
                             </div>
                         </div>
                     )}

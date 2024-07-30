@@ -1,7 +1,6 @@
 /// <reference types="vss-web-extension-sdk" />
 import * as React from 'react'
 import { ITableColumn, SimpleTableCell, TableColumnLayout } from 'azure-devops-ui/Table'
-import { IExtensionDataManager } from 'azure-devops-extension-api'
 import { ObservableValue } from 'azure-devops-ui/Core/Observable'
 import { ArrayItemProvider } from 'azure-devops-ui/Utilities/Provider'
 import { BoltListDragEvent, IListDropData } from 'azure-devops-ui/List'
@@ -9,6 +8,13 @@ import { ExtensionDataKeys, IEnvironmentInstance, ISettingsContentState } from '
 import { initAzureDevOpsSdk } from '../api/AzureDevOpsSdkManager'
 import { MainContent } from './MainContent'
 import { merge } from '../utilities'
+import { getEnvironmentsSortedByConvention } from '../api/AzureDevOpsClient'
+import { ISettingsContentState } from './ISettingsContentState'
+import { ExtensionDataKeys, IDevOpsProjectInfo, IEnvironmentInstance } from '../../api/types'
+import { initAzureDevOpsSdk } from '../../api/AzureDevOpsSdkManager'
+import { MainContent } from './main-content'
+
+import { merge } from '../../api/Utilities'
 import './main.scss'
 import { getEnvironmentsSortedByConvention } from '../api/AzureDevopsClient'
 
@@ -34,22 +40,20 @@ export class Main extends React.Component<{}, ISettingsContentState> {
         }
     }
 
-    private _extensionDataManager?: IExtensionDataManager
-    private _projectName?: string
+    private _projectInfo?: IDevOpsProjectInfo
 
     public async componentDidMount() {
-        const { project, organization, extensionDataManager } = await initAzureDevOpsSdk()
-        this._extensionDataManager = extensionDataManager
-        this._projectName = project
-        const originalEnvironments = await getEnvironmentsSortedByConvention(project)
+        this._projectInfo = await initAzureDevOpsSdk()
 
-        const environments = (await extensionDataManager.getValue<IEnvironmentInstance[]>(ExtensionDataKeys.Environments)) ?? []
+        const originalEnvironments = await getEnvironmentsSortedByConvention(this._projectInfo.name)
+
+        const environments =
+            (await this._projectInfo.extensionDataManager.getValue<IEnvironmentInstance[]>(ExtensionDataKeys.Environments)) ?? []
 
         this.setState({
             environments: new ArrayItemProvider(merge(originalEnvironments, environments)),
             isLoading: false,
-            organisation: organization,
-            project: project,
+            projectInfo: this._projectInfo,
             onTableRowDrop: this.onTableRowDrop,
         })
     }
@@ -93,18 +97,20 @@ export class Main extends React.Component<{}, ISettingsContentState> {
     }
 
     onSaveCustomSortOrder = async () => {
-        if (this._extensionDataManager) {
+        const dataManager = this._projectInfo?.extensionDataManager
+        if (dataManager) {
             this.setState({ isLoading: true })
-            await this._extensionDataManager.setValue<IEnvironmentInstance[]>(ExtensionDataKeys.Environments, this.state.environments.value)
+            await dataManager.setValue<IEnvironmentInstance[]>(ExtensionDataKeys.Environments, this.state.environments.value)
             this.setState({ isLoading: false })
         }
     }
 
     onResetToDefaultSortOrder = async () => {
-        if (this._extensionDataManager) {
+        const dataManager = this._projectInfo?.extensionDataManager
+        if (dataManager) {
             this.setState({ isLoading: true })
-            await this._extensionDataManager.setValue(ExtensionDataKeys.Environments, undefined)
-            const environments = await getEnvironmentsSortedByConvention(this._projectName ?? '')
+            await dataManager.setValue(ExtensionDataKeys.Environments, undefined)
+            const environments = await getEnvironmentsSortedByConvention(this._projectInfo?.name ?? '')
             this.setState({ isLoading: false, environments: new ArrayItemProvider(environments) })
         }
     }

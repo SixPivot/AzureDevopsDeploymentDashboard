@@ -7,15 +7,27 @@ import { Link } from 'azure-devops-ui/Link'
 import { Button } from 'azure-devops-ui/Button'
 import { IEnvironmentInstance, IPipelineInstance } from '../types'
 import { TreeViewDeploymentsTable } from '../components/TreeViewDeploymentsTable'
+import { IDashboardEnvironmentColumn, IPipelineInstance } from '../api/types'
+import { DeploymentTableCell } from './deployment-table-cell'
+import { ArrayItemProvider } from 'azure-devops-ui/Utilities/Provider'
+import { IDevOpsProjectInfo, IEnvironmentInstance } from '../../api/types'
+import { TreeViewTable } from './tree-view-table'
 import { DropdownSelection } from 'azure-devops-ui/Utilities/DropdownSelection'
 import { Dropdown } from 'azure-devops-ui/Dropdown'
-import { ListViewDeploymentsTable } from '../components/ListViewDeploymentsTable'
+
+export interface IMainContentState {
+    pipelines?: ArrayItemProvider<IPipelineInstance>
+    columns: IDashboardEnvironmentColumn[]
+    isLoading: boolean
+    organisation?: string
+    project?: string
+}
 
 export type MainContentProps = {
     environments: IEnvironmentInstance[]
-    pipelines: IPipelineInstance[]
-    organisation?: string
-    project?: string
+    pipelines: ArrayItemProvider<IPipelineInstance>
+    organisation: string
+    project: string
     isLoading: boolean
 }
 
@@ -26,7 +38,14 @@ enum ViewType {
 
 export const MainContent = (props: MainContentProps) => {
     const { environments, pipelines, project, organisation, isLoading } = props
-
+    const columns = generateEnvironmentsAsColumns(environments)
+    const state: IMainContentState = {
+        columns,
+        pipelines,
+        project,
+        organisation,
+        isLoading,
+    }
     const viewSelection = new DropdownSelection()
     const [viewType, setViewType] = useState(ViewType.List.toString())
 
@@ -34,12 +53,23 @@ export const MainContent = (props: MainContentProps) => {
         viewSelection.select(0)
     }, [])
 
-    const mapViewTypeToDropdownItems = () => {
-        return Object.entries(ViewType).map(([_, value]) => ({
-            id: value,
-            text: value,
-        }))
-    }
+    const viewOptions = Object.entries(ViewType).map(([_, value]) => ({
+        id: value,
+        text: value,
+    }))
+
+    const headerCommandBarItems: IHeaderCommandBarItem[] = [
+        {
+            iconProps: { iconName: 'Settings' },
+            id: 'deployment-dashboard-settings',
+            tooltipProps: { text: 'Navigate to deployment dashboard settings' },
+            isPrimary: true,
+            important: true,
+            href: state.projectInfo?.settingsUri,
+            target: '_top',
+            text: 'Settings',
+        },
+    ]
 
     return (
         <Page className="flex-grow">
@@ -54,7 +84,7 @@ export const MainContent = (props: MainContentProps) => {
                         <div>Provides a view of your products, deployments, and environments in your project's build pipelines.</div>
                         <div>
                             <Dropdown
-                                items={mapViewTypeToDropdownItems()}
+                                items={viewOptions}
                                 onSelect={(_, item) => {
                                     setViewType(item.id)
                                 }}
@@ -63,6 +93,7 @@ export const MainContent = (props: MainContentProps) => {
                         </div>
                     </HeaderDescription>
                 </HeaderTitleArea>
+                <HeaderCommandBar items={headerCommandBarItems} />
             </CustomHeader>
 
             <div className="page-content page-content-top">
@@ -87,7 +118,7 @@ export const MainContent = (props: MainContentProps) => {
                                     text="View pipelines"
                                     primary={true}
                                     target="_top"
-                                    href={`https://dev.azure.com/${organisation}/${project}/_build`}
+                                    href={`https://dev.azure.com/${state.organisation}/${state.project}/_build`}
                                 />
                             </div>
                         </div>
