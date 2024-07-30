@@ -4,19 +4,12 @@ import { ITableColumn, SimpleTableCell, TableColumnLayout } from 'azure-devops-u
 import { ObservableValue } from 'azure-devops-ui/Core/Observable'
 import { ArrayItemProvider } from 'azure-devops-ui/Utilities/Provider'
 import { BoltListDragEvent, IListDropData } from 'azure-devops-ui/List'
-import { ExtensionDataKeys, IEnvironmentInstance, ISettingsContentState } from '../types'
+import { ExtensionDataKeys, IDevOpsProjectInfo, IEnvironmentInstance, ISettingsContentState } from '../types'
 import { initAzureDevOpsSdk } from '../api/AzureDevOpsSdkManager'
+import { getEnvironmentsSortedByConvention } from '../api/AzureDevopsClient'
 import { MainContent } from './MainContent'
 import { merge } from '../utilities'
-import { getEnvironmentsSortedByConvention } from '../api/AzureDevOpsClient'
-import { ISettingsContentState } from './ISettingsContentState'
-import { ExtensionDataKeys, IDevOpsProjectInfo, IEnvironmentInstance } from '../../api/types'
-import { initAzureDevOpsSdk } from '../../api/AzureDevOpsSdkManager'
-import { MainContent } from './main-content'
-
-import { merge } from '../../api/Utilities'
 import './main.scss'
-import { getEnvironmentsSortedByConvention } from '../api/AzureDevopsClient'
 
 export class Main extends React.Component<{}, ISettingsContentState> {
     constructor(props: {}) {

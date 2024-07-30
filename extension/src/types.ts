@@ -4,6 +4,7 @@ import { ISimpleTableCell, ITableColumn } from 'azure-devops-ui/Table'
 import { ArrayItemProvider } from 'azure-devops-ui/Utilities/Provider'
 import { IStatusProps } from 'azure-devops-ui/Status'
 import { BoltListDragEvent, IListDropData } from 'azure-devops-ui/List'
+import { IExtensionDataManager } from 'azure-devops-extension-api'
 
 /**
  Type represents deployment pipelines (pipelines used for deployment. Usually these are YAML pipelines with deployment environments)
@@ -80,8 +81,7 @@ export interface IDashboardMainState {
     environments: IEnvironmentInstance[]
     pipelines: IPipelineInstance[]
     isLoading: boolean
-    organisation?: string
-    project?: string
+    projectInfo?: IDevOpsProjectInfo
 }
 
 export interface ISortableByConvention {
@@ -98,10 +98,29 @@ export enum ExtensionDataKeys {
 export interface ISettingsContentState {
     columns: ITableColumn<IEnvironmentInstance>[]
     environments: ArrayItemProvider<IEnvironmentInstance>
-    project?: string
+    projectInfo?: IDevOpsProjectInfo
     organisation?: string
     isLoading: boolean
     onTableRowDrop?: (event: BoltListDragEvent<HTMLElement, IEnvironmentInstance>, dropData: IListDropData) => void
     onSaveCustomSortOrder: () => void
     onResetToDefaultSortOrder: () => void
+}
+
+/**
+ * Must match contribution Ids use in vss-extension.json
+ */
+export enum ContributionIds {
+    DeploymentDashboard = 'deployment-dashboard',
+    DeploymentDashboardSettings = 'deployment-dashboard-settings',
+}
+
+export interface IDevOpsProjectInfo {
+    name: string
+    organization: string
+    extensionDataManager: IExtensionDataManager
+    extensionId: string
+    projectUri: string
+    pipelinesUri: string
+    settingsUri: string
+    deploymentDashboardUri: string
 }

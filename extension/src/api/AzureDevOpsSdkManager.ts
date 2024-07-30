@@ -1,7 +1,7 @@
 /// <reference types="vss-web-extension-sdk" />
 import * as SDK from 'azure-devops-extension-sdk'
 import { CommonServiceIds, IExtensionDataService, IProjectPageService } from 'azure-devops-extension-api'
-import { ContributionIds, IDevOpsProjectInfo } from './types'
+import { ContributionIds, IDevOpsProjectInfo } from '../types'
 
 export async function initAzureDevOpsSdk(): Promise<IDevOpsProjectInfo> {
     await SDK.init()
