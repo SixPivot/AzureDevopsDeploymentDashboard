@@ -3,7 +3,7 @@ import * as React from 'react'
 import { MainContent } from './MainContent'
 import { ExtensionDataKeys, IEnvironmentInstance, IDashboardMainState } from '../types'
 
-import './main.scss'
+import './Main.scss'
 import { initAzureDevOpsSdk } from '../api/AzureDevOpsSdkManager'
 import { getDashboardEnvironmentPipeline } from '../api/AzureDevopsClient'
 import { merge } from '../utilities'
