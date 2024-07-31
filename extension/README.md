@@ -11,5 +11,5 @@ This dashboard lets you easily see an overview of all your recent pipeline deplo
 You’ll find this helpful if your team has:
 - Automated deployments - you’ll be able to see which ones have failed so you can re-release or-rollback/roll forward
 - Pipeline folders - you’ll have better visibility of yow many pipelines are sitting within
-- Multiple environments - you’ll be able to see which ones are on different deployments based on the - name
+- Multiple environments - you’ll be able to see which ones are on different deployments based on the name
 - Multiple components - you’ll be able deploy to the same environment
