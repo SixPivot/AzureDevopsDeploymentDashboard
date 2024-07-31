@@ -42,6 +42,25 @@ Be pragmatic, keep it as simple as possible (but no simpler), and keep to the fo
 - eslint (recommened to use the vscode extension)
 - prettier (use the git hook provided)
 
+### Naming guidelines
+
+- Use `.ts` for TypeScript files, `.tsx` for TypeScript files that include JSX.
+- Use PascalCase for components (eg. `UserProfile` should be in a file named `UserProfile.tsx`).
+- For styles and test files, use the same name as the component with the appropriate suffixes (eg. `UserProfile.scss` for style, `UserProfile.test.tsx` for tests).
+- User camelCase for utility and helper files (eg. existing `utilities.ts` file).
+
+
+### Directory structure
+
+- The source code for the project is in the `extension\src` folder.
+    - `api` contains the code for interacting with the Azure DevOps API.
+    - `dashboard` contains the dashboard feature component of the extension.
+    - `settings` contains the settings feature component.
+    - `components` contains other components.
+    - `telemetry` contains the code for tracking telemetry.
+    - `types.ts` contains types used throughout the extension.
+    - `utilities.ts` contains utility functions.
+
 ### Typescript
 
 - Avoid using `any`.
