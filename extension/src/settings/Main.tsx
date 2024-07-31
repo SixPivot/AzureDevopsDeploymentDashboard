@@ -9,7 +9,7 @@ import { initAzureDevOpsSdk } from '../api/AzureDevOpsSdkManager'
 import { getEnvironmentsSortedByConvention } from '../api/AzureDevopsClient'
 import { MainContent } from './MainContent'
 import { merge } from '../utilities'
-import './main.scss'
+import './Main.scss'
 
 export class Main extends React.Component<{}, ISettingsContentState> {
     constructor(props: {}) {
