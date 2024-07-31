@@ -8,9 +8,9 @@ import { Button } from 'azure-devops-ui/Button'
 import { IEnvironmentInstance, IPipelineInstance, IDevOpsProjectInfo } from '../types'
 import { TreeViewDeploymentsTable } from '../components/TreeViewDeploymentsTable'
 import { DropdownSelection } from 'azure-devops-ui/Utilities/DropdownSelection'
-import { Dropdown } from 'azure-devops-ui/Dropdown'
 import { ListViewDeploymentsTable } from '../components/ListViewDeploymentsTable'
 import { HeaderCommandBar, IHeaderCommandBarItem } from 'azure-devops-ui/HeaderCommandBar'
+import { IMenuItem } from 'azure-devops-ui/Menu'
 
 export type MainContentProps = {
     environments: IEnvironmentInstance[]
@@ -30,7 +30,26 @@ export const MainContent = (props: MainContentProps) => {
     const viewSelection = new DropdownSelection()
     const [viewType, setViewType] = useState(ViewType.List.toString())
 
-    const headerCommandBarItems: IHeaderCommandBarItem[] = [
+    const pageHeaderCommandBarItems: IHeaderCommandBarItem[] = [
+        {
+            iconProps: { iconName: 'View' },
+            id: 'deployment-dashboard-views',
+            tooltipProps: { text: 'Select dashboard view' },
+            important: true,
+            text: viewType ?? 'Views',
+            subMenuProps: {
+                id: 'deployment-dashboard-view-options',
+                items: Object.entries(ViewType).map(
+                    ([_, value]) =>
+                        ({
+                            id: value,
+                            text: value,
+                            className: viewType === value.toString() ? 'selected-view' : undefined,
+                        }) as IMenuItem
+                ),
+                onActivate: (item, _event) => setViewType(item.id),
+            },
+        },
         {
             iconProps: { iconName: 'Settings' },
             id: 'deployment-dashboard-settings',
@@ -47,11 +66,6 @@ export const MainContent = (props: MainContentProps) => {
         viewSelection.select(0)
     }, [])
 
-    const viewOptions = Object.entries(ViewType).map(([_, value]) => ({
-        id: value,
-        text: value,
-    }))
-
     return (
         <Page className="flex-grow">
             <CustomHeader className="bolt-header-with-commandbar">
@@ -63,18 +77,9 @@ export const MainContent = (props: MainContentProps) => {
                     </HeaderTitleRow>
                     <HeaderDescription className="flex-row flex-center justify-space-between">
                         <div>Provides a view of your products, deployments, and environments in your project's build pipelines.</div>
-                        <div>
-                            <Dropdown
-                                items={viewOptions}
-                                onSelect={(_, item) => {
-                                    setViewType(item.id)
-                                }}
-                                selection={viewSelection}
-                            />
-                        </div>
                     </HeaderDescription>
                 </HeaderTitleArea>
-                <HeaderCommandBar items={headerCommandBarItems} />
+                <HeaderCommandBar items={pageHeaderCommandBarItems} />
             </CustomHeader>
 
             <div className="page-content page-content-top">
