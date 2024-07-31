@@ -44,7 +44,6 @@ export const MainContent = (props: MainContentProps) => {
                         ({
                             id: value,
                             text: value,
-                            className: viewType === value.toString() ? 'selected-view' : undefined,
                         }) as IMenuItem
                 ),
                 onActivate: (item, _event) => setViewType(item.id),
