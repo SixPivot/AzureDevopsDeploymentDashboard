@@ -6,7 +6,7 @@
     "name": "Release Dashboard",
     "description": "A dashboard to view a summary of all deployments",
     "demands": ["api-version/3.0"],
-    "categories": ["Azure Repos"],
+    "categories": ["Azure Pipelines"],
     "public": false,
     "targets": [
         {
@@ -18,6 +18,17 @@
             "path": "OVERVIEW.md"
         }
     },
+    "screenshots": [
+        {
+            "path": "img/dashboard-screenshot.png"
+        },
+        {
+            "path": "img/menu-screenshot.png"
+        },
+        {
+            "path": "img/settings-screenshot.png"
+        }
+    ],
     "icons": {
         "default": "img/icon128_white.png"
     },
