@@ -79,7 +79,7 @@ function generatePipelineInstancesArray(environments: IEnvironmentPipelines[]): 
 }
 
 /**
- * Fetchs enviroments from pipelines
+ * Fetches environments from pipelines
  * @param projectName : project name
  * @returns Promise: Array of IEnvironmentInstance
  */
