@@ -30,7 +30,7 @@ The extensions are probably already installed in the SixPivot org in Azure-devop
 
 1. Publish the extension first.
 1. Go to `https://marketplace.visualstudio.com/manage/publishers/sixpivot`
-1. In the elipsis on the extension listed there, open the menu, then select share
+1. In the ellipsis on the extension listed there, open the menu, then select share
 1. enter "sixpivot" as the organisation.
 1. Now go to the sixpivot org in azure devops and go to settings -> extensions `https://dev.azure.com/sixpivot/_settings/extensions`
 1. Go to the Shared tab
@@ -52,7 +52,7 @@ The extensions are probably already installed in the SixPivot org in Azure-devop
 
 Before committing your code. Run `npm run prettier:check` to validate the code with prettier. Either fix issues (error or warnings) manually or run `npm run prettier:write` to let prettier do the job for you. Please note that this could update files your didn't touch.
 
-The pre-commit hook will prevent you from commiting code if prettier encounters errors code.
+The pre-commit hook will prevent you from committing code if prettier encounters errors code.
 
 ## Developer resources
 
