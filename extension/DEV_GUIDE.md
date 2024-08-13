@@ -1,42 +1,49 @@
 # Deployment Dashboard
 
-This is now the SixPivot Azure Devops Pipelines Deployment Dashboard!
+Local development and debugging of the extension (except for the most simple changes) will generally require that you have access to an Azure DevOps organisation that you can publish your own 'dev' copy of the extension, which alters the baseUri to point to your local machine.
 
 ## Get started
 
 1. Clone the repo
 1. Copy `pre-commit` file from `git-hooks` folder to `.git\hooks`
 1. `cd extensions` and `npm install`
-1. `npm run start:dev`
-1. Go to `localhost:3000` in your browser. You should get an untrusted certificate error page. Select **Advanced** and then select **Accept the Risk and Continue**.
-1. Go [here](https://dev.azure.com/sixpivot/ReleaseDashboard/_apps/hub/SixPivot.sixpivot-release-dashboard-dev.deployment-dashboard)
 
-This link should go to the Deployment Dashboard project, and to the developer extension running in our organisation. This extension is pointing to `https://localhost:3000` and you should be ready to make changes to your code and see it hot-reload.
+## Publish a 'dev' extension to the marketplace
+
+1. Go to <https://marketplace.visualstudio.com/>
+1. Click **Publish extension** in the top right of the screen, and sign in (if you weren't already)
+1. (Skip this step if you are a member of an existing marketplace publisher) If you have not been added to a publisher yet, you will go directly to a create screen.
+   1. Create a new publisher, making note of the Publisher ID.
+   1. Edit the `extension\configs\dev.json` file and update the **publisher** property, setting the value to your publisher id. Do not commit changes to this file!
+
+1. Get an Azure DevOps PAT (personal access token) with the **Marketplace (Publish)** scope and access set to **All accessible organizations**. For more information, see [Authenticate access with personal access tokens](https://docs.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate).
+1. Deploy the 'dev' extension to the marketplace: `npm run publish:dev -- --token [token]`
+1. The extension will be built and uploaded to your publisher. You should now see it listed similar to this:
+
+    ![Publisher extension](../assets/publisher-extension.png)
+
+1. Click on the ellipsis ... menu and select **Share/Unshare**
+1. In the side panel, click on **+Organization** and enter your Azure DevOps organisation name.
+
+    ![Entering organization name to share extension with](../assets/publisher-extension-shared-org.png)
+
+1. Now navigate back to your Azure DevOps organisation and go to **Organization settings**, then **Extensions** and **Shared**
+1. Click on the **Release Dashboard (Dev)** extension and then **Install**
+1. Follow the prompts to finish installing the extension into your organisation.
+
+## Local development
+
+1. `npm run start:dev`
+1. Go to <localhost:3000> in your browser. You should get an untrusted certificate error page. Select **Advanced** and then select **Accept the Risk and Continue**.
+1. In Azure DevOps, open a project and go to the **Azure Pipelines** section and click on the **Deployment Dashboard** item that links to a page ending in `sixpivot-release-dashboard-dev.deployment-dashboard` (Note the `-dev` in the name!)
+
+    ![Dev deployment dashboard](../assets/azure-pipelines-menu-dev-extension.png)
+
+1. You can now make local changes to the extension code. As this extension is pointing back to <https://localhost:3000> you should be ready to make changes to your code and see it hot-reload.
 
 > Although most code changes will be reflected immediately, you may still need to occasionally update your extension in the marketplace. The dev extension loads all its resources from the webpack-dev-server, but the manifest itself is being loaded from the published code. Therefore, any changes to the manifest file will not be properly reflected in Azure DevOps until the extension has been republished.
 
-## Publishing extensions
-
-1. Get an Azure DevOps PAT (personal access token) with the **Marketplace (Publish)** scope and access set to **All accessible organizations**. For more information, see [Authenticate access with personal access tokens](https://docs.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate).
-1. Go to `https://marketplace.visualstudio.com/`
-1. Click "publish an extension" on the top right of the screen.
-1. If you are already added to a publisher, you will be taken to `https://marketplace.visualstudio.com/manage/publishers/sixpivot`, assuming the publisher you're added to is `SixPivot`.
-1. If you have not been added to a publisher yet, you will go directly to a create screen. If you do this though, you will need to update the config with your publisher id. Use the SixPivot one unless you want to experiment for some reason.
-1. Deploy the extension to the marketplace: `npm run publish:dev -- --token [token]`
-
-## Install the extension
-
-The extensions are probably already installed in the SixPivot org in Azure-devops. In case you need to install them again:
-
-1. Publish the extension first.
-1. Go to `https://marketplace.visualstudio.com/manage/publishers/sixpivot`
-1. In the ellipsis on the extension listed there, open the menu, then select share
-1. enter "sixpivot" as the organisation.
-1. Now go to the sixpivot org in azure devops and go to settings -> extensions `https://dev.azure.com/sixpivot/_settings/extensions`
-1. Go to the Shared tab
-1. Install the extension.
-
-### Debug in VS Code
+### Debug in Visual Studio Code
 
 1. In VS Code, press **F5** to start debugging (making sure the webpack-dev-server is still running). The default launch configuration should be set to ~~**Launch Firefox**~~ this should work now.
 
@@ -47,6 +54,10 @@ The extensions are probably already installed in the SixPivot org in Azure-devop
     > If you leave the Firefox window open that VS Code launches, the debugger will reattach instead of starting a clean Firefox instance each time.
 
 1. Navigate to your extension and set a breakpoint in a method in VS Code. You should see that breakpoint hit when that method executes.
+
+## Unit tests
+
+There are some (see [src/utilities.test.ts](src/utilities.test.ts) for an example), but it would be great to have more!
 
 ## Before committing code
 
