@@ -1,4 +1,4 @@
-[![Build Status](https://dev.azure.com/sixpivot/ReleaseDashboard/_apis/build/status%2FPublish?branchName=main)](https://dev.azure.com/sixpivot/ReleaseDashboard/_build/latest?definitionId=24&branchName=main)
+[![Build Status](https://dev.azure.com/sixpivot/ReleaseDashboard/_apis/build/status%2FPublish%20(GitHub)?branchName=main)](https://dev.azure.com/sixpivot/ReleaseDashboard/_build/latest?definitionId=78&branchName=main)
 
 # Introduction
 
