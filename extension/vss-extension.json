@@ -7,7 +7,7 @@
     "description": "A dashboard to view a summary of all deployments",
     "demands": ["api-version/3.0"],
     "categories": ["Azure Pipelines"],
-    "public": false,
+    "public": true,
     "targets": [
         {
             "id": "Microsoft.VisualStudio.Services"
@@ -43,6 +43,10 @@
         }
     ],
     "scopes": ["vso.build", "vso.release", "vso.environment_manage"],
+    "repository": {
+        "type": "git",
+        "uri": "https://github.com/SixPivot/AzureDevopsDeploymentDashboard"
+    },
     "contributions": [
         {
             "id": "deployment-dashboard",
