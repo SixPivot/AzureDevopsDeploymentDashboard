@@ -28,11 +28,15 @@ export async function getDashboardEnvironmentPipeline(projectName: string): Prom
             pipeline: {},
         }
         for (const deployment of deployments) {
-            if (!environmentPipeline.pipeline[deployment.definition.name]) {
-                const pipeline = pipelines.find((p) => p.id == deployment.definition.id)
-                environmentPipeline.pipeline[deployment.definition.name] = {
-                    deployment: deployment,
-                    pipeline: pipeline,
+            const pipeline = pipelines.find((p) => p.id == deployment.definition.id)
+
+            // Pipelines that are removed may still have deployments, but we don't want to show them.
+            if (pipeline) {
+                if (!environmentPipeline.pipeline[pipeline.name]) {
+                    environmentPipeline.pipeline[pipeline.name] = {
+                        deployment: deployment,
+                        pipeline: pipeline,
+                    }
                 }
             }
         }
