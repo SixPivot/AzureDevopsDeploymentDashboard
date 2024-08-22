@@ -12,7 +12,7 @@ import { ListViewDeploymentsTable } from '../components/ListViewDeploymentsTable
 import { HeaderCommandBar, IHeaderCommandBarItem } from 'azure-devops-ui/HeaderCommandBar'
 import { IMenuItem } from 'azure-devops-ui/Menu'
 
-export type MainContentProps = {
+export type DashboardContentProps = {
     environments: IEnvironmentInstance[]
     pipelines: IPipelineInstance[]
     projectInfo?: IDevOpsProjectInfo
@@ -24,7 +24,7 @@ enum ViewType {
     Folder = 'Folder View',
 }
 
-export const MainContent = (props: MainContentProps) => {
+export const DashboardContent = (props: DashboardContentProps) => {
     const { environments, pipelines, projectInfo, isLoading } = props
 
     const viewSelection = new DropdownSelection()
