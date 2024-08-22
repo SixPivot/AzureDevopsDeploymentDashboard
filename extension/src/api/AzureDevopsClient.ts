@@ -15,7 +15,7 @@ export async function getDashboardEnvironmentPipeline(projectName: string): Prom
     const pipelinesClient = getClient(PipelinesRestClient)
 
     const [pipelines, environments] = await Promise.all([
-        pipelinesClient.listPipelines(projectName),
+        pipelinesClient.listPipelines(projectName, 'name asc', 1000),
         taskAgentClient.getEnvironments(projectName),
     ])
 
