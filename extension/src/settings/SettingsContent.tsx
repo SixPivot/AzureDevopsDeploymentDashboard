@@ -1,3 +1,4 @@
+/// <reference types="vss-web-extension-sdk" />
 import React from 'react'
 import { Card } from 'azure-devops-ui/Card'
 import { CustomHeader, HeaderDescription, HeaderTitle, HeaderTitleArea, HeaderTitleRow, TitleSize } from 'azure-devops-ui/Header'
@@ -9,8 +10,9 @@ import { Page } from 'azure-devops-ui/Page'
 import { HeaderCommandBar, IHeaderCommandBarItem } from 'azure-devops-ui/HeaderCommandBar'
 import { ListDragDropBehavior, ListDragImage } from 'azure-devops-ui/List'
 import { IEnvironmentInstance, ISettingsContentState } from '../types'
+import './Settings.scss'
 
-export const MainContent = (props: { state: ISettingsContentState }) => {
+export const SettingsContent = (props: { state: ISettingsContentState }) => {
     const { state } = props
     const environmentsCardHeaderCommandBarItems: IHeaderCommandBarItem[] = [
         {
