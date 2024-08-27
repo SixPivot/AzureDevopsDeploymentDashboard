@@ -1,5 +1,5 @@
-import { merge, sortByConvention } from './utilities'
-import { ISortableByConvention } from './types'
+import { merge, sortByConvention } from '../utilities'
+import { ISortableByConvention } from '../types'
 
 describe('sortByConvention', () => {
     it('should sort by convention', () => {

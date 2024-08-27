@@ -2,14 +2,18 @@ import { SimpleTableCell, Table } from 'azure-devops-ui/Table'
 import { Link } from 'azure-devops-ui/Link'
 import React from 'react'
 import { Status, StatusSize } from 'azure-devops-ui/Status'
-import { AgoFormat } from 'azure-devops-ui/Utilities/Date'
-import { Ago } from 'azure-devops-ui/Ago'
-import { getStatusIndicatorData } from '../utilities'
-import { IDashboardEnvironmentColumn, IEnvironmentInstance, IPipelineInstance } from '../types'
+import { generatePipelineInstancesArray, getStatusIndicatorData } from '../utilities'
+import { IDashboardEnvironmentColumn, IEnvironmentInstance, IEnvironmentPipelines, IPipelineInstance } from '../types'
 import { ArrayItemProvider } from 'azure-devops-ui/Utilities/Provider'
+import { Ago } from 'azure-devops-ui/Ago'
+import { AgoFormat } from 'azure-devops-ui/Utilities/Date'
 
-export const ListViewDeploymentsTable = (props: { environments: IEnvironmentInstance[]; pipelines: IPipelineInstance[] }): JSX.Element => {
-    const { environments, pipelines } = props
+export type ListViewDeploymentsTableProps = {
+    environmentPipelines: IEnvironmentPipelines[]
+}
+export const ListViewDeploymentsTable = (props: ListViewDeploymentsTableProps): JSX.Element => {
+    const { environmentPipelines } = props
+    const pipelines = generatePipelineInstancesArray(environmentPipelines)
 
     function getListViewColumns(environments: IEnvironmentInstance[]): Array<IDashboardEnvironmentColumn> {
         const columns: IDashboardEnvironmentColumn[] = []
@@ -76,6 +80,10 @@ export const ListViewDeploymentsTable = (props: { environments: IEnvironmentInst
     }
 
     return (
-        <Table className="deployments-table" columns={getListViewColumns(environments)} itemProvider={new ArrayItemProvider(pipelines)} />
+        <Table
+            className="deployments-table"
+            columns={getListViewColumns(environmentPipelines)}
+            itemProvider={new ArrayItemProvider(pipelines)}
+        />
     )
 }

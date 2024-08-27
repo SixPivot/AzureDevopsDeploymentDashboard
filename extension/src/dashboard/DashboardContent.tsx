@@ -5,7 +5,7 @@ import { Spinner, SpinnerSize } from 'azure-devops-ui/Spinner'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'azure-devops-ui/Link'
 import { Button } from 'azure-devops-ui/Button'
-import { IEnvironmentInstance, IPipelineInstance, IDevOpsProjectInfo } from '../types'
+import { IDevOpsProjectInfo, IEnvironmentPipelines } from '../types'
 import { TreeViewDeploymentsTable } from '../components/TreeViewDeploymentsTable'
 import { DropdownSelection } from 'azure-devops-ui/Utilities/DropdownSelection'
 import { ListViewDeploymentsTable } from '../components/ListViewDeploymentsTable'
@@ -13,8 +13,7 @@ import { HeaderCommandBar, IHeaderCommandBarItem } from 'azure-devops-ui/HeaderC
 import { IMenuItem } from 'azure-devops-ui/Menu'
 
 export type DashboardContentProps = {
-    environments: IEnvironmentInstance[]
-    pipelines: IPipelineInstance[]
+    environmentPipelines: IEnvironmentPipelines[]
     projectInfo?: IDevOpsProjectInfo
     isLoading: boolean
 }
@@ -25,7 +24,7 @@ enum ViewType {
 }
 
 export const DashboardContent = (props: DashboardContentProps) => {
-    const { environments, pipelines, projectInfo, isLoading } = props
+    const { environmentPipelines, projectInfo, isLoading } = props
 
     const viewSelection = new DropdownSelection()
     const [viewType, setViewType] = useState(ViewType.List.toString())
@@ -87,7 +86,7 @@ export const DashboardContent = (props: DashboardContentProps) => {
                         <div className="flex-grow padding-vertical-20 font-size-m">
                             <Spinner label="Loading data..." size={SpinnerSize.large} />
                         </div>
-                    ) : pipelines && pipelines.length === 0 ? (
+                    ) : environmentPipelines && environmentPipelines.length === 0 ? (
                         <div className="font-size-m flex-grow text-center padding-vertical-20">
                             <div className="margin-bottom-16 font-weight-heavy font-size-l">No deployments were found in any pipelines</div>
                             <Link
@@ -103,9 +102,9 @@ export const DashboardContent = (props: DashboardContentProps) => {
                             </div>
                         </div>
                     ) : viewType === ViewType.List ? (
-                        <ListViewDeploymentsTable environments={environments} pipelines={pipelines} />
+                        <ListViewDeploymentsTable environmentPipelines={environmentPipelines} />
                     ) : (
-                        <TreeViewDeploymentsTable environments={environments} pipelines={pipelines} />
+                        <TreeViewDeploymentsTable environmentPipelines={environmentPipelines} />
                     )}
                 </Card>
             </div>

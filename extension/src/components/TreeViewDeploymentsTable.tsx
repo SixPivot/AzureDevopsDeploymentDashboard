@@ -3,24 +3,24 @@ import { ITreeColumn, renderExpandableTreeCell, Tree } from 'azure-devops-ui/Tre
 import { ITreeItem, ITreeItemEx, TreeItemProvider } from 'azure-devops-ui/Utilities/TreeItemProvider'
 import { IItemProvider } from 'azure-devops-ui/Utilities/Provider'
 import { IReadonlyObservableValue } from 'azure-devops-ui/Core/Observable'
-import { IDeploymentTableItem, IPipelineInstance } from '../types'
-import { IEnvironmentInstance } from '../types'
+import { IDeploymentTableItem, IEnvironmentPipelines, IPipelineInstance } from '../types'
 import { SimpleTableCell } from 'azure-devops-ui/Table'
 import { Status, StatusSize } from 'azure-devops-ui/Status'
-import { getStatusIndicatorData } from '../utilities'
+import { generatePipelineInstancesArray, getStatusIndicatorData } from '../utilities'
 import { Link } from 'azure-devops-ui/Link'
 import { Ago } from 'azure-devops-ui/Ago'
 import { useState, useEffect } from 'react'
 import { ITreeItemProvider } from 'azure-devops-ui/Utilities/TreeItemProvider'
 import { AgoFormat } from 'azure-devops-ui/Utilities/Date'
 
-export const TreeViewDeploymentsTable = (props: { environments: IEnvironmentInstance[]; pipelines: IPipelineInstance[] }): JSX.Element => {
-    const { environments, pipelines } = props
+export const TreeViewDeploymentsTable = (props: { environmentPipelines: IEnvironmentPipelines[] }): JSX.Element => {
+    const { environmentPipelines } = props
     const [folderViewItemProvider, setFolderViewItemProvider] = useState<ITreeItemProvider<IDeploymentTableItem>>()
+    const pipelines = generatePipelineInstancesArray(environmentPipelines)
 
     useEffect(() => {
-        if (pipelines && environments) buildTreeView()
-    }, [pipelines, environments])
+        if (environmentPipelines) buildTreeView()
+    }, [environmentPipelines])
 
     const buildTreeView = () => {
         let treeNodeItems: ITreeItem<IDeploymentTableItem>[] = []
@@ -78,7 +78,7 @@ export const TreeViewDeploymentsTable = (props: { environments: IEnvironmentInst
             renderCell: renderExpandableTreeCell,
         })
 
-        let dynamicColumns = environments.map((env) => {
+        let dynamicColumns = environmentPipelines.map((env) => {
             return {
                 id: env.name!,
                 name: env.name,

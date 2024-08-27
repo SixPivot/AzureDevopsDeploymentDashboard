@@ -21,6 +21,6 @@
         "allowJs": true,
         "resolveJsonModule": true,
     },
-    "include": ["src"],
+    "include": ["src", "tests/DashboardContent.test.tsx", "tests/utilities.test.ts", "tests/DashboardContent.test.data.js"],
     "exclude": ["src/__mocks__/*.js"]
 }

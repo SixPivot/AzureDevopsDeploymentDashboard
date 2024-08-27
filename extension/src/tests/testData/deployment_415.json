@@ -1,0 +1,1027 @@
+[
+    {
+        "id": 415,
+        "requestIdentifier": "aa6b8df3-64ca-4b08-8402-4e0417f02c37.dev.dev",
+        "environmentId": 5,
+        "serviceOwner": "00025394-6065-48ca-87d9-7f5672854ef7",
+        "scopeId": "058870c3-3e26-462c-95d6-15749bcea90e",
+        "planType": "Build",
+        "planId": "aa6b8df3-64ca-4b08-8402-4e0417f02c37",
+        "stageName": "dev",
+        "jobName": "dev",
+        "stageAttempt": 1,
+        "jobAttempt": 1,
+        "definition": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/definition?definitionId=92"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Definitions/92"
+                }
+            },
+            "id": 92,
+            "name": "TestPipelinesRepo"
+        },
+        "owner": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/results?buildId=4128"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Builds/4128"
+                }
+            },
+            "id": 4128,
+            "name": "20240826.1"
+        },
+        "result": 2,
+        "queueTime": "\/Date(1724642364660)\/",
+        "startTime": "\/Date(1724642364746)\/",
+        "finishTime": "\/Date(1724642405520)\/"
+    },
+    {
+        "id": 414,
+        "requestIdentifier": "b230d2b7-4660-48b4-a0c6-40a5e82b86a5.dev.dev",
+        "environmentId": 5,
+        "serviceOwner": "00025394-6065-48ca-87d9-7f5672854ef7",
+        "scopeId": "058870c3-3e26-462c-95d6-15749bcea90e",
+        "planType": "Build",
+        "planId": "b230d2b7-4660-48b4-a0c6-40a5e82b86a5",
+        "stageName": "dev",
+        "jobName": "dev",
+        "stageAttempt": 1,
+        "jobAttempt": 1,
+        "definition": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/definition?definitionId=91"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Definitions/91"
+                }
+            },
+            "id": 91,
+            "name": "TestPipelinesRepo (91)"
+        },
+        "owner": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/results?buildId=4127"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Builds/4127"
+                }
+            },
+            "id": 4127,
+            "name": "20240826.1"
+        },
+        "result": 0,
+        "queueTime": "\/Date(1724642337340)\/",
+        "startTime": "\/Date(1724642337413)\/",
+        "finishTime": "\/Date(1724642388890)\/"
+    },
+    {
+        "id": 413,
+        "requestIdentifier": "b5e09679-95bb-41c9-b740-2fd29f94b116.dev.dev",
+        "environmentId": 5,
+        "serviceOwner": "00025394-6065-48ca-87d9-7f5672854ef7",
+        "scopeId": "058870c3-3e26-462c-95d6-15749bcea90e",
+        "planType": "Build",
+        "planId": "b5e09679-95bb-41c9-b740-2fd29f94b116",
+        "stageName": "dev",
+        "jobName": "dev",
+        "stageAttempt": 1,
+        "jobAttempt": 1,
+        "definition": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/definition?definitionId=90"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Definitions/90"
+                }
+            },
+            "id": 90,
+            "name": "TestPipelinesRepo (90)"
+        },
+        "owner": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/results?buildId=4126"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Builds/4126"
+                }
+            },
+            "id": 4126,
+            "name": "20240826.1"
+        },
+        "result": 0,
+        "queueTime": "\/Date(1724642257226)\/",
+        "startTime": "\/Date(1724642257306)\/",
+        "finishTime": "\/Date(1724642285396)\/"
+    },
+    {
+        "id": 411,
+        "requestIdentifier": "1dbe0d26-81fe-4bee-aac8-0866b2727ee2.dev.dev",
+        "environmentId": 5,
+        "serviceOwner": "00025394-6065-48ca-87d9-7f5672854ef7",
+        "scopeId": "058870c3-3e26-462c-95d6-15749bcea90e",
+        "planType": "Build",
+        "planId": "1dbe0d26-81fe-4bee-aac8-0866b2727ee2",
+        "stageName": "dev",
+        "jobName": "dev",
+        "stageAttempt": 1,
+        "jobAttempt": 1,
+        "definition": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/definition?definitionId=89"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Definitions/89"
+                }
+            },
+            "id": 89,
+            "name": "TestPipelinesRepo (89)"
+        },
+        "owner": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/results?buildId=4125"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Builds/4125"
+                }
+            },
+            "id": 4125,
+            "name": "20240826.1"
+        },
+        "result": 0,
+        "queueTime": "\/Date(1724642152346)\/",
+        "startTime": "\/Date(1724642152646)\/",
+        "finishTime": "\/Date(1724642180606)\/"
+    },
+    {
+        "id": 409,
+        "requestIdentifier": "82bac25c-4d0b-40ea-ad2d-95d20097fc8c.dev.dev",
+        "environmentId": 5,
+        "serviceOwner": "00025394-6065-48ca-87d9-7f5672854ef7",
+        "scopeId": "058870c3-3e26-462c-95d6-15749bcea90e",
+        "planType": "Build",
+        "planId": "82bac25c-4d0b-40ea-ad2d-95d20097fc8c",
+        "stageName": "dev",
+        "jobName": "dev",
+        "stageAttempt": 1,
+        "jobAttempt": 1,
+        "definition": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/definition?definitionId=88"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Definitions/88"
+                }
+            },
+            "id": 88,
+            "name": "TestPipelinesRepo (88)"
+        },
+        "owner": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/results?buildId=4122"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Builds/4122"
+                }
+            },
+            "id": 4122,
+            "name": "20240826.1"
+        },
+        "result": 0,
+        "queueTime": "\/Date(1724633169100)\/",
+        "startTime": "\/Date(1724633169166)\/",
+        "finishTime": "\/Date(1724633197946)\/"
+    },
+    {
+        "id": 398,
+        "requestIdentifier": "ee822ad5-aded-48df-a4e2-682f027a9bc2.dev.dev",
+        "environmentId": 5,
+        "serviceOwner": "00025394-6065-48ca-87d9-7f5672854ef7",
+        "scopeId": "058870c3-3e26-462c-95d6-15749bcea90e",
+        "planType": "Build",
+        "planId": "ee822ad5-aded-48df-a4e2-682f027a9bc2",
+        "stageName": "dev",
+        "jobName": "dev",
+        "stageAttempt": 1,
+        "jobAttempt": 1,
+        "definition": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/definition?definitionId=85"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Definitions/85"
+                }
+            },
+            "id": 85,
+            "name": "Release E"
+        },
+        "owner": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/results?buildId=4100"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Builds/4100"
+                }
+            },
+            "id": 4100,
+            "name": "20240823.1"
+        },
+        "result": 3,
+        "queueTime": "\/Date(1724371569123)\/",
+        "startTime": "\/Date(1724371569323)\/",
+        "finishTime": "\/Date(1724371671310)\/"
+    },
+    {
+        "id": 397,
+        "requestIdentifier": "0d96de35-1d28-41db-8c72-fc161346f2f1.dev.dev",
+        "environmentId": 5,
+        "serviceOwner": "00025394-6065-48ca-87d9-7f5672854ef7",
+        "scopeId": "058870c3-3e26-462c-95d6-15749bcea90e",
+        "planType": "Build",
+        "planId": "0d96de35-1d28-41db-8c72-fc161346f2f1",
+        "stageName": "dev",
+        "jobName": "dev",
+        "stageAttempt": 1,
+        "jobAttempt": 1,
+        "definition": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/definition?definitionId=84"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Definitions/84"
+                }
+            },
+            "id": 84,
+            "name": "Release D"
+        },
+        "owner": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/results?buildId=4099"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Builds/4099"
+                }
+            },
+            "id": 4099,
+            "name": "20240823.1"
+        },
+        "result": 3,
+        "queueTime": "\/Date(1724371538453)\/",
+        "startTime": "\/Date(1724371538543)\/",
+        "finishTime": "\/Date(1724371666066)\/"
+    },
+    {
+        "id": 396,
+        "requestIdentifier": "1f74503d-5f63-4fd2-ac36-bc78820c5cfd.dev.dev",
+        "environmentId": 5,
+        "serviceOwner": "00025394-6065-48ca-87d9-7f5672854ef7",
+        "scopeId": "058870c3-3e26-462c-95d6-15749bcea90e",
+        "planType": "Build",
+        "planId": "1f74503d-5f63-4fd2-ac36-bc78820c5cfd",
+        "stageName": "dev",
+        "jobName": "dev",
+        "stageAttempt": 1,
+        "jobAttempt": 1,
+        "definition": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/definition?definitionId=83"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Definitions/83"
+                }
+            },
+            "id": 83,
+            "name": "Release C"
+        },
+        "owner": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/results?buildId=4098"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Builds/4098"
+                }
+            },
+            "id": 4098,
+            "name": "20240823.1"
+        },
+        "result": 3,
+        "queueTime": "\/Date(1724371506393)\/",
+        "startTime": "\/Date(1724371506473)\/",
+        "finishTime": "\/Date(1724371660653)\/"
+    },
+    {
+        "id": 392,
+        "requestIdentifier": "0f9268be-349f-4e30-aaff-62e2bde9da02.dev.dev",
+        "environmentId": 5,
+        "serviceOwner": "00025394-6065-48ca-87d9-7f5672854ef7",
+        "scopeId": "058870c3-3e26-462c-95d6-15749bcea90e",
+        "planType": "Build",
+        "planId": "0f9268be-349f-4e30-aaff-62e2bde9da02",
+        "stageName": "dev",
+        "jobName": "dev",
+        "stageAttempt": 1,
+        "jobAttempt": 1,
+        "definition": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/definition?definitionId=82"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Definitions/82"
+                }
+            },
+            "id": 82,
+            "name": "Release A"
+        },
+        "owner": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/results?buildId=4097"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Builds/4097"
+                }
+            },
+            "id": 4097,
+            "name": "20240823.1"
+        },
+        "result": 0,
+        "queueTime": "\/Date(1724371080503)\/",
+        "startTime": "\/Date(1724371080620)\/",
+        "finishTime": "\/Date(1724371459296)\/"
+    },
+    {
+        "id": 391,
+        "requestIdentifier": "41ef8297-ee48-400b-be19-40457416cc98.dev.dev",
+        "environmentId": 5,
+        "serviceOwner": "00025394-6065-48ca-87d9-7f5672854ef7",
+        "scopeId": "058870c3-3e26-462c-95d6-15749bcea90e",
+        "planType": "Build",
+        "planId": "41ef8297-ee48-400b-be19-40457416cc98",
+        "stageName": "dev",
+        "jobName": "dev",
+        "stageAttempt": 1,
+        "jobAttempt": 1,
+        "definition": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/definition?definitionId=81"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Definitions/81"
+                }
+            },
+            "id": 81,
+            "name": "Release B"
+        },
+        "owner": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/results?buildId=4096"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Builds/4096"
+                }
+            },
+            "id": 4096,
+            "name": "20240823.1"
+        },
+        "result": 0,
+        "queueTime": "\/Date(1724371078503)\/",
+        "startTime": "\/Date(1724371078600)\/",
+        "finishTime": "\/Date(1724371421536)\/"
+    },
+    {
+        "id": 390,
+        "requestIdentifier": "7f6b700c-7847-4fbe-b92b-e27949efc56e.dev.dev",
+        "environmentId": 5,
+        "serviceOwner": "00025394-6065-48ca-87d9-7f5672854ef7",
+        "scopeId": "058870c3-3e26-462c-95d6-15749bcea90e",
+        "planType": "Build",
+        "planId": "7f6b700c-7847-4fbe-b92b-e27949efc56e",
+        "stageName": "dev",
+        "jobName": "dev",
+        "stageAttempt": 1,
+        "jobAttempt": 1,
+        "definition": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/definition?definitionId=80"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Definitions/80"
+                }
+            },
+            "id": 80,
+            "name": "Sample 1"
+        },
+        "owner": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/results?buildId=4095"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Builds/4095"
+                }
+            },
+            "id": 4095,
+            "name": "20240823.1"
+        },
+        "result": 0,
+        "queueTime": "\/Date(1724371076700)\/",
+        "startTime": "\/Date(1724371076770)\/",
+        "finishTime": "\/Date(1724371374320)\/"
+    },
+    {
+        "id": 389,
+        "requestIdentifier": "fa79fd94-a3c5-4ca1-9798-a4e2748fa3ff.dev.dev",
+        "environmentId": 5,
+        "serviceOwner": "00025394-6065-48ca-87d9-7f5672854ef7",
+        "scopeId": "058870c3-3e26-462c-95d6-15749bcea90e",
+        "planType": "Build",
+        "planId": "fa79fd94-a3c5-4ca1-9798-a4e2748fa3ff",
+        "stageName": "dev",
+        "jobName": "dev",
+        "stageAttempt": 1,
+        "jobAttempt": 1,
+        "definition": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/definition?definitionId=83"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Definitions/83"
+                }
+            },
+            "id": 83,
+            "name": "Release C"
+        },
+        "owner": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/results?buildId=4092"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Builds/4092"
+                }
+            },
+            "id": 4092,
+            "name": "20240822.1"
+        },
+        "result": 0,
+        "queueTime": "\/Date(1724298903376)\/",
+        "startTime": "\/Date(1724298903460)\/",
+        "finishTime": "\/Date(1724299063380)\/"
+    },
+    {
+        "id": 388,
+        "requestIdentifier": "fa79e10c-a3c5-4ca1-9798-a4e2748fa3ff.dev.dev",
+        "environmentId": 5,
+        "serviceOwner": "00025394-6065-48ca-87d9-7f5672854ef7",
+        "scopeId": "058870c3-3e26-462c-95d6-15749bcea90e",
+        "planType": "Build",
+        "planId": "fa79e10c-a3c5-4ca1-9798-a4e2748fa3ff",
+        "stageName": "dev",
+        "jobName": "dev",
+        "stageAttempt": 1,
+        "jobAttempt": 1,
+        "definition": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/definition?definitionId=84"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Definitions/84"
+                }
+            },
+            "id": 84,
+            "name": "Release D"
+        },
+        "owner": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/results?buildId=4091"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Builds/4091"
+                }
+            },
+            "id": 4091,
+            "name": "20240822.1"
+        },
+        "result": 0,
+        "queueTime": "\/Date(1724298871420)\/",
+        "startTime": "\/Date(1724298871496)\/",
+        "finishTime": "\/Date(1724299036163)\/"
+    },
+    {
+        "id": 387,
+        "requestIdentifier": "2371787d-076d-422b-93cf-6968cadffc31.dev.dev",
+        "environmentId": 5,
+        "serviceOwner": "00025394-6065-48ca-87d9-7f5672854ef7",
+        "scopeId": "058870c3-3e26-462c-95d6-15749bcea90e",
+        "planType": "Build",
+        "planId": "2371787d-076d-422b-93cf-6968cadffc31",
+        "stageName": "dev",
+        "jobName": "dev",
+        "stageAttempt": 1,
+        "jobAttempt": 1,
+        "definition": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/definition?definitionId=85"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Definitions/85"
+                }
+            },
+            "id": 85,
+            "name": "Release E"
+        },
+        "owner": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/results?buildId=4090"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Builds/4090"
+                }
+            },
+            "id": 4090,
+            "name": "20240822.1"
+        },
+        "result": 2,
+        "queueTime": "\/Date(1724298840290)\/",
+        "startTime": "\/Date(1724298840370)\/",
+        "finishTime": "\/Date(1724299005736)\/"
+    },
+    {
+        "id": 383,
+        "requestIdentifier": "d7495856-790d-4ddb-be68-8d7d7486d3b7.dev.dev",
+        "environmentId": 5,
+        "serviceOwner": "00025394-6065-48ca-87d9-7f5672854ef7",
+        "scopeId": "058870c3-3e26-462c-95d6-15749bcea90e",
+        "planType": "Build",
+        "planId": "d7495856-790d-4ddb-be68-8d7d7486d3b7",
+        "stageName": "dev",
+        "jobName": "dev",
+        "stageAttempt": 1,
+        "jobAttempt": 1,
+        "definition": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/definition?definitionId=82"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Definitions/82"
+                }
+            },
+            "id": 82,
+            "name": "Release A"
+        },
+        "owner": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/results?buildId=4089"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Builds/4089"
+                }
+            },
+            "id": 4089,
+            "name": "20240822.1"
+        },
+        "result": 0,
+        "queueTime": "\/Date(1724298700920)\/",
+        "startTime": "\/Date(1724298701213)\/",
+        "finishTime": "\/Date(1724298807400)\/"
+    },
+    {
+        "id": 382,
+        "requestIdentifier": "a3c8e4a5-78a5-441d-8891-3186dc8efcc1.dev.dev",
+        "environmentId": 5,
+        "serviceOwner": "00025394-6065-48ca-87d9-7f5672854ef7",
+        "scopeId": "058870c3-3e26-462c-95d6-15749bcea90e",
+        "planType": "Build",
+        "planId": "a3c8e4a5-78a5-441d-8891-3186dc8efcc1",
+        "stageName": "dev",
+        "jobName": "dev",
+        "stageAttempt": 1,
+        "jobAttempt": 1,
+        "definition": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/definition?definitionId=81"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Definitions/81"
+                }
+            },
+            "id": 81,
+            "name": "Release B"
+        },
+        "owner": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/results?buildId=4088"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Builds/4088"
+                }
+            },
+            "id": 4088,
+            "name": "20240822.1"
+        },
+        "result": 0,
+        "queueTime": "\/Date(1724298698313)\/",
+        "startTime": "\/Date(1724298698400)\/",
+        "finishTime": "\/Date(1724298780243)\/"
+    },
+    {
+        "id": 381,
+        "requestIdentifier": "23710273-076d-422b-93cf-6968cadffc31.dev.dev",
+        "environmentId": 5,
+        "serviceOwner": "00025394-6065-48ca-87d9-7f5672854ef7",
+        "scopeId": "058870c3-3e26-462c-95d6-15749bcea90e",
+        "planType": "Build",
+        "planId": "23710273-076d-422b-93cf-6968cadffc31",
+        "stageName": "dev",
+        "jobName": "dev",
+        "stageAttempt": 1,
+        "jobAttempt": 1,
+        "definition": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/definition?definitionId=80"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Definitions/80"
+                }
+            },
+            "id": 80,
+            "name": "Sample 1"
+        },
+        "owner": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/results?buildId=4087"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Builds/4087"
+                }
+            },
+            "id": 4087,
+            "name": "20240822.1"
+        },
+        "result": 0,
+        "queueTime": "\/Date(1724298693090)\/",
+        "startTime": "\/Date(1724298693186)\/",
+        "finishTime": "\/Date(1724298752496)\/"
+    },
+    {
+        "id": 376,
+        "requestIdentifier": "6304156b-31fb-4b42-9562-ac298aaeaa94.dev.dev",
+        "environmentId": 5,
+        "serviceOwner": "00025394-6065-48ca-87d9-7f5672854ef7",
+        "scopeId": "058870c3-3e26-462c-95d6-15749bcea90e",
+        "planType": "Build",
+        "planId": "6304156b-31fb-4b42-9562-ac298aaeaa94",
+        "stageName": "dev",
+        "jobName": "dev",
+        "stageAttempt": 1,
+        "jobAttempt": 1,
+        "definition": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/definition?definitionId=71"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Definitions/71"
+                }
+            },
+            "id": 71,
+            "name": "Release Pipeline C"
+        },
+        "owner": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/results?buildId=3965"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Builds/3965"
+                }
+            },
+            "id": 3965,
+            "name": "20240729.3"
+        },
+        "result": 0,
+        "queueTime": "\/Date(1722226813370)\/",
+        "startTime": "\/Date(1722226813493)\/",
+        "finishTime": "\/Date(1722226841103)\/"
+    },
+    {
+        "id": 373,
+        "requestIdentifier": "c8cd8418-88b3-457c-a5d5-c162592085af.dev.dev",
+        "environmentId": 5,
+        "serviceOwner": "00025394-6065-48ca-87d9-7f5672854ef7",
+        "scopeId": "058870c3-3e26-462c-95d6-15749bcea90e",
+        "planType": "Build",
+        "planId": "c8cd8418-88b3-457c-a5d5-c162592085af",
+        "stageName": "dev",
+        "jobName": "dev",
+        "stageAttempt": 1,
+        "jobAttempt": 1,
+        "definition": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/definition?definitionId=71"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Definitions/71"
+                }
+            },
+            "id": 71,
+            "name": "Release Pipeline C"
+        },
+        "owner": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/results?buildId=3963"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Builds/3963"
+                }
+            },
+            "id": 3963,
+            "name": "20240729.2"
+        },
+        "result": 0,
+        "queueTime": "\/Date(1722212548700)\/",
+        "startTime": "\/Date(1722212548793)\/",
+        "finishTime": "\/Date(1722212574250)\/"
+    },
+    {
+        "id": 371,
+        "requestIdentifier": "990be904-96ae-4761-b1c9-358cba312d04.dev.dev",
+        "environmentId": 5,
+        "serviceOwner": "00025394-6065-48ca-87d9-7f5672854ef7",
+        "scopeId": "058870c3-3e26-462c-95d6-15749bcea90e",
+        "planType": "Build",
+        "planId": "990be904-96ae-4761-b1c9-358cba312d04",
+        "stageName": "dev",
+        "jobName": "dev",
+        "stageAttempt": 1,
+        "jobAttempt": 1,
+        "definition": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/definition?definitionId=71"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Definitions/71"
+                }
+            },
+            "id": 71,
+            "name": "Release Pipeline C"
+        },
+        "owner": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/results?buildId=3960"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Builds/3960"
+                }
+            },
+            "id": 3960,
+            "name": "20240729.1"
+        },
+        "result": 0,
+        "queueTime": "\/Date(1722211676650)\/",
+        "startTime": "\/Date(1722211676766)\/",
+        "finishTime": "\/Date(1722211833290)\/"
+    },
+    {
+        "id": 370,
+        "requestIdentifier": "0b0b645b-0f77-431a-8a98-b885b4a72833.dev.dev",
+        "environmentId": 5,
+        "serviceOwner": "00025394-6065-48ca-87d9-7f5672854ef7",
+        "scopeId": "058870c3-3e26-462c-95d6-15749bcea90e",
+        "planType": "Build",
+        "planId": "0b0b645b-0f77-431a-8a98-b885b4a72833",
+        "stageName": "dev",
+        "jobName": "dev",
+        "stageAttempt": 1,
+        "jobAttempt": 1,
+        "definition": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/definition?definitionId=73"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Definitions/73"
+                }
+            },
+            "id": 73,
+            "name": "Release Pipeline E"
+        },
+        "owner": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/results?buildId=3924"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Builds/3924"
+                }
+            },
+            "id": 3924,
+            "name": "20240717.1"
+        },
+        "result": 2,
+        "queueTime": "\/Date(1721195292330)\/",
+        "startTime": "\/Date(1721195292423)\/",
+        "finishTime": "\/Date(1721195319270)\/"
+    },
+    {
+        "id": 368,
+        "requestIdentifier": "7491a830-0f89-40f1-9c2f-ed5f3daed836.dev.dev",
+        "environmentId": 5,
+        "serviceOwner": "00025394-6065-48ca-87d9-7f5672854ef7",
+        "scopeId": "058870c3-3e26-462c-95d6-15749bcea90e",
+        "planType": "Build",
+        "planId": "7491a830-0f89-40f1-9c2f-ed5f3daed836",
+        "stageName": "dev",
+        "jobName": "dev",
+        "stageAttempt": 1,
+        "jobAttempt": 1,
+        "definition": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/definition?definitionId=72"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Definitions/72"
+                }
+            },
+            "id": 72,
+            "name": "ReleaseDashboard"
+        },
+        "owner": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/results?buildId=3923"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Builds/3923"
+                }
+            },
+            "id": 3923,
+            "name": "20240717.1"
+        },
+        "result": 0,
+        "queueTime": "\/Date(1721190277246)\/",
+        "startTime": "\/Date(1721190277346)\/",
+        "finishTime": "\/Date(1721190314406)\/"
+    },
+    {
+        "id": 367,
+        "requestIdentifier": "96c8b0c9-7d8b-42fa-87d0-0044bfb1e1b9.dev.dev",
+        "environmentId": 5,
+        "serviceOwner": "00025394-6065-48ca-87d9-7f5672854ef7",
+        "scopeId": "058870c3-3e26-462c-95d6-15749bcea90e",
+        "planType": "Build",
+        "planId": "96c8b0c9-7d8b-42fa-87d0-0044bfb1e1b9",
+        "stageName": "dev",
+        "jobName": "dev",
+        "stageAttempt": 1,
+        "jobAttempt": 1,
+        "definition": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/definition?definitionId=69"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Definitions/69"
+                }
+            },
+            "id": 69,
+            "name": "Release Pipeline B"
+        },
+        "owner": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/results?buildId=3922"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Builds/3922"
+                }
+            },
+            "id": 3922,
+            "name": "20240717.1"
+        },
+        "result": 3,
+        "queueTime": "\/Date(1721190060083)\/",
+        "startTime": "\/Date(1721190060210)\/",
+        "finishTime": "\/Date(1721190076983)\/"
+    },
+    {
+        "id": 363,
+        "requestIdentifier": "c4a9b6ef-3c64-4730-a378-9cff1dfb6b74.dev.dev",
+        "environmentId": 5,
+        "serviceOwner": "00025394-6065-48ca-87d9-7f5672854ef7",
+        "scopeId": "058870c3-3e26-462c-95d6-15749bcea90e",
+        "planType": "Build",
+        "planId": "c4a9b6ef-3c64-4730-a378-9cff1dfb6b74",
+        "stageName": "dev",
+        "jobName": "dev",
+        "stageAttempt": 1,
+        "jobAttempt": 1,
+        "definition": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/definition?definitionId=71"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Definitions/71"
+                }
+            },
+            "id": 71,
+            "name": "Release Pipeline C"
+        },
+        "owner": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/results?buildId=3915"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Builds/3915"
+                }
+            },
+            "id": 3915,
+            "name": "20240715.2"
+        },
+        "result": 0,
+        "queueTime": "\/Date(1721014603763)\/",
+        "startTime": "\/Date(1721014603870)\/",
+        "finishTime": "\/Date(1721014627730)\/"
+    },
+    {
+        "id": 360,
+        "requestIdentifier": "3c1c246b-860e-4b45-bab5-88607a877bd3.dev.dev",
+        "environmentId": 5,
+        "serviceOwner": "00025394-6065-48ca-87d9-7f5672854ef7",
+        "scopeId": "058870c3-3e26-462c-95d6-15749bcea90e",
+        "planType": "Build",
+        "planId": "3c1c246b-860e-4b45-bab5-88607a877bd3",
+        "stageName": "dev",
+        "jobName": "dev",
+        "stageAttempt": 1,
+        "jobAttempt": 1,
+        "definition": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/definition?definitionId=71"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Definitions/71"
+                }
+            },
+            "id": 71,
+            "name": "Release Pipeline C"
+        },
+        "owner": {
+            "_links": {
+                "web": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/results?buildId=3914"
+                },
+                "self": {
+                    "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/build/Builds/3914"
+                }
+            },
+            "id": 3914,
+            "name": "20240715.1"
+        },
+        "result": 0,
+        "queueTime": "\/Date(1721014339340)\/",
+        "startTime": "\/Date(1721014339440)\/",
+        "finishTime": "\/Date(1721014363860)\/"
+    }
+]

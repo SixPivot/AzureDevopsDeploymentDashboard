@@ -1,0 +1,122 @@
+[
+    {
+        "_links": {
+            "self": {
+                "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/pipelines/87?revision=2"
+            },
+            "web": {
+                "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/definition?definitionId=87"
+            }
+        },
+        "url": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/pipelines/87?revision=2",
+        "id": 87,
+        "revision": 2,
+        "name": "Build A",
+        "folder": "\\PipelinesForTesting\\Applications"
+    },
+    {
+        "_links": {
+            "self": {
+                "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/pipelines/23?revision=1"
+            },
+            "web": {
+                "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/definition?definitionId=23"
+            }
+        },
+        "url": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/pipelines/23?revision=1",
+        "id": 23,
+        "revision": 1,
+        "name": "OldDashboard",
+        "folder": "\\"
+    },
+    {
+        "_links": {
+            "self": {
+                "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/pipelines/78?revision=4"
+            },
+            "web": {
+                "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/definition?definitionId=78"
+            }
+        },
+        "url": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/pipelines/78?revision=4",
+        "id": 78,
+        "revision": 4,
+        "name": "Publish (GitHub)",
+        "folder": "\\"
+    },
+    {
+        "_links": {
+            "self": {
+                "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/pipelines/88?revision=2"
+            },
+            "web": {
+                "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/definition?definitionId=88"
+            }
+        },
+        "url": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/pipelines/88?revision=2",
+        "id": 88,
+        "revision": 2,
+        "name": "Release A",
+        "folder": "\\PipelinesForTesting\\Applications"
+    },
+    {
+        "_links": {
+            "self": {
+                "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/pipelines/89?revision=2"
+            },
+            "web": {
+                "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/definition?definitionId=89"
+            }
+        },
+        "url": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/pipelines/89?revision=2",
+        "id": 89,
+        "revision": 2,
+        "name": "Release B",
+        "folder": "\\PipelinesForTesting\\Applications"
+    },
+    {
+        "_links": {
+            "self": {
+                "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/pipelines/90?revision=2"
+            },
+            "web": {
+                "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/definition?definitionId=90"
+            }
+        },
+        "url": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/pipelines/90?revision=2",
+        "id": 90,
+        "revision": 2,
+        "name": "Release C",
+        "folder": "\\PipelinesForTesting\\Services"
+    },
+    {
+        "_links": {
+            "self": {
+                "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/pipelines/91?revision=2"
+            },
+            "web": {
+                "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/definition?definitionId=91"
+            }
+        },
+        "url": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/pipelines/91?revision=2",
+        "id": 91,
+        "revision": 2,
+        "name": "Release D",
+        "folder": "\\PipelinesForTesting\\Services"
+    },
+    {
+        "_links": {
+            "self": {
+                "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/pipelines/92?revision=2"
+            },
+            "web": {
+                "href": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_build/definition?definitionId=92"
+            }
+        },
+        "url": "https://dev.azure.com/sixpivot/058870c3-3e26-462c-95d6-15749bcea90e/_apis/pipelines/92?revision=2",
+        "id": 92,
+        "revision": 2,
+        "name": "Release E",
+        "folder": "\\PipelinesForTesting\\Services"
+    }
+]

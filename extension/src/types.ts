@@ -78,8 +78,7 @@ export type IDeploymentTableItem = {
 }
 
 export interface IDashboardMainState {
-    environments: IEnvironmentInstance[]
-    pipelines: IPipelineInstance[]
+    environmentPipelines: IEnvironmentPipelines[]
     isLoading: boolean
     projectInfo?: IDevOpsProjectInfo
 }

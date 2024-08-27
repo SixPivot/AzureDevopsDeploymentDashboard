@@ -1,5 +1,12 @@
 import { Statuses } from 'azure-devops-ui/Status'
-import { IEnvironmentInstance, ISortableByConvention, IStatusIndicatorData } from './types'
+import {
+    IEnvironmentDeploymentDictionary,
+    IEnvironmentInstance,
+    IEnvironmentPipelines,
+    IPipelineInstance,
+    ISortableByConvention,
+    IStatusIndicatorData,
+} from './types'
 
 function applySortOrder(item: ISortableByConvention, groupWord: string, groupSortOrder: number) {
     if (item.conventionSortOrder) return
@@ -113,4 +120,35 @@ export function getStatusIndicatorData(status: number): IStatusIndicatorData {
     }
 
     return indicatorData
+}
+
+export function generatePipelineInstancesArray(environments: IEnvironmentPipelines[]): Array<IPipelineInstance> {
+    const pipelineInfoArray: Array<IPipelineInstance> = []
+
+    for (const environment of environments) {
+        for (const key of Object.keys(environment.pipeline)) {
+            const pipelineInfo = pipelineInfoArray.find((pr) => pr.key == key) ?? {
+                key: key,
+                name: environment.pipeline[key].pipeline?.name ?? '',
+                environments: {} as IEnvironmentDeploymentDictionary,
+                uri: environment.pipeline[key].deployment.definition._links['web'].href,
+            }
+
+            if (pipelineInfoArray.indexOf(pipelineInfo) === -1) {
+                pipelineInfoArray.push(pipelineInfo)
+            }
+
+            if (environment.name === undefined) continue
+
+            pipelineInfo.environments[environment.name] = {
+                value: environment.pipeline[key].deployment.owner.name,
+                finishTime: environment.pipeline[key].deployment.finishTime,
+                result: environment.pipeline[key].deployment.result,
+                folder: environment.pipeline[key].pipeline?.folder,
+                uri: environment.pipeline[key].deployment.owner?._links['web'].href,
+            }
+        }
+    }
+
+    return pipelineInfoArray
 }

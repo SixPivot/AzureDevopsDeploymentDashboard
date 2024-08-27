@@ -1,28 +1,35 @@
 import { getClient } from 'azure-devops-extension-api'
 import { PipelinesRestClient } from 'azure-devops-extension-api/Pipelines/PipelinesClient'
-import { TaskAgentRestClient } from 'azure-devops-extension-api/TaskAgent'
-import {
-    IDashboardEnvironmentPipeline,
-    IEnvironmentPipelines,
-    IEnvironmentDeploymentDictionary,
-    IPipelineInstance,
-    IEnvironmentInstance,
-} from '../types'
-import { sortByConvention } from '../utilities'
+import { EnvironmentInstance, TaskAgentRestClient } from 'azure-devops-extension-api/TaskAgent'
+import { IEnvironmentPipelines, IEnvironmentInstance, IDevOpsProjectInfo, ExtensionDataKeys } from '../types'
+import { merge, sortByConvention } from '../utilities'
 
-export async function getDashboardEnvironmentPipeline(projectName: string): Promise<IDashboardEnvironmentPipeline> {
+export async function getSortedEnvironments(projectInfo: IDevOpsProjectInfo): Promise<EnvironmentInstance[]> {
+    const settings = (await projectInfo.extensionDataManager.getValue<EnvironmentInstance[]>(ExtensionDataKeys.Environments)) ?? []
+    const taskAgentClient = getClient(TaskAgentRestClient)
+    const environments = await taskAgentClient.getEnvironments(projectInfo.name)
+
+    const sortedEnvironments: EnvironmentInstance[] =
+        settings
+            ?.map((x) => environments.find((e) => e.name === x.name))
+            .filter((x) => x)
+            .map((x) => x!) ?? []
+    const convention = sortByConvention(environments)
+    return (merge(convention, sortedEnvironments) ?? convention) as EnvironmentInstance[]
+}
+
+export async function getDashboardEnvironmentPipeline(projectInfo: IDevOpsProjectInfo): Promise<IEnvironmentPipelines[]> {
     const taskAgentClient = getClient(TaskAgentRestClient)
     const pipelinesClient = getClient(PipelinesRestClient)
 
     const [pipelines, environments] = await Promise.all([
-        pipelinesClient.listPipelines(projectName, 'name asc', 1000),
-        taskAgentClient.getEnvironments(projectName),
+        pipelinesClient.listPipelines(projectInfo.name, 'name asc', 1000),
+        getSortedEnvironments(projectInfo),
     ])
 
     const environmentPipelines: IEnvironmentPipelines[] = []
     for (const environment of environments) {
-        const deployments = await taskAgentClient.getEnvironmentDeploymentExecutionRecords(projectName, environment.id)
-
+        const deployments = await taskAgentClient.getEnvironmentDeploymentExecutionRecords(projectInfo.name, environment.id)
         const environmentPipeline: IEnvironmentPipelines = {
             name: environment.name,
             pipeline: {},
@@ -43,43 +50,7 @@ export async function getDashboardEnvironmentPipeline(projectName: string): Prom
         environmentPipelines.push(environmentPipeline)
     }
 
-    const pipelineInstancesArray = generatePipelineInstancesArray(environmentPipelines)
-
-    return {
-        environments: sortByConvention(environmentPipelines) as IEnvironmentPipelines[],
-        pipelines: pipelineInstancesArray,
-    }
-}
-
-function generatePipelineInstancesArray(environments: IEnvironmentPipelines[]): Array<IPipelineInstance> {
-    const pipelineInfoArray: Array<IPipelineInstance> = []
-
-    for (const environment of environments) {
-        for (const key of Object.keys(environment.pipeline)) {
-            const pipelineInfo = pipelineInfoArray.find((pr) => pr.key == key) ?? {
-                key: key,
-                name: environment.pipeline[key].pipeline?.name ?? '',
-                environments: {} as IEnvironmentDeploymentDictionary,
-                uri: environment.pipeline[key].deployment.definition._links['web'].href,
-            }
-
-            if (pipelineInfoArray.indexOf(pipelineInfo) === -1) {
-                pipelineInfoArray.push(pipelineInfo)
-            }
-
-            if (environment.name === undefined) continue
-
-            pipelineInfo.environments[environment.name] = {
-                value: environment.pipeline[key].deployment.owner.name,
-                finishTime: environment.pipeline[key].deployment.finishTime,
-                result: environment.pipeline[key].deployment.result,
-                folder: environment.pipeline[key].pipeline?.folder,
-                uri: environment.pipeline[key].deployment.owner?._links['web'].href,
-            }
-        }
-    }
-
-    return pipelineInfoArray
+    return environmentPipelines
 }
 
 /**

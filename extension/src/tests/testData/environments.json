@@ -1,0 +1,298 @@
+[
+    {
+        "id": 5,
+        "name": "Dev",
+        "description": "Automatically created environment",
+        "createdBy": {
+            "displayName": "David Gardiner",
+            "url": "https://spsprodeau1.vssps.visualstudio.com/A03a80234-5264-4ce4-941b-adc2da6a9e0e/_apis/Identities/97a174a7-3ded-65c7-abd1-50bb97d8f59d",
+            "_links": {
+                "avatar": {
+                    "href": "https://dev.azure.com/sixpivot/_apis/GraphProfile/MemberAvatars/aad.OTdhMTc0YTctM2RlZC03NWM3LWFiZDEtNTBiYjk3ZDhmNTlk"
+                }
+            },
+            "id": "97a174a7-3ded-65c7-abd1-50bb97d8f59d",
+            "uniqueName": "david.gardiner@sixpivot.com.au",
+            "imageUrl": "https://dev.azure.com/sixpivot/_apis/GraphProfile/MemberAvatars/aad.OTdhMTc0YTctM2RlZC03NWM3LWFiZDEtNTBiYjk3ZDhmNTlk",
+            "descriptor": "aad.OTdhMTc0YTctM2RlZC03NWM3LWFiZDEtNTBiYjk3ZDhmNTlk"
+        },
+        "createdOn": "\/Date(1670543042000)\/",
+        "lastModifiedBy": {
+            "displayName": "David Gardiner",
+            "url": "https://spsprodeau1.vssps.visualstudio.com/A03a80234-5264-4ce4-941b-adc2da6a9e0e/_apis/Identities/97a174a7-3ded-65c7-abd1-50bb97d8f59d",
+            "_links": {
+                "avatar": {
+                    "href": "https://dev.azure.com/sixpivot/_apis/GraphProfile/MemberAvatars/aad.OTdhMTc0YTctM2RlZC03NWM3LWFiZDEtNTBiYjk3ZDhmNTlk"
+                }
+            },
+            "id": "97a174a7-3ded-65c7-abd1-50bb97d8f59d",
+            "uniqueName": "david.gardiner@sixpivot.com.au",
+            "imageUrl": "https://dev.azure.com/sixpivot/_apis/GraphProfile/MemberAvatars/aad.OTdhMTc0YTctM2RlZC03NWM3LWFiZDEtNTBiYjk3ZDhmNTlk",
+            "descriptor": "aad.OTdhMTc0YTctM2RlZC03NWM3LWFiZDEtNTBiYjk3ZDhmNTlk"
+        },
+        "lastModifiedOn": "\/Date(1670543042000)\/",
+        "project": {
+            "id": "058870c3-3e26-462c-95d6-15749bcea90e",
+            "name": null
+        }
+    },
+    {
+        "id": 23,
+        "name": "Mel-Dev-SE",
+        "description": "",
+        "createdBy": {
+            "displayName": "Moses Soliman",
+            "url": "https://spsprodeau1.vssps.visualstudio.com/A03a80234-5264-4ce4-941b-adc2da6a9e0e/_apis/Identities/91df6867-8cc8-6f3c-9f90-47fabaeade27",
+            "_links": {
+                "avatar": {
+                    "href": "https://dev.azure.com/sixpivot/_apis/GraphProfile/MemberAvatars/aad.OTFkZjY4NjctOGNjOC03ZjNjLTlmOTAtNDdmYWJhZWFkZTI3"
+                }
+            },
+            "id": "91df6867-8cc8-6f3c-9f90-47fabaeade27",
+            "uniqueName": "Moses.Soliman@sixpivot.com.au",
+            "imageUrl": "https://dev.azure.com/sixpivot/_apis/GraphProfile/MemberAvatars/aad.OTFkZjY4NjctOGNjOC03ZjNjLTlmOTAtNDdmYWJhZWFkZTI3",
+            "descriptor": "aad.OTFkZjY4NjctOGNjOC03ZjNjLTlmOTAtNDdmYWJhZWFkZTI3"
+        },
+        "createdOn": "\/Date(1722233245713)\/",
+        "lastModifiedBy": {
+            "displayName": "Moses Soliman",
+            "url": "https://spsprodeau1.vssps.visualstudio.com/A03a80234-5264-4ce4-941b-adc2da6a9e0e/_apis/Identities/91df6867-8cc8-6f3c-9f90-47fabaeade27",
+            "_links": {
+                "avatar": {
+                    "href": "https://dev.azure.com/sixpivot/_apis/GraphProfile/MemberAvatars/aad.OTFkZjY4NjctOGNjOC03ZjNjLTlmOTAtNDdmYWJhZWFkZTI3"
+                }
+            },
+            "id": "91df6867-8cc8-6f3c-9f90-47fabaeade27",
+            "uniqueName": "Moses.Soliman@sixpivot.com.au",
+            "imageUrl": "https://dev.azure.com/sixpivot/_apis/GraphProfile/MemberAvatars/aad.OTFkZjY4NjctOGNjOC03ZjNjLTlmOTAtNDdmYWJhZWFkZTI3",
+            "descriptor": "aad.OTFkZjY4NjctOGNjOC03ZjNjLTlmOTAtNDdmYWJhZWFkZTI3"
+        },
+        "lastModifiedOn": "\/Date(1722233245713)\/",
+        "project": {
+            "id": "058870c3-3e26-462c-95d6-15749bcea90e",
+            "name": null
+        }
+    },
+    {
+        "id": 20,
+        "name": "MelTest",
+        "description": "",
+        "createdBy": {
+            "displayName": "Moses Soliman",
+            "url": "https://spsprodeau1.vssps.visualstudio.com/A03a80234-5264-4ce4-941b-adc2da6a9e0e/_apis/Identities/91df6867-8cc8-6f3c-9f90-47fabaeade27",
+            "_links": {
+                "avatar": {
+                    "href": "https://dev.azure.com/sixpivot/_apis/GraphProfile/MemberAvatars/aad.OTFkZjY4NjctOGNjOC03ZjNjLTlmOTAtNDdmYWJhZWFkZTI3"
+                }
+            },
+            "id": "91df6867-8cc8-6f3c-9f90-47fabaeade27",
+            "uniqueName": "Moses.Soliman@sixpivot.com.au",
+            "imageUrl": "https://dev.azure.com/sixpivot/_apis/GraphProfile/MemberAvatars/aad.OTFkZjY4NjctOGNjOC03ZjNjLTlmOTAtNDdmYWJhZWFkZTI3",
+            "descriptor": "aad.OTFkZjY4NjctOGNjOC03ZjNjLTlmOTAtNDdmYWJhZWFkZTI3"
+        },
+        "createdOn": "\/Date(1722226684980)\/",
+        "lastModifiedBy": {
+            "displayName": "Moses Soliman",
+            "url": "https://spsprodeau1.vssps.visualstudio.com/A03a80234-5264-4ce4-941b-adc2da6a9e0e/_apis/Identities/91df6867-8cc8-6f3c-9f90-47fabaeade27",
+            "_links": {
+                "avatar": {
+                    "href": "https://dev.azure.com/sixpivot/_apis/GraphProfile/MemberAvatars/aad.OTFkZjY4NjctOGNjOC03ZjNjLTlmOTAtNDdmYWJhZWFkZTI3"
+                }
+            },
+            "id": "91df6867-8cc8-6f3c-9f90-47fabaeade27",
+            "uniqueName": "Moses.Soliman@sixpivot.com.au",
+            "imageUrl": "https://dev.azure.com/sixpivot/_apis/GraphProfile/MemberAvatars/aad.OTFkZjY4NjctOGNjOC03ZjNjLTlmOTAtNDdmYWJhZWFkZTI3",
+            "descriptor": "aad.OTFkZjY4NjctOGNjOC03ZjNjLTlmOTAtNDdmYWJhZWFkZTI3"
+        },
+        "lastModifiedOn": "\/Date(1722226684980)\/",
+        "project": {
+            "id": "058870c3-3e26-462c-95d6-15749bcea90e",
+            "name": null
+        }
+    },
+    {
+        "id": 21,
+        "name": "Preprod",
+        "description": "Automatically created environment",
+        "createdBy": {
+            "displayName": "Moses Soliman",
+            "url": "https://spsprodeau1.vssps.visualstudio.com/A03a80234-5264-4ce4-941b-adc2da6a9e0e/_apis/Identities/91df6867-8cc8-6f3c-9f90-47fabaeade27",
+            "_links": {
+                "avatar": {
+                    "href": "https://dev.azure.com/sixpivot/_apis/GraphProfile/MemberAvatars/aad.OTFkZjY4NjctOGNjOC03ZjNjLTlmOTAtNDdmYWJhZWFkZTI3"
+                }
+            },
+            "id": "91df6867-8cc8-6f3c-9f90-47fabaeade27",
+            "uniqueName": "Moses.Soliman@sixpivot.com.au",
+            "imageUrl": "https://dev.azure.com/sixpivot/_apis/GraphProfile/MemberAvatars/aad.OTFkZjY4NjctOGNjOC03ZjNjLTlmOTAtNDdmYWJhZWFkZTI3",
+            "descriptor": "aad.OTFkZjY4NjctOGNjOC03ZjNjLTlmOTAtNDdmYWJhZWFkZTI3"
+        },
+        "createdOn": "\/Date(1722226775400)\/",
+        "lastModifiedBy": {
+            "displayName": "Moses Soliman",
+            "url": "https://spsprodeau1.vssps.visualstudio.com/A03a80234-5264-4ce4-941b-adc2da6a9e0e/_apis/Identities/91df6867-8cc8-6f3c-9f90-47fabaeade27",
+            "_links": {
+                "avatar": {
+                    "href": "https://dev.azure.com/sixpivot/_apis/GraphProfile/MemberAvatars/aad.OTFkZjY4NjctOGNjOC03ZjNjLTlmOTAtNDdmYWJhZWFkZTI3"
+                }
+            },
+            "id": "91df6867-8cc8-6f3c-9f90-47fabaeade27",
+            "uniqueName": "Moses.Soliman@sixpivot.com.au",
+            "imageUrl": "https://dev.azure.com/sixpivot/_apis/GraphProfile/MemberAvatars/aad.OTFkZjY4NjctOGNjOC03ZjNjLTlmOTAtNDdmYWJhZWFkZTI3",
+            "descriptor": "aad.OTFkZjY4NjctOGNjOC03ZjNjLTlmOTAtNDdmYWJhZWFkZTI3"
+        },
+        "lastModifiedOn": "\/Date(1722226775400)\/",
+        "project": {
+            "id": "058870c3-3e26-462c-95d6-15749bcea90e",
+            "name": null
+        }
+    },
+    {
+        "id": 7,
+        "name": "Prod",
+        "description": "Automatically created environment",
+        "createdBy": {
+            "displayName": "David Gardiner",
+            "url": "https://spsprodeau1.vssps.visualstudio.com/A03a80234-5264-4ce4-941b-adc2da6a9e0e/_apis/Identities/97a174a7-3ded-65c7-abd1-50bb97d8f59d",
+            "_links": {
+                "avatar": {
+                    "href": "https://dev.azure.com/sixpivot/_apis/GraphProfile/MemberAvatars/aad.OTdhMTc0YTctM2RlZC03NWM3LWFiZDEtNTBiYjk3ZDhmNTlk"
+                }
+            },
+            "id": "97a174a7-3ded-65c7-abd1-50bb97d8f59d",
+            "uniqueName": "david.gardiner@sixpivot.com.au",
+            "imageUrl": "https://dev.azure.com/sixpivot/_apis/GraphProfile/MemberAvatars/aad.OTdhMTc0YTctM2RlZC03NWM3LWFiZDEtNTBiYjk3ZDhmNTlk",
+            "descriptor": "aad.OTdhMTc0YTctM2RlZC03NWM3LWFiZDEtNTBiYjk3ZDhmNTlk"
+        },
+        "createdOn": "\/Date(1670543042090)\/",
+        "lastModifiedBy": {
+            "displayName": "David Gardiner",
+            "url": "https://spsprodeau1.vssps.visualstudio.com/A03a80234-5264-4ce4-941b-adc2da6a9e0e/_apis/Identities/97a174a7-3ded-65c7-abd1-50bb97d8f59d",
+            "_links": {
+                "avatar": {
+                    "href": "https://dev.azure.com/sixpivot/_apis/GraphProfile/MemberAvatars/aad.OTdhMTc0YTctM2RlZC03NWM3LWFiZDEtNTBiYjk3ZDhmNTlk"
+                }
+            },
+            "id": "97a174a7-3ded-65c7-abd1-50bb97d8f59d",
+            "uniqueName": "david.gardiner@sixpivot.com.au",
+            "imageUrl": "https://dev.azure.com/sixpivot/_apis/GraphProfile/MemberAvatars/aad.OTdhMTc0YTctM2RlZC03NWM3LWFiZDEtNTBiYjk3ZDhmNTlk",
+            "descriptor": "aad.OTdhMTc0YTctM2RlZC03NWM3LWFiZDEtNTBiYjk3ZDhmNTlk"
+        },
+        "lastModifiedOn": "\/Date(1670543042090)\/",
+        "project": {
+            "id": "058870c3-3e26-462c-95d6-15749bcea90e",
+            "name": null
+        }
+    },
+    {
+        "id": 22,
+        "name": "Syd-Dev",
+        "description": "",
+        "createdBy": {
+            "displayName": "Moses Soliman",
+            "url": "https://spsprodeau1.vssps.visualstudio.com/A03a80234-5264-4ce4-941b-adc2da6a9e0e/_apis/Identities/91df6867-8cc8-6f3c-9f90-47fabaeade27",
+            "_links": {
+                "avatar": {
+                    "href": "https://dev.azure.com/sixpivot/_apis/GraphProfile/MemberAvatars/aad.OTFkZjY4NjctOGNjOC03ZjNjLTlmOTAtNDdmYWJhZWFkZTI3"
+                }
+            },
+            "id": "91df6867-8cc8-6f3c-9f90-47fabaeade27",
+            "uniqueName": "Moses.Soliman@sixpivot.com.au",
+            "imageUrl": "https://dev.azure.com/sixpivot/_apis/GraphProfile/MemberAvatars/aad.OTFkZjY4NjctOGNjOC03ZjNjLTlmOTAtNDdmYWJhZWFkZTI3",
+            "descriptor": "aad.OTFkZjY4NjctOGNjOC03ZjNjLTlmOTAtNDdmYWJhZWFkZTI3"
+        },
+        "createdOn": "\/Date(1722233207686)\/",
+        "lastModifiedBy": {
+            "displayName": "Moses Soliman",
+            "url": "https://spsprodeau1.vssps.visualstudio.com/A03a80234-5264-4ce4-941b-adc2da6a9e0e/_apis/Identities/91df6867-8cc8-6f3c-9f90-47fabaeade27",
+            "_links": {
+                "avatar": {
+                    "href": "https://dev.azure.com/sixpivot/_apis/GraphProfile/MemberAvatars/aad.OTFkZjY4NjctOGNjOC03ZjNjLTlmOTAtNDdmYWJhZWFkZTI3"
+                }
+            },
+            "id": "91df6867-8cc8-6f3c-9f90-47fabaeade27",
+            "uniqueName": "Moses.Soliman@sixpivot.com.au",
+            "imageUrl": "https://dev.azure.com/sixpivot/_apis/GraphProfile/MemberAvatars/aad.OTFkZjY4NjctOGNjOC03ZjNjLTlmOTAtNDdmYWJhZWFkZTI3",
+            "descriptor": "aad.OTFkZjY4NjctOGNjOC03ZjNjLTlmOTAtNDdmYWJhZWFkZTI3"
+        },
+        "lastModifiedOn": "\/Date(1722233207686)\/",
+        "project": {
+            "id": "058870c3-3e26-462c-95d6-15749bcea90e",
+            "name": null
+        }
+    },
+    {
+        "id": 6,
+        "name": "Test",
+        "description": "Automatically created environment",
+        "createdBy": {
+            "displayName": "David Gardiner",
+            "url": "https://spsprodeau1.vssps.visualstudio.com/A03a80234-5264-4ce4-941b-adc2da6a9e0e/_apis/Identities/97a174a7-3ded-65c7-abd1-50bb97d8f59d",
+            "_links": {
+                "avatar": {
+                    "href": "https://dev.azure.com/sixpivot/_apis/GraphProfile/MemberAvatars/aad.OTdhMTc0YTctM2RlZC03NWM3LWFiZDEtNTBiYjk3ZDhmNTlk"
+                }
+            },
+            "id": "97a174a7-3ded-65c7-abd1-50bb97d8f59d",
+            "uniqueName": "david.gardiner@sixpivot.com.au",
+            "imageUrl": "https://dev.azure.com/sixpivot/_apis/GraphProfile/MemberAvatars/aad.OTdhMTc0YTctM2RlZC03NWM3LWFiZDEtNTBiYjk3ZDhmNTlk",
+            "descriptor": "aad.OTdhMTc0YTctM2RlZC03NWM3LWFiZDEtNTBiYjk3ZDhmNTlk"
+        },
+        "createdOn": "\/Date(1670543042053)\/",
+        "lastModifiedBy": {
+            "displayName": "David Gardiner",
+            "url": "https://spsprodeau1.vssps.visualstudio.com/A03a80234-5264-4ce4-941b-adc2da6a9e0e/_apis/Identities/97a174a7-3ded-65c7-abd1-50bb97d8f59d",
+            "_links": {
+                "avatar": {
+                    "href": "https://dev.azure.com/sixpivot/_apis/GraphProfile/MemberAvatars/aad.OTdhMTc0YTctM2RlZC03NWM3LWFiZDEtNTBiYjk3ZDhmNTlk"
+                }
+            },
+            "id": "97a174a7-3ded-65c7-abd1-50bb97d8f59d",
+            "uniqueName": "david.gardiner@sixpivot.com.au",
+            "imageUrl": "https://dev.azure.com/sixpivot/_apis/GraphProfile/MemberAvatars/aad.OTdhMTc0YTctM2RlZC03NWM3LWFiZDEtNTBiYjk3ZDhmNTlk",
+            "descriptor": "aad.OTdhMTc0YTctM2RlZC03NWM3LWFiZDEtNTBiYjk3ZDhmNTlk"
+        },
+        "lastModifiedOn": "\/Date(1670543042053)\/",
+        "project": {
+            "id": "058870c3-3e26-462c-95d6-15749bcea90e",
+            "name": null
+        }
+    },
+    {
+        "id": 15,
+        "name": "UAT",
+        "description": "Automatically created environment",
+        "createdBy": {
+            "displayName": "Jack Sowter",
+            "url": "https://spsprodeau1.vssps.visualstudio.com/A03a80234-5264-4ce4-941b-adc2da6a9e0e/_apis/Identities/28b9ea94-5bc9-646a-a3a3-20c64d4f870b",
+            "_links": {
+                "avatar": {
+                    "href": "https://dev.azure.com/sixpivot/_apis/GraphProfile/MemberAvatars/aad.MjhiOWVhOTQtNWJjOS03NDZhLWEzYTMtMjBjNjRkNGY4NzBi"
+                }
+            },
+            "id": "28b9ea94-5bc9-646a-a3a3-20c64d4f870b",
+            "uniqueName": "jack.sowter@sixpivot.com.au",
+            "imageUrl": "https://dev.azure.com/sixpivot/_apis/GraphProfile/MemberAvatars/aad.MjhiOWVhOTQtNWJjOS03NDZhLWEzYTMtMjBjNjRkNGY4NzBi",
+            "descriptor": "aad.MjhiOWVhOTQtNWJjOS03NDZhLWEzYTMtMjBjNjRkNGY4NzBi"
+        },
+        "createdOn": "\/Date(1721014047206)\/",
+        "lastModifiedBy": {
+            "displayName": "Jack Sowter",
+            "url": "https://spsprodeau1.vssps.visualstudio.com/A03a80234-5264-4ce4-941b-adc2da6a9e0e/_apis/Identities/28b9ea94-5bc9-646a-a3a3-20c64d4f870b",
+            "_links": {
+                "avatar": {
+                    "href": "https://dev.azure.com/sixpivot/_apis/GraphProfile/MemberAvatars/aad.MjhiOWVhOTQtNWJjOS03NDZhLWEzYTMtMjBjNjRkNGY4NzBi"
+                }
+            },
+            "id": "28b9ea94-5bc9-646a-a3a3-20c64d4f870b",
+            "uniqueName": "jack.sowter@sixpivot.com.au",
+            "imageUrl": "https://dev.azure.com/sixpivot/_apis/GraphProfile/MemberAvatars/aad.MjhiOWVhOTQtNWJjOS03NDZhLWEzYTMtMjBjNjRkNGY4NzBi",
+            "descriptor": "aad.MjhiOWVhOTQtNWJjOS03NDZhLWEzYTMtMjBjNjRkNGY4NzBi"
+        },
+        "lastModifiedOn": "\/Date(1721014047206)\/",
+        "project": {
+            "id": "058870c3-3e26-462c-95d6-15749bcea90e",
+            "name": null
+        }
+    }
+]

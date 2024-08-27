@@ -3,9 +3,8 @@ import * as ReactDOM from 'react-dom'
 import { InitTelemetry } from '../telemetry/applicationInsights'
 import { initAzureDevOpsSdk } from '../api/AzureDevOpsSdkManager'
 import { getDashboardEnvironmentPipeline } from '../api/AzureDevopsClient'
-import { ExtensionDataKeys, IDashboardMainState, IEnvironmentInstance } from '../types'
+import { IDashboardMainState } from '../types'
 import { DashboardContent } from './DashboardContent'
-import { merge } from '../utilities'
 import './Dashboard.scss'
 
 export class Dashboard extends React.Component<{}, IDashboardMainState> {
@@ -13,8 +12,7 @@ export class Dashboard extends React.Component<{}, IDashboardMainState> {
         super(props)
 
         this.state = {
-            environments: [],
-            pipelines: [],
+            environmentPipelines: [],
             isLoading: true,
         }
     }
@@ -22,14 +20,10 @@ export class Dashboard extends React.Component<{}, IDashboardMainState> {
     public async componentDidMount() {
         const projectInfo = await initAzureDevOpsSdk()
 
-        const { environments, pipelines } = await getDashboardEnvironmentPipeline(projectInfo.name)
-
-        const sortedEnvironments =
-            (await projectInfo.extensionDataManager.getValue<IEnvironmentInstance[]>(ExtensionDataKeys.Environments)) ?? []
+        const environmentPipelines = await getDashboardEnvironmentPipeline(projectInfo)
 
         this.setState({
-            environments: merge(environments, sortedEnvironments) ?? environments,
-            pipelines: pipelines,
+            environmentPipelines,
             projectInfo: projectInfo,
             isLoading: false,
         })
