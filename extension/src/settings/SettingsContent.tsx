@@ -9,16 +9,16 @@ import { Button } from 'azure-devops-ui/Button'
 import { Page } from 'azure-devops-ui/Page'
 import { HeaderCommandBar, IHeaderCommandBarItem } from 'azure-devops-ui/HeaderCommandBar'
 import { ListDragDropBehavior, ListDragImage } from 'azure-devops-ui/List'
-import { IEnvironmentInstance, ISettingsContentState } from '../types'
+import { IEnvironmentInstance, ISettingsContentProps } from '../types'
 import './Settings.scss'
 
-export const SettingsContent = (props: { state: ISettingsContentState }) => {
-    const { state } = props
+export const SettingsContent = (props: ISettingsContentProps) => {
+    const { state, onResetToDefaultSortOrder, onSaveCustomSortOrder, onTableRowDrop } = props
     const environmentsCardHeaderCommandBarItems: IHeaderCommandBarItem[] = [
         {
             id: 'reset-sort-order-settings',
             text: 'Reset to default',
-            onActivate: state.onResetToDefaultSortOrder,
+            onActivate: onResetToDefaultSortOrder,
             iconProps: {
                 iconName: 'Undo',
             },
@@ -27,7 +27,7 @@ export const SettingsContent = (props: { state: ISettingsContentState }) => {
             id: 'sort-order-save',
             text: 'Save',
             isPrimary: true,
-            onActivate: state.onSaveCustomSortOrder,
+            onActivate: onSaveCustomSortOrder,
             iconProps: {
                 iconName: 'Save',
             },
@@ -52,7 +52,7 @@ export const SettingsContent = (props: { state: ISettingsContentState }) => {
         id: 'environment-dragndrop-behavior',
         type: 'IEnvironmentInstance',
         renderDragImage: (event) => <ListDragImage text={event.detail.dataTransfer.data.name ?? 'UNKNOWN ENVIRONMENT'} />,
-        onDrop: state.onTableRowDrop,
+        onDrop: onTableRowDrop,
     })
 
     function renderGripper(_: number, left: boolean) {

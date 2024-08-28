@@ -10,47 +10,21 @@ import { getEnvironmentsSortedByConvention } from '../api/AzureDevopsClient'
 import { initAzureDevOpsSdk } from '../api/AzureDevOpsSdkManager'
 import { SettingsContent } from './SettingsContent'
 
-export class Settings extends React.Component<{}, ISettingsContentState> {
-    constructor(props: {}) {
-        super(props)
+async function load(): Promise<{ environments: ArrayItemProvider<IEnvironmentInstance>; projectInfo: IDevOpsProjectInfo }> {
+    var _projectInfo = await initAzureDevOpsSdk()
 
-        this.state = {
-            columns: [
-                {
-                    columnLayout: TableColumnLayout.singleLine,
-                    id: 'environmentName',
-                    name: 'Environment name',
-                    readonly: true,
-                    renderCell: this.renderEnvironmentNameCell,
-                    width: new ObservableValue(-30),
-                },
-            ],
-            environments: new ArrayItemProvider<IEnvironmentInstance>([]),
-            isLoading: true,
-            onSaveCustomSortOrder: this.onSaveCustomSortOrder,
-            onResetToDefaultSortOrder: this.onResetToDefaultSortOrder,
-        }
+    const originalEnvironments = await getEnvironmentsSortedByConvention(_projectInfo.name)
+
+    const environments = (await _projectInfo.extensionDataManager.getValue<IEnvironmentInstance[]>(ExtensionDataKeys.Environments)) ?? []
+
+    return {
+        environments: new ArrayItemProvider(merge(originalEnvironments, environments)),
+        projectInfo: _projectInfo,
     }
+}
 
-    private _projectInfo?: IDevOpsProjectInfo
-
-    public async componentDidMount() {
-        this._projectInfo = await initAzureDevOpsSdk()
-
-        const originalEnvironments = await getEnvironmentsSortedByConvention(this._projectInfo.name)
-
-        const environments =
-            (await this._projectInfo.extensionDataManager.getValue<IEnvironmentInstance[]>(ExtensionDataKeys.Environments)) ?? []
-
-        this.setState({
-            environments: new ArrayItemProvider(merge(originalEnvironments, environments)),
-            isLoading: false,
-            projectInfo: this._projectInfo,
-            onTableRowDrop: this.onTableRowDrop,
-        })
-    }
-
-    renderEnvironmentNameCell = (
+const Settings = () => {
+    const renderEnvironmentNameCell = (
         _rowIndex: number,
         columnIndex: number,
         tableColumn: ITableColumn<IEnvironmentInstance>,
@@ -68,48 +42,96 @@ export class Settings extends React.Component<{}, ISettingsContentState> {
         )
     }
 
-    onTableRowDrop = (event: BoltListDragEvent<HTMLElement, IEnvironmentInstance>, dropData: IListDropData) => {
+    const onTableRowDrop = (event: BoltListDragEvent<HTMLElement, IEnvironmentInstance>, dropData: IListDropData) => {
         const draggedItem = event.detail.dataTransfer.data
         const dragIndex = event.detail.dataTransfer.secondaryData?.index
 
         //Strange behavior between dragging up and dragging down
         const dropIndex = dragIndex !== undefined && dragIndex < dropData.index ? dropData.index - 1 : dropData.index
 
-        const items = this.state.environments?.value
+        const items = state.environments?.value
         if (dragIndex !== undefined) {
             // Remove the dragged item from its original position
             items.splice(dragIndex, 1)
 
             // Insert the dragged item at the new position
             items.splice(dropIndex, 0, draggedItem)
-            this.setState({
+            setState({
+                ...state,
                 environments: new ArrayItemProvider(items),
             })
         }
     }
 
-    onSaveCustomSortOrder = async () => {
-        const dataManager = this._projectInfo?.extensionDataManager
+    const onSaveCustomSortOrder = async () => {
+        const dataManager = state.projectInfo?.extensionDataManager
         if (dataManager) {
-            this.setState({ isLoading: true })
-            await dataManager.setValue<IEnvironmentInstance[]>(ExtensionDataKeys.Environments, this.state.environments.value)
-            this.setState({ isLoading: false })
+            setState({
+                ...state,
+                isLoading: true,
+            })
+            await dataManager.setValue<IEnvironmentInstance[]>(ExtensionDataKeys.Environments, state.environments.value)
+            setState({
+                ...state,
+                isLoading: false,
+            })
         }
     }
 
-    onResetToDefaultSortOrder = async () => {
-        const dataManager = this._projectInfo?.extensionDataManager
+    const onResetToDefaultSortOrder = async () => {
+        const dataManager = state.projectInfo?.extensionDataManager
         if (dataManager) {
-            this.setState({ isLoading: true })
+            setState({
+                ...state,
+                isLoading: true,
+            })
             await dataManager.setValue(ExtensionDataKeys.Environments, undefined)
-            const environments = await getEnvironmentsSortedByConvention(this._projectInfo?.name ?? '')
-            this.setState({ isLoading: false, environments: new ArrayItemProvider(environments) })
+            const environments = await getEnvironmentsSortedByConvention(state.projectInfo?.name ?? '')
+            setState({
+                ...state,
+                isLoading: false,
+                environments: new ArrayItemProvider(environments),
+            })
         }
     }
+    const [state, setState] = React.useState<ISettingsContentState>({
+        columns: [
+            {
+                columnLayout: TableColumnLayout.singleLine,
+                id: 'environmentName',
+                name: 'Environment name',
+                readonly: true,
+                renderCell: renderEnvironmentNameCell,
+                width: new ObservableValue(-30),
+            },
+        ],
+        environments: new ArrayItemProvider<IEnvironmentInstance>([]),
+        isLoading: true,
+    })
 
-    public render(): JSX.Element {
-        return <SettingsContent state={this.state} />
-    }
+    React.useEffect(() => {
+        load()
+            .then(({ projectInfo, environments }) =>
+                setState({
+                    ...state,
+                    environments,
+                    projectInfo,
+                    isLoading: false,
+                })
+            )
+            .catch((err) => {
+                throw err
+            })
+    })
+
+    return (
+        <SettingsContent
+            state={state}
+            onTableRowDrop={onTableRowDrop}
+            onResetToDefaultSortOrder={onResetToDefaultSortOrder}
+            onSaveCustomSortOrder={onSaveCustomSortOrder}
+        />
+    )
 }
 
 ReactDOM.render(<Settings />, document.getElementById('root'))

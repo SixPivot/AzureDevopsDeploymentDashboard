@@ -77,7 +77,7 @@ export type IDeploymentTableItem = {
     name: string
 }
 
-export interface IDashboardMainState {
+export interface IDashboardContentState {
     environments: IEnvironmentInstance[]
     pipelines: IPipelineInstance[]
     isLoading: boolean
@@ -95,15 +95,19 @@ export enum ExtensionDataKeys {
     Environments = 'Environments',
 }
 
+export interface ISettingsContentProps {
+    state: ISettingsContentState
+    onTableRowDrop?: (event: BoltListDragEvent<HTMLElement, IEnvironmentInstance>, dropData: IListDropData) => void
+    onSaveCustomSortOrder: () => void
+    onResetToDefaultSortOrder: () => void
+}
+
 export interface ISettingsContentState {
     columns: ITableColumn<IEnvironmentInstance>[]
     environments: ArrayItemProvider<IEnvironmentInstance>
     projectInfo?: IDevOpsProjectInfo
     organisation?: string
     isLoading: boolean
-    onTableRowDrop?: (event: BoltListDragEvent<HTMLElement, IEnvironmentInstance>, dropData: IListDropData) => void
-    onSaveCustomSortOrder: () => void
-    onResetToDefaultSortOrder: () => void
 }
 
 /**
