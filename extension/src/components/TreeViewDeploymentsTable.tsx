@@ -9,10 +9,10 @@ import { SimpleTableCell } from 'azure-devops-ui/Table'
 import { Status, StatusSize } from 'azure-devops-ui/Status'
 import { getStatusIndicatorData } from '../utilities'
 import { Link } from 'azure-devops-ui/Link'
-import { Ago } from 'azure-devops-ui/Ago'
 import { useState, useEffect } from 'react'
 import { ITreeItemProvider } from 'azure-devops-ui/Utilities/TreeItemProvider'
 import { AgoFormat } from 'azure-devops-ui/Utilities/Date'
+import { SafeAgo } from './SafeAgo'
 
 export const TreeViewDeploymentsTable = (props: { environments: IEnvironmentInstance[]; pipelines: IPipelineInstance[] }): JSX.Element => {
     const { environments, pipelines } = props
@@ -134,7 +134,9 @@ export const TreeViewDeploymentsTable = (props: { environments: IEnvironmentInst
                             {pipeline.environments[treeColumn!.name!].value}
                         </Link>
                         <div className="finish-date">
-                            <Ago date={pipeline.environments[treeColumn!.id!].finishTime} format={AgoFormat.Extended} />
+                            {pipeline.environments[treeColumn!.id!].finishTime && (
+                                <SafeAgo date={pipeline.environments[treeColumn!.id!].finishTime} format={AgoFormat.Extended} />
+                            )}
                         </div>
                     </div>
                 </div>
