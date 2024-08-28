@@ -3,10 +3,10 @@ import { Link } from 'azure-devops-ui/Link'
 import React from 'react'
 import { Status, StatusSize } from 'azure-devops-ui/Status'
 import { AgoFormat } from 'azure-devops-ui/Utilities/Date'
-import { Ago } from 'azure-devops-ui/Ago'
 import { getStatusIndicatorData } from '../utilities'
 import { IDashboardEnvironmentColumn, IEnvironmentInstance, IPipelineInstance } from '../types'
 import { ArrayItemProvider } from 'azure-devops-ui/Utilities/Provider'
+import { SafeAgo } from './SafeAgo'
 
 export const ListViewDeploymentsTable = (props: { environments: IEnvironmentInstance[]; pipelines: IPipelineInstance[] }): JSX.Element => {
     const { environments, pipelines } = props
@@ -63,7 +63,7 @@ export const ListViewDeploymentsTable = (props: { environments: IEnvironmentInst
                             </Link>
                             <div className="finish-date">
                                 {tableItem.environments[tableColumn.id].finishTime && (
-                                    <Ago date={tableItem.environments[tableColumn.id].finishTime} format={AgoFormat.Extended} />
+                                    <SafeAgo date={tableItem.environments[tableColumn.id].finishTime} format={AgoFormat.Extended} />
                                 )}
                             </div>
                         </div>
