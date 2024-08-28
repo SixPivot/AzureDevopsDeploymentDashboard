@@ -21,8 +21,7 @@ export async function getDashboardEnvironmentPipeline(projectName: string): Prom
 
     const environmentPipelines: IEnvironmentPipelines[] = []
     for (const environment of environments) {
-        const deployments = await taskAgentClient.getEnvironmentDeploymentExecutionRecords(projectName, environment.id)
-
+        const deployments = await taskAgentClient.getEnvironmentDeploymentExecutionRecords(projectName, environment.id, undefined, 1000)
         const environmentPipeline: IEnvironmentPipelines = {
             name: environment.name,
             pipeline: {},
