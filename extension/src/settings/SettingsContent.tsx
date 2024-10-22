@@ -11,6 +11,8 @@ import { HeaderCommandBar, IHeaderCommandBarItem } from 'azure-devops-ui/HeaderC
 import { ListDragDropBehavior, ListDragImage } from 'azure-devops-ui/List'
 import { IEnvironmentInstance, ISettingsContentProps } from '../types'
 import './Settings.scss'
+import { downloadJson } from '../utilities'
+import { diagnostics } from '../diagnostics'
 
 export const SettingsContent = (props: ISettingsContentProps) => {
     const { state, onResetToDefaultSortOrder, onSaveCustomSortOrder, onTableRowDrop } = props
@@ -45,7 +47,25 @@ export const SettingsContent = (props: ISettingsContentProps) => {
             target: '_top',
             text: 'View dashboard',
         },
+        {
+            iconProps: { iconName: 'Download' },
+            id: 'diagnostic-dump',
+            tooltipProps: { text: 'Export a diagnostic package' },
+            isPrimary: false,
+            important: false,
+            // href: state.projectInfo?.deploymentDashboardUri,
+            target: '_top',
+            text: 'Export Diagnostics',
+            onActivate: () => {
+                downloadDiagnosticData()
+            },
+        },
     ]
+
+    const downloadDiagnosticData = async () => {
+        const data = await diagnostics()
+        downloadJson(data, `dashboard_diagnostics_${new Date().getTime()}.json`)
+    }
 
     const dragDropBehavior = new ListDragDropBehavior<IEnvironmentInstance>({
         allowedTypes: ['IEnvironmentInstance'],
