@@ -5,7 +5,7 @@ import { Spinner, SpinnerSize } from 'azure-devops-ui/Spinner'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'azure-devops-ui/Link'
 import { Button } from 'azure-devops-ui/Button'
-import { IEnvironmentInstance, IPipelineInstance, IDevOpsProjectInfo } from '../types'
+import { IDashboardContentState } from '../types'
 import { TreeViewDeploymentsTable } from '../components/TreeViewDeploymentsTable'
 import { DropdownSelection } from 'azure-devops-ui/Utilities/DropdownSelection'
 import { ListViewDeploymentsTable } from '../components/ListViewDeploymentsTable'
@@ -13,10 +13,7 @@ import { HeaderCommandBar, IHeaderCommandBarItem } from 'azure-devops-ui/HeaderC
 import { IMenuItem } from 'azure-devops-ui/Menu'
 
 export type DashboardContentProps = {
-    environments: IEnvironmentInstance[]
-    pipelines: IPipelineInstance[]
-    projectInfo?: IDevOpsProjectInfo
-    isLoading: boolean
+    state: IDashboardContentState
 }
 
 enum ViewType {
@@ -25,7 +22,9 @@ enum ViewType {
 }
 
 export const DashboardContent = (props: DashboardContentProps) => {
-    const { environments, pipelines, projectInfo, isLoading } = props
+    const {
+        state: { environments, pipelines, projectInfo, isLoading },
+    } = props
 
     const viewSelection = new DropdownSelection()
     const [viewType, setViewType] = useState(ViewType.List.toString())

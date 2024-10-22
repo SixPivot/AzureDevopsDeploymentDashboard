@@ -3,10 +3,11 @@ import * as React from 'react'
 import '@testing-library/jest-dom'
 import '@testing-library/jest-dom/jest-globals'
 import { data } from './DashboardContent.test.data'
-import { DashboardContent, DashboardContentProps } from './DashboardContent'
+import { DashboardContent } from './DashboardContent'
+import { IDashboardContentState } from '../types'
 
 test('Render and check layout', async () => {
-    render(<DashboardContent {...(data as unknown as DashboardContentProps)} />)
+    render(<DashboardContent state={data as unknown as IDashboardContentState} />)
 
     await screen.findByRole('heading')
 
@@ -17,7 +18,7 @@ test('Render and check layout', async () => {
 })
 
 test('Check all pipelines are included', async () => {
-    render(<DashboardContent {...(data as unknown as DashboardContentProps)} />)
+    render(<DashboardContent state={data as unknown as IDashboardContentState} />)
 
     const rows = screen.getAllByRole('row')
     expect(rows).toHaveLength(8) // includes header
@@ -33,7 +34,7 @@ test('Check all pipelines are included', async () => {
 })
 
 test('Check all environments are included', async () => {
-    render(<DashboardContent {...(data as unknown as DashboardContentProps)} />)
+    render(<DashboardContent state={data as unknown as IDashboardContentState} />)
     for (const env of data.environments) {
         const column = screen.getByText(env.name)
         expect(column).toBeInTheDocument()
