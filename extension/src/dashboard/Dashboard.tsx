@@ -19,7 +19,7 @@ const Dashboard = () => {
             .catch((err) => {
                 throw err
             })
-    })
+    }, [])
     return <DashboardContent state={state}></DashboardContent>
 }
 

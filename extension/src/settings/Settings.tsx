@@ -122,7 +122,7 @@ const Settings = () => {
             .catch((err) => {
                 throw err
             })
-    })
+    }, [])
 
     return (
         <SettingsContent
